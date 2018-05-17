@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TrailApp</string>
+    <string name="reportBtnTxt">Report</string>
+    <string name="learnMoreTxt">Learn More</string>
 </resources>
