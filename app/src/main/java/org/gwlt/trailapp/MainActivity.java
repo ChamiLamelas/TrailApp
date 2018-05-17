@@ -10,6 +10,9 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button reportButton;
+    private Button learnMoreButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
      * Sets up UI components
      */
     public void setUpUIComponents() {
-        Button reportButton = (Button) findViewById(R.id.reportButton);
+        reportButton = findViewById(R.id.reportButton);
         reportButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 report("Test");
             }
         });
 
-        Button learnMoreButton = (Button) findViewById(R.id.learnMoreButton);
+        learnMoreButton = findViewById(R.id.learnMoreButton);
         learnMoreButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 learnMore();
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
      * @param reportMsg - message to send in report to GWLT
      */
     public void report(String reportMsg) {
-        String recipients[] = {};
+        String recipients[] = {"slamelas@bancroftschool.org","cstephenson@bancroftschool.org"};
         String reportTitle = "Report: " + Utilities.getFormattedTime("MM:dd:yyyy hh:mm:ss");
         Intent emailIntent = Utilities.genEmail(recipients, reportTitle, reportMsg);
 
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void learnMore() {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW); // specifies Intent is for viewing a URI
-        browserIntent.setData(Uri.parse("gwlt.org")); // sets data the Intent will work on
+        browserIntent.setData(Uri.parse("http://www.gwlt.org")); // sets data the Intent will work on
 
         try {
             // starts activity (opens browser) based on user's choice from dialog created by createChooser()
