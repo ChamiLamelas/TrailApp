@@ -4,14 +4,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Toolbar appToolbar;
     private Button reportButton;
-    private Button learnMoreButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +26,32 @@ public class MainActivity extends AppCompatActivity {
      * Sets up UI components
      */
     public void setUpUIComponents() {
+        appToolbar = findViewById(R.id.appToolbar);
+        setSupportActionBar(appToolbar);
+
         reportButton = findViewById(R.id.reportButton);
         reportButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+            @Override
+            public void onClick(View v) {
                 report("Test");
             }
         });
+    }
 
-        learnMoreButton = findViewById(R.id.learnMoreButton);
-        learnMoreButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                learnMore();
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.learnMoreButton) {
+            learnMore();
+            return true;
+        }
+        else if (id == R.id.helpButton) {
+            Log.i("MainActivity", "help");
+            return true;
+        }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
