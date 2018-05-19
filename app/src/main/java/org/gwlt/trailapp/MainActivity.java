@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.helpButton) {
-            Toast.makeText(this, "HELP!", Toast.LENGTH_SHORT).show(); // using toast in place of Log because of spam in logcat
+            Toast.makeText(this, "HELP!", Toast.LENGTH_SHORT).show(); 
             return true;
         }
         else {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             finish(); // finishes activity
         }
         catch (android.content.ActivityNotFoundException ex) { // thrown by startActivity
-            Toast.makeText(this, "no mail client installed.", Toast.LENGTH_SHORT).show(); // using toast in place of Log because of spam in logcat
+            Toast.makeText(this, "no mail client installed.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         catch (android.content.ActivityNotFoundException ex) { // thrown by startActivity
-            Toast.makeText(this, "no browser installed.", Toast.LENGTH_SHORT).show(); // using toast in place of Log because of spam in logcat
+            Toast.makeText(this, "no browser installed.", Toast.LENGTH_SHORT).show();
         }
     }
 }

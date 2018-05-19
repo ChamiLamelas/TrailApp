@@ -26,6 +26,26 @@ public final class Utilities {
     }
 
     /**
+     * Generates a report email using genEmail() and getFormattedTime() as helper methods
+     * @param trashBox - trash checkbox
+     * @param overgrownBox - overgrown check box
+     * Add more as more checkboxes are added
+     * @param reportMsg - user's own comment
+     * @return email Intent that holds report data
+     */
+    public static Intent genReport(boolean trashBox, boolean overgrownBox, String reportMsg) {
+        String reportRecipients[] = {"slamelas@bancroftschool.org","cstephenson@bancroftschool.org"};
+        String reportSubject = "<Property Name> Report for " + getFormattedTime("MM:dd:yyyy hh:mm:ss");
+        String reportBody = "";
+        if (trashBox)
+            reportBody += "trash on trail.\n";
+        if (overgrownBox)
+            reportBody += "trail is overgrown.\n";
+        reportBody += reportMsg;
+        return genEmail(reportRecipients, reportSubject, reportBody);
+    }
+
+    /**
      * Gets the current time using a provided pattern
      * @param pattern - e.g. "dd:MM:yyyy"
      * @return - current time formatted to fit the provided pattern
