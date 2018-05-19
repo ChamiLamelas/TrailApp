@@ -1,7 +1,11 @@
 package org.gwlt.trailapp;
 
+import android.app.PendingIntent;
+
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -35,7 +39,14 @@ public class MainActivity extends AppCompatActivity {
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                report("Test");
+                try {
+                    Intent reportIntent = new Intent(MainActivity.this, ReportActivity.class);
+                    startActivity(reportIntent);
+                    finish();
+                }
+                catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(MainActivity.this,"could not open report tab",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -70,25 +81,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.trailapp_menu, menu);
         return true;
-    }
-
-    /**
-     * Generates an email in the mail client of the user's choice with the provided report message
-     * @param reportMsg - message to send in report to GWLT
-     */
-    public void report(String reportMsg) {
-        String recipients[] = {"slamelas@bancroftschool.org","cstephenson@bancroftschool.org"};
-        String reportTitle = "Report: " + Utilities.getFormattedTime("MM:dd:yyyy hh:mm:ss");
-        Intent emailIntent = Utilities.genEmail(recipients, reportTitle, reportMsg);
-
-        try {
-            // starts activity (opens mail app) based on user's choice from dialog created by createChooser()
-            startActivity(Intent.createChooser(emailIntent, "Choose mail client.. "));
-            finish(); // finishes activity
-        }
-        catch (android.content.ActivityNotFoundException ex) { // thrown by startActivity
-            Toast.makeText(this, "no mail client installed.", Toast.LENGTH_SHORT).show();
-        }
     }
 
     /**

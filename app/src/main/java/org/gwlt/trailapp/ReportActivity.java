@@ -13,8 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class ReportActivity extends AppCompatActivity {
-
-    private Toolbar reportTitle;
+    private Toolbar reportToolbar;
     private CheckBox trashBox;
     private CheckBox overgrownBox;
     private EditText reportEntry;
@@ -28,8 +27,8 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     public void setUpUIComponents() {
-        reportTitle = findViewById(R.id.reportTitle);
-        setSupportActionBar(reportTitle);
+        reportToolbar = findViewById(R.id.appToolbar);
+        setSupportActionBar(reportToolbar);
 
         trashBox = findViewById(R.id.trashBox);
         overgrownBox = findViewById(R.id.overgrownBox);
@@ -48,15 +47,5 @@ public class ReportActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return new MainActivity().onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return new MainActivity().onCreateOptionsMenu(menu);
     }
 }
