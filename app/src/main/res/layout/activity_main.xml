@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,25 +11,28 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/appToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="76dp"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:layout_constraintBottom_toTopOf="@+id/reportButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <Button
         android:id="@+id/reportButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="78dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginBottom="387dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginStart="34dp"
         android:text="@string/reportBtnTxt"
-        app:layout_constraintBottom_toTopOf="@+id/learnMoreButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.292" />
+        app:layout_constraintTop_toBottomOf="@+id/appToolbar" />
 
 </android.support.constraint.ConstraintLayout>

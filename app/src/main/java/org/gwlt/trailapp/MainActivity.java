@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Detects clicks on Toolbar menu items and runs desired functions
+     * @param item - menu item that has been triggered
+     * @return false to allow normal menu processing to proceed, true to consume it here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -46,12 +53,23 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.helpButton) {
-            Log.i("MainActivity", "help");
+            Toast.makeText(this, "HELP!", Toast.LENGTH_SHORT).show(); // using toast in place of Log because of spam in logcat
             return true;
         }
         else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Adds menu to the toolbar
+     * @param menu - menu being added to the toolbar
+     * @return true to display menu
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.trailapp_menu, menu);
+        return true;
     }
 
     /**
@@ -69,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             finish(); // finishes activity
         }
         catch (android.content.ActivityNotFoundException ex) { // thrown by startActivity
-            Log.i("MainActivity:","no mail client installed.", ex); // use Log in place of System.out.println()
+            Toast.makeText(this, "no mail client installed.", Toast.LENGTH_SHORT).show(); // using toast in place of Log because of spam in logcat
         }
     }
 
@@ -86,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         catch (android.content.ActivityNotFoundException ex) { // thrown by startActivity
-            Log.i("MainActivity:", "no browser installed.", ex);
+            Toast.makeText(this, "no browser installed.", Toast.LENGTH_SHORT).show(); // using toast in place of Log because of spam in logcat
         }
     }
 }
