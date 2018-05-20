@@ -33,9 +33,9 @@ public final class Utilities {
      * @param reportMsg - user's own comment
      * @return email Intent that holds report data
      */
-    public static Intent genReport(boolean trashBox, boolean overgrownBox, String reportMsg) {
+    public static Intent genReport(boolean trashBox, boolean overgrownBox, String reportMsg, String time) {
         String reportRecipients[] = {"slamelas@bancroftschool.org","cstephenson@bancroftschool.org"};
-        String reportSubject = "<Property Name> Report for " + getFormattedTime("MM:dd:yyyy hh:mm:ss");
+        String reportSubject = "[REPORT] <Property Name> " + time;
         String reportBody = "";
         if (trashBox)
             reportBody += "trash on trail.\n";

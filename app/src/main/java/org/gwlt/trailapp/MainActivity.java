@@ -1,15 +1,10 @@
 package org.gwlt.trailapp;
 
-import android.app.PendingIntent;
-
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +13,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar appToolbar;
-    private Button reportButton;
+    private Toolbar jAppToolbar;
+    private Button jReportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +27,16 @@ public class MainActivity extends AppCompatActivity {
      * Sets up UI components
      */
     public void setUpUIComponents() {
-        appToolbar = findViewById(R.id.appToolbar);
-        setSupportActionBar(appToolbar);
+        jAppToolbar = findViewById(R.id.appToolbar);
+        setSupportActionBar(jAppToolbar);
 
-        reportButton = findViewById(R.id.reportButton);
-        reportButton.setOnClickListener(new View.OnClickListener() {
+        jReportButton = findViewById(R.id.reportButton);
+        jReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     Intent reportIntent = new Intent(MainActivity.this, ReportActivity.class);
                     startActivity(reportIntent);
-                    finish();
                 }
                 catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(MainActivity.this,"could not open report tab",Toast.LENGTH_SHORT).show();
