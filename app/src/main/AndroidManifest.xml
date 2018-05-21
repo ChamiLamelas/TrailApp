@@ -48,7 +48,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PropertyActivity" />
         </activity>
-        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>

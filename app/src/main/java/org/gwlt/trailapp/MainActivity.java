@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -22,23 +23,33 @@ public class MainActivity extends BaseActivity {
 
     private Toolbar jAppToolbar;
     private Button jPropertyButton;
-    public static HashMap<String, Integer> resourcesList;
+    public static HashMap<String, Integer> properties = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpUIComponents();
-        loadResourcesList();
     }
 
-    private void addResource(Button button, int imgID) {
-        resourcesList.put(button.getText().toString(), imgID);
-    }
-
-    private void loadResourcesList() {
-        resourcesList =  new HashMap<>();
-        addResource(jPropertyButton, R.drawable.gwlt_mission_img);
+    private Button addButton(int btnID, int imgID) {
+        Button btn = findViewById(btnID);
+        final String PROPERTY_NAME = btn.getText().toString();
+        properties.put(PROPERTY_NAME, imgID);
+        btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent propertyIntent = new Intent(MainActivity.this, PropertyActivity.class);
+                    propertyIntent.putExtra(Utilities.PROPERTY_NAME_ID, PROPERTY_NAME);
+                    startActivity(propertyIntent);
+                }
+                catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(MainActivity.this, "could not open property", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return btn;
     }
 
     /**
@@ -50,19 +61,6 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(jAppToolbar);
 
         // set up property button
-        jPropertyButton = findViewById(R.id.gwltMissionButton);
-        jPropertyButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent propertyIntent = new Intent(MainActivity.this, PropertyActivity.class);
-                    propertyIntent.putExtra(Utilities.PROPERTY_NAME_ID, jPropertyButton.getText().toString());
-                    startActivity(propertyIntent);
-                }
-                catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(MainActivity.this, "could not open property", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        jPropertyButton = addButton(R.id.gwltMissionButton, R.drawable.gwlt_mission_img);
     }
 }
