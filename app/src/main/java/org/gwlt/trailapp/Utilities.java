@@ -12,6 +12,8 @@ import java.util.Calendar;
  */
 public final class Utilities {
 
+    public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing extra data between intents
+
     /**
      * Generates an Intent that holds an email with the provided information:
      * @param recipients - who to send the email to
@@ -33,17 +35,15 @@ public final class Utilities {
      * Generates a report email using genEmail() and getFormattedTime() as helper methods
      * @param selectedCommonIssues - selected common issues
      * @param reportMsg - user's own comment
-     * @param time - time of the report
      * @return email Intent that holds report data
      */
-    public static Intent genReport(ArrayList<String> selectedCommonIssues, String reportMsg, String time) {
+    public static Intent genReport(String reportTitle, ArrayList<String> selectedCommonIssues, String reportMsg) {
         String reportRecipients[] = {"slamelas@bancroftschool.org","cstephenson@bancroftschool.org"};
-        String reportSubject = "[REPORT] <Property Name> " + time;
         String reportBody = "";
         for (String selectedCommonIssue : selectedCommonIssues)
             reportBody += selectedCommonIssue + ":Yes\n";
         reportBody += reportMsg;
-        return genEmail(reportRecipients, reportSubject, reportBody);
+        return genEmail(reportRecipients, reportTitle, reportBody);
     }
 
     /**

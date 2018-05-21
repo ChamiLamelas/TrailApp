@@ -1,9 +1,13 @@
 package org.gwlt.trailapp;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Class that represents a ReportActivity which is the Report screen for the GWLT app.
  */
-public class ReportActivity extends AppCompatActivity {
+public class ReportActivity extends BaseActivity {
 
     private Toolbar jReportToolbar;
     private CheckBox jTrashBox;
@@ -34,23 +38,27 @@ public class ReportActivity extends AppCompatActivity {
     // add more checkboxes here (step 2)
     private EditText jReportEntry;
     private Button jReportSubmit;
+    private String time;
+    private String propertyName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        setUpComponents();
+        time = Utilities.getFormattedTime("MM/dd/yy hh:mm");
+        propertyName = getIntent().getStringExtra(Utilities.PROPERTY_NAME_ID);
+        setUpUIComponents();
     }
 
     /**
      * Set up UI components
      */
-    public void setUpComponents() {
+    @Override
+    public void setUpUIComponents() {
         // set up toolbar for activity and set appropriate title
         jReportToolbar = findViewById(R.id.reportToolbar);
         setSupportActionBar(jReportToolbar);
-        final String TIME = Utilities.getFormattedTime("MM/dd/yy hh:mm");
-        getSupportActionBar().setTitle("<Property Name> " + TIME);
+        getSupportActionBar().setTitle("Report for " + propertyName + " at " + time);
 
         // set up entry elements (checkboxes and text box)
         jTrashBox = findViewById(R.id.trashBox);
@@ -71,8 +79,8 @@ public class ReportActivity extends AppCompatActivity {
                         selectedCommonIssues.add(jOvergrownBox.getText().toString());
                     // add to selected common issues here (step 4)
                     // starts activity based on Intent returned by Utilities.genReport()
-                    startActivity(Intent.createChooser(Utilities.genReport(selectedCommonIssues, jReportEntry.getText().toString(), TIME), "Choose mail client"));
-                    finish();
+                    startActivity(Intent.createChooser(Utilities.genReport(getSupportActionBar().getTitle().toString(), selectedCommonIssues, jReportEntry.getText().toString()), "Choose mail client"));
+                    finish(); // finish the Report Activity after the email client has been opened... any further editing can be done by the user in the email client
                 }
                 catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(ReportActivity.this, "no mail client installed.", Toast.LENGTH_SHORT).show();
@@ -80,4 +88,6 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

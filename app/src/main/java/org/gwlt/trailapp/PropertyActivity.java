@@ -1,0 +1,74 @@
+package org.gwlt.trailapp;
+
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Property;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
+
+/**
+ * Class that represents PropertyActivity of GWLT app.
+ */
+public class PropertyActivity extends BaseActivity {
+    private Toolbar jPropertyToolbar;
+    private Button jReportButton;
+    private Button jSeeMoreButton;
+    private String propertyName;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_property);
+        propertyName = getIntent().getStringExtra(Utilities.PROPERTY_NAME_ID); // get name of property from extra data passed by Intent
+        setUpUIComponents();
+    }
+
+    @Override
+    public void setUpUIComponents() {
+        // set appropriate title for property screen
+        jPropertyToolbar = findViewById(R.id.propertyToolbar);
+        setSupportActionBar(jPropertyToolbar);
+        getSupportActionBar().setTitle(propertyName);
+
+        // set report button to launch report Intent when clicked
+        jReportButton = findViewById(R.id.reportButton);
+        jReportButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
+                    reportIntent.putExtra(Utilities.PROPERTY_NAME_ID, propertyName);
+                    startActivity(reportIntent);
+                }
+                catch (ActivityNotFoundException ex) {
+                    Toast.makeText(PropertyActivity.this,"could not open report tab",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // set see more button to launch see more Intent
+        jSeeMoreButton = findViewById(R.id.seeMoreButton);
+        jSeeMoreButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent seeMoreIntent = new Intent(PropertyActivity.this, SeeMoreActivity.class);
+                    seeMoreIntent.putExtra(Utilities.PROPERTY_NAME_ID, propertyName);
+                    startActivity(seeMoreIntent);
+                }
+                catch (ActivityNotFoundException ex) {
+                    Toast.makeText(PropertyActivity.this, "could not open see more tab",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+}

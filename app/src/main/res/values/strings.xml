@@ -3,8 +3,12 @@
     <string name="reportBtnTxt">Report</string>
     <string name="learnMoreTxt">Learn More</string>
     <string name="helpTxt">Help</string>
+    <string name="helpInstructions">1 2 3..</string>
     <string name="trashBoxTxt">Trash</string>
     <string name="overgrownBoxTxt">Overgrown</string>
     <string name="reportSubmitTxt">Email Report</string>
     <string name="reportDescriptionTxt">The following items are common problems with our trails and you can choose whichever are applicable and add additional information in the field below them. Once you are finished, an email will be generated for you that will be sent to the Greater Worcester Land Trust. </string>
+    <string name="seeMoreTxt">See More</string>
+    <string name="sampleProperty">A Property</string>
+    <!--add more properties here-->
 </resources>
