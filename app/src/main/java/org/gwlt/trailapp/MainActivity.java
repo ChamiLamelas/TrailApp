@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+/**
+ * Class that represents the Main Activity of the GWLT app.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar jAppToolbar;
@@ -27,9 +30,11 @@ public class MainActivity extends AppCompatActivity {
      * Sets up UI components
      */
     public void setUpUIComponents() {
+        // set screen toolbar
         jAppToolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(jAppToolbar);
 
+        // set report button to launch report Intent when clicked
         jReportButton = findViewById(R.id.reportButton);
         jReportButton.setOnClickListener(new View.OnClickListener() {
             @Override

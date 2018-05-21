@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.net.Uri;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * Utilities Library to be used by Activity classes
+ */
 public final class Utilities {
 
     /**
@@ -27,20 +31,17 @@ public final class Utilities {
 
     /**
      * Generates a report email using genEmail() and getFormattedTime() as helper methods
-     * @param trashBox - trash checkbox
-     * @param overgrownBox - overgrown check box
-     * Add more as more checkboxes are added
+     * @param selectedCommonIssues - selected common issues
      * @param reportMsg - user's own comment
+     * @param time - time of the report
      * @return email Intent that holds report data
      */
-    public static Intent genReport(boolean trashBox, boolean overgrownBox, String reportMsg, String time) {
+    public static Intent genReport(ArrayList<String> selectedCommonIssues, String reportMsg, String time) {
         String reportRecipients[] = {"slamelas@bancroftschool.org","cstephenson@bancroftschool.org"};
         String reportSubject = "[REPORT] <Property Name> " + time;
         String reportBody = "";
-        if (trashBox)
-            reportBody += "trash on trail.\n";
-        if (overgrownBox)
-            reportBody += "trail is overgrown.\n";
+        for (String selectedCommonIssue : selectedCommonIssues)
+            reportBody += selectedCommonIssue + ":Yes\n";
         reportBody += reportMsg;
         return genEmail(reportRecipients, reportSubject, reportBody);
     }
