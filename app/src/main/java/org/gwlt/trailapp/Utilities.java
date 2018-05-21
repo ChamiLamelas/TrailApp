@@ -33,6 +33,7 @@ public final class Utilities {
 
     /**
      * Generates a report email using genEmail() and getFormattedTime() as helper methods
+     * @param reportTitle - title of the report
      * @param selectedCommonIssues - selected common issues
      * @param reportMsg - user's own comment
      * @return email Intent that holds report data

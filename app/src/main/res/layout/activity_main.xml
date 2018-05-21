@@ -10,13 +10,13 @@
     tools:layout_editor_absoluteY="25dp">
 
     <Button
-        android:id="@+id/propertyButton"
+        android:id="@+id/gwltMissionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="69dp"
         android:layout_marginStart="69dp"
         android:layout_marginTop="15dp"
-        android:text="@string/sampleProperty"
+        android:text="@string/gwltMissionTxt"
         app:layout_constraintStart_toStartOf="@+id/appToolbar"
         app:layout_constraintTop_toBottomOf="@+id/appToolbar" />
 

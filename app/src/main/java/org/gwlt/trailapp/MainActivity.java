@@ -13,6 +13,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 /**
  * Class that represents the Main Activity of the GWLT app.
  */
@@ -20,12 +22,23 @@ public class MainActivity extends BaseActivity {
 
     private Toolbar jAppToolbar;
     private Button jPropertyButton;
+    public static HashMap<String, Integer> resourcesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpUIComponents();
+        loadResourcesList();
+    }
+
+    private void addResource(Button button, int imgID) {
+        resourcesList.put(button.getText().toString(), imgID);
+    }
+
+    private void loadResourcesList() {
+        resourcesList =  new HashMap<>();
+        addResource(jPropertyButton, R.drawable.gwlt_mission_img);
     }
 
     /**
@@ -37,7 +50,7 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(jAppToolbar);
 
         // set up property button
-        jPropertyButton = findViewById(R.id.propertyButton);
+        jPropertyButton = findViewById(R.id.gwltMissionButton);
         jPropertyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
