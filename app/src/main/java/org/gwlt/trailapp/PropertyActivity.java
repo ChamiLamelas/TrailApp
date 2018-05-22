@@ -40,13 +40,17 @@ public class PropertyActivity extends BaseActivity {
         jReportButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
-                    reportIntent.putExtra(Utilities.PROPERTY_NAME_ID, propertyName);
-                    startActivity(reportIntent);
+                if (connectedToInternet()) {
+                    try {
+                        Intent reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
+                        reportIntent.putExtra(Utilities.PROPERTY_NAME_ID, propertyName);
+                        startActivity(reportIntent);
+                    } catch (ActivityNotFoundException ex) {
+                        Toast.makeText(PropertyActivity.this, "could not open report tab", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                catch (ActivityNotFoundException ex) {
-                    Toast.makeText(PropertyActivity.this,"could not open report tab",Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(PropertyActivity.this, "An Internet connection is required to complete this action.",Toast.LENGTH_LONG).show();
                 }
             }
         });

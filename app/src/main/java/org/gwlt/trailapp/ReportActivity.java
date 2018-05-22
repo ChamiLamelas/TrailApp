@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 /**
  * To add a new checkbox:
- *
+ * <p>
  * 1) go to activity_report.xml and add it to where you wish on the screen
  * 2) add new Checkbox to instance fields
  * 3) initialize new Checkbox in setUpComponents() with view identified in activity_report.xml
  * 4) in onClick() under the creation of the OnClickListener for jReportSubmit, add the following if condition for the new Checkbox
- *      if checkbox is checked:
- *          add checkbox text + ":yes" to selectedCommonIssues
+ * if checkbox is checked:
+ * add checkbox text + ":yes" to selectedCommonIssues
  */
 
 /**
@@ -78,23 +78,18 @@ public class ReportActivity extends BaseActivity {
         jReportSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (connectedToInternet()) {
-                    try {
-                        ArrayList<String> selectedCommonIssues = new ArrayList<>();
-                        if (jTrashBox.isChecked())
-                            selectedCommonIssues.add(jTrashBox.getText().toString());
-                        if (jOvergrownBox.isChecked())
-                            selectedCommonIssues.add(jOvergrownBox.getText().toString());
-                        // add to selected common issues here (step 4)
-                        // starts activity based on Intent returned by Utilities.genReport()
-                        startActivity(Intent.createChooser(Utilities.genReport(getSupportActionBar().getTitle().toString(), selectedCommonIssues, jReportEntry.getText().toString()), "Choose mail client"));
-                        finish(); // finish the Report Activity after the email client has been opened... any further editing can be done by the user in the email client
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(ReportActivity.this, "no mail client installed.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else {
-                    Toast.makeText(ReportActivity.this, "An Internet connection is required to complete this action.",Toast.LENGTH_LONG).show();
+                try {
+                    ArrayList<String> selectedCommonIssues = new ArrayList<>();
+                    if (jTrashBox.isChecked())
+                        selectedCommonIssues.add(jTrashBox.getText().toString());
+                    if (jOvergrownBox.isChecked())
+                        selectedCommonIssues.add(jOvergrownBox.getText().toString());
+                    // add to selected common issues here (step 4)
+                    // starts activity based on Intent returned by Utilities.genReport()
+                    startActivity(Intent.createChooser(Utilities.genReport(getSupportActionBar().getTitle().toString(), selectedCommonIssues, jReportEntry.getText().toString()), "Choose mail client"));
+                    finish(); // finish the Report Activity after the email client has been opened... any further editing can be done by the user in the email client
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(ReportActivity.this, "no mail client installed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

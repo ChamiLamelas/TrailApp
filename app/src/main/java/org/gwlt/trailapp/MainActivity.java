@@ -11,10 +11,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+/**
+ * To add a new property:
+ *
+ * 1) Add a new string to strings.xml with the name of the new property
+ * 2) Add an image for the property to either drawable or mipmap
+ * 3) Add a new item to the property_popup_menu.xml file with the following format:
+ *      <item
+ *          android:id="@+id/<insert id for new property></>"
+ *          android:title="@string/<insert id of string with title of this property></>"/>
+ * 4) In loadProperties(), use addProperty() to add a new property by passing in the id for string title of the property and the id for the image resource for the property
+ */
 
 /**
  * Class that represents the Main Activity of the GWLT app.
@@ -29,27 +42,20 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loadProperties();
         setUpUIComponents();
+        Toast.makeText(MainActivity.this,"Double-tap to access a list of properties.",Toast.LENGTH_LONG).show();
     }
 
-    private Button addButton(int btnID, int imgID) {
-        Button btn = findViewById(btnID);
-        final String PROPERTY_NAME = btn.getText().toString();
-        properties.put(PROPERTY_NAME, imgID);
-        btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent propertyIntent = new Intent(MainActivity.this, PropertyActivity.class);
-                    propertyIntent.putExtra(Utilities.PROPERTY_NAME_ID, PROPERTY_NAME);
-                    startActivity(propertyIntent);
-                }
-                catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(MainActivity.this, "could not open property", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        return btn;
+    private void addProperty(int nameResID, int imgResID) {
+        String name = getResources().getString(nameResID);
+        properties.put(name, imgResID);
+    }
+
+    private void loadProperties() {
+        addProperty(R.string.oneTxt, R.mipmap.asnebumskit);
+        addProperty(R.string.twoTxt, R.mipmap.bovenzi_g_1_1);
+        addProperty(R.string.threeTxt, R.mipmap.broadmeadow);
     }
 
     /**
@@ -61,6 +67,28 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(jAppToolbar);
 
         // set up property button
-        jPropertyButton = addButton(R.id.gwltMissionButton, R.drawable.gwlt_mission_img);
+        jPropertyButton = findViewById(R.id.gwltMissionButton);
+        jPropertyButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu propertiesMenu = new PopupMenu(MainActivity.this, jPropertyButton);
+                propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu());
+                propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        try {
+                            Intent propertyIntent = new Intent(MainActivity.this, PropertyActivity.class);
+                            propertyIntent.putExtra(Utilities.PROPERTY_NAME_ID, item.getTitle().toString());
+                            startActivity(propertyIntent);
+                        }
+                        catch (ActivityNotFoundException ex) {
+                            Toast.makeText(MainActivity.this,"Could not open property",Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+                    }
+                });
+                propertiesMenu.show();
+            }
+        });
     }
 }
