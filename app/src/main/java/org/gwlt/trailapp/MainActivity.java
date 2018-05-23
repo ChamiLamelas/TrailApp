@@ -3,8 +3,10 @@ package org.gwlt.trailapp;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.gesture.Gesture;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
 import android.view.MenuItem;
@@ -72,16 +74,15 @@ public class MainActivity extends BaseActivity {
             scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(BaseActivity.MAX_SCALE_FACTOR, scaleFactor));
             mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set matrix x and y to be the scale factor
             jMapImgVIew.setImageMatrix(mapScalingMatrix); // scale image using matrix
+            Toast.makeText(MainActivity.this,"CLICK",Toast.LENGTH_SHORT).show();
             return true;
         }
     }
 
-    private class DoubleTapListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onDoubleTap(MotionEvent event) {
-            openPropertiesMenu();
-            return true;
-        }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        scaleDetector.onTouchEvent(event);
+        return true;
     }
 
     /**
@@ -135,12 +136,6 @@ public class MainActivity extends BaseActivity {
 
         jMapImgVIew = findViewById(R.id.mapImgView);
         jMapImgVIew.setImageResource(R.drawable.gwlt_mission_img);
-        jMapImgVIew.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return new GestureDetector(MainActivity.this, new DoubleTapListener()).onTouchEvent(event);
-            }
-        });
 
         // set up property button
         jPropertyButton = findViewById(R.id.gwltMissionButton);
