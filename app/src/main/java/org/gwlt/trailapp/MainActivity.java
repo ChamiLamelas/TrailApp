@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.gesture.Gesture;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.support.v4.content.PermissionChecker;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
@@ -40,7 +41,6 @@ import java.util.HashMap;
 public class MainActivity extends BaseActivity {
 
     private Toolbar jAppToolbar; // screen's toolbar
-    private Button jPropertyButton;
     public static HashMap<String, Integer> properties; // properties map to link property names with their respective images
     private float scaleFactor; // scale factor for zooming
     private Matrix mapScalingMatrix; // matrix to scale image
@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize for this activity with class that extends ScaleGestureDetector.SimpleOnScaleGestureListener
         loadProperties();
         setUpUIComponents();
-        Toast.makeText(MainActivity.this,"Double-tap to access a list of properties.",Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this,"Press and hold to access a list of properties.",Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -74,7 +74,6 @@ public class MainActivity extends BaseActivity {
             scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(BaseActivity.MAX_SCALE_FACTOR, scaleFactor));
             mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set matrix x and y to be the scale factor
             jMapImgVIew.setImageMatrix(mapScalingMatrix); // scale image using matrix
-            Toast.makeText(MainActivity.this,"CLICK",Toast.LENGTH_SHORT).show();
             return true;
         }
     }
@@ -109,7 +108,7 @@ public class MainActivity extends BaseActivity {
      * Opens properties popup menu
      */
     private void openPropertiesMenu() {
-        PopupMenu propertiesMenu = new PopupMenu(MainActivity.this, jPropertyButton);
+        PopupMenu propertiesMenu = new PopupMenu(MainActivity.this, jMapImgVIew);
         propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu());
         propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -136,13 +135,11 @@ public class MainActivity extends BaseActivity {
 
         jMapImgVIew = findViewById(R.id.mapImgView);
         jMapImgVIew.setImageResource(R.drawable.gwlt_mission_img);
-
-        // set up property button
-        jPropertyButton = findViewById(R.id.gwltMissionButton);
-        jPropertyButton.setOnClickListener(new OnClickListener() {
+        jMapImgVIew.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 openPropertiesMenu();
+                return true;
             }
         });
     }
