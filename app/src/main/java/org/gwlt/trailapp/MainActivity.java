@@ -1,11 +1,14 @@
 package org.gwlt.trailapp;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -73,6 +76,14 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private class DoubleTapListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDoubleTap(MotionEvent event) {
+            openPropertiesMenu();
+            return true;
+        }
+    }
+
     /**
      * Add a new property to the hashmap
      * @param nameResID - id of the string resource containing the property name
@@ -93,6 +104,29 @@ public class MainActivity extends BaseActivity {
         addProperty(R.string.threeTxt, R.mipmap.sibley);
     }
 
+    /**
+     * Opens properties popup menu
+     */
+    private void openPropertiesMenu() {
+        PopupMenu propertiesMenu = new PopupMenu(MainActivity.this, jPropertyButton);
+        propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu());
+        propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                try {
+                    Intent propertyIntent = new Intent(MainActivity.this, PropertyActivity.class);
+                    propertyIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, item.getTitle().toString());
+                    startActivity(propertyIntent);
+                }
+                catch (ActivityNotFoundException ex) {
+                    Toast.makeText(MainActivity.this,"Could not open property",Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+        propertiesMenu.show();
+    }
+
     @Override
     public void setUpUIComponents() {
         // set screen toolbar
@@ -101,29 +135,19 @@ public class MainActivity extends BaseActivity {
 
         jMapImgVIew = findViewById(R.id.mapImgView);
         jMapImgVIew.setImageResource(R.drawable.gwlt_mission_img);
+        jMapImgVIew.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return new GestureDetector(MainActivity.this, new DoubleTapListener()).onTouchEvent(event);
+            }
+        });
 
         // set up property button
         jPropertyButton = findViewById(R.id.gwltMissionButton);
         jPropertyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu propertiesMenu = new PopupMenu(MainActivity.this, jPropertyButton);
-                propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu());
-                propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        try {
-                            Intent propertyIntent = new Intent(MainActivity.this, PropertyActivity.class);
-                            propertyIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, item.getTitle().toString());
-                            startActivity(propertyIntent);
-                        }
-                        catch (ActivityNotFoundException ex) {
-                            Toast.makeText(MainActivity.this,"Could not open property",Toast.LENGTH_SHORT).show();
-                        }
-                        return true;
-                    }
-                });
-                propertiesMenu.show();
+                openPropertiesMenu();
             }
         });
     }
