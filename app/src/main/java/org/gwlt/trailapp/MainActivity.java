@@ -17,9 +17,9 @@ import java.util.ArrayList;
 /**
  * To add a new property:
  *
- * 1) Add a new string to strings.xml with the name of the new property
+ * 1) Add a new string to app/src/main/values/strings.xml with the name of the new property
  * 2) Add an image for the property to either drawable or mipmap
- * 3) Add a new item to the property_popup_menu.xml file with the following format:
+ * 3) Add a new item to the res/menu/property_popup_menu.xml file with the following format:
  *      <item
  *          android:id="@+id/<insert id for new property></>"
  *          android:title="@string/<insert id of string with title of this property></>"/>
@@ -67,9 +67,13 @@ public class MainActivity extends BaseActivity {
      */
     private void loadProperties() {
         properties = new ArrayList<>();
-        addProperty(R.string.oneTxt, R.mipmap.southwick_muir, R.string.oneSeeMore);
-        addProperty(R.string.twoTxt, R.mipmap.tetasset, R.string.twoSeeMore);
-        addProperty(R.string.threeTxt, R.mipmap.sibley, R.string.threeSeeMore);
+        addProperty(R.string.asnebumskit, R.mipmap.asnebumskit, R.string.oneSeeMore);
+        addProperty(R.string.cascades, R.mipmap.cascades, R.string.twoSeeMore);
+        addProperty(R.string.cookPond, R.mipmap.cooks_pond, R.string.threeSeeMore);
+        addProperty(R.string.donkerCooksBrook, R.mipmap.donker_cooks_brook, R.string.threeSeeMore);
+        addProperty(R.string.kinneyWoods, R.mipmap.kinney_woods, R.string.twoSeeMore);
+        addProperty(R.string.morelandWoods, R.mipmap.moreland_woods, R.string.twoSeeMore);
+        addProperty(R.string.southwickMuir, R.mipmap.southwick_muir, R.string.twoSeeMore);
     }
 
     /**

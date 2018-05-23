@@ -16,9 +16,13 @@
     <string name="seeMoreTxt">See More</string>
     <string name="gwltMissionTxt">TEST POPUP</string>
     <!--add more property names here-->
-    <string name="oneTxt">One</string>
-    <string name="twoTxt">Two</string>
-    <string name="threeTxt">Three</string>
+    <string name="asnebumskit">Asnebumskit</string>
+    <string name="cascades">Cascades</string>
+    <string name="cookPond">Cook\'s Pond</string>
+    <string name="donkerCooksBrook">Donker Cook\'s Brook</string>
+    <string name="kinneyWoods">Kinney Woods</string>
+    <string name="morelandWoods">Moreland Woods</string>
+    <string name="southwickMuir">Southwick Muir</string>
     <!--add more property see more information here-->
     <string name="oneSeeMore">One is blue</string>
     <string name="twoSeeMore">Two is red</string>
