@@ -19,9 +19,10 @@ import java.util.ArrayList;
  * 1) go to activity_report.xml and add it to where you wish on the screen
  * 2) add new Checkbox to instance fields
  * 3) initialize new Checkbox in setUpComponents() with view identified in activity_report.xml
- * 4) in onClick() under the creation of the OnClickListener for jReportSubmit, add the following if condition for the new Checkbox
- * if checkbox is checked:
- * add checkbox text + ":yes" to selectedCommonIssues
+ * 4) add checkbox to if statement to check whether or not the checkboxes should be made invisible
+ * 5) in onClick() under the creation of the OnClickListener for jReportSubmit, add the following if condition for the new Checkbox
+ *      if checkbox is checked:
+ *          add checkbox text + ":yes" to selectedCommonIssues
  */
 
 /**
@@ -30,27 +31,25 @@ import java.util.ArrayList;
 public class ReportActivity extends BaseActivity {
 
     private Toolbar jReportToolbar; // screen's toolbar
-    private TextView jReportInfo; // information on how the report system works
+    private TextView jReportInfo; // information on the report
+    private TextView jReportDescription; // description of how the particular type of report works
     private CheckBox jTrashBox; // checkbox for trash on trail
     private CheckBox jOvergrownBox; // checkbox for overgrown trail
     // add more checkboxes here (step 2)
     private EditText jReportEntry; // report entry
     private Button jReportSubmit; // report submit button
-    private String time; // time of report
     private String propertyName; // property that report is being submitted for
+    private boolean reportType; // report type: false (sighting) true (problem)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        time = Utilities.getFormattedTime("MM/dd/yy hh:mm");
         propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID);
+        reportType = getIntent().getBooleanExtra(BaseActivity.REPORT_TYPE_ID, BaseActivity.DEFAULT_REPORT_TYPE);
         setUpUIComponents();
     }
 
-    /**
-     * Set up UI components
-     */
     @Override
     public void setUpUIComponents() {
         // set up toolbar for activity and set appropriate title
@@ -60,13 +59,28 @@ public class ReportActivity extends BaseActivity {
 
         // set report information
         jReportInfo = findViewById(R.id.reportInfo);
-        jReportInfo.setText("Property: " + propertyName + "\nTime: " + time);
+        String reportInfoStr = "Property: " + propertyName + "\nType: ";
+        reportInfoStr += (reportType == BaseActivity.REPORT_PROBLEM) ? "Problem":"Sighting";
+        jReportInfo.setText(reportInfoStr);
         jReportInfo.setTypeface(jReportInfo.getTypeface(), Typeface.BOLD);
+
+        // set report description
+        jReportDescription = findViewById(R.id.reportDescription);
+        jReportDescription.setText((reportType == BaseActivity.REPORT_PROBLEM) ? R.string.problemDescriptionTxt : R.string.sightingDescriptionTxt);
 
         // set up entry elements (checkboxes and text box)
         jTrashBox = findViewById(R.id.trashBox);
         jOvergrownBox = findViewById(R.id.overgrownBox);
         // initialize checkbox here (step 3)
+
+        // set checkboxes as invisible if the report is a sighting
+        if (reportType == BaseActivity.REPORT_SIGHTING) {
+            jTrashBox.setVisibility(View.GONE);
+            jOvergrownBox.setVisibility(View.GONE);
+            // add other checkboxes here (step 4)
+        }
+
+        // set up report entry box
         jReportEntry = findViewById(R.id.reportEntry);
 
         // set up report submit button
@@ -76,13 +90,14 @@ public class ReportActivity extends BaseActivity {
             public void onClick(View v) {
                 try {
                     ArrayList<String> selectedCommonIssues = new ArrayList<>();
-                    if (jTrashBox.isChecked())
-                        selectedCommonIssues.add(jTrashBox.getText().toString());
-                    if (jOvergrownBox.isChecked())
-                        selectedCommonIssues.add(jOvergrownBox.getText().toString());
-                    // add to selected common issues here (step 4)
-                    // starts activity based on Intent returned by Utilities.genReport()
-                    startActivity(Intent.createChooser(Utilities.genReport(getSupportActionBar().getTitle().toString(), selectedCommonIssues, jReportEntry.getText().toString()), "Choose mail client"));
+                    if (reportType == BaseActivity.REPORT_PROBLEM) {
+                        if (jTrashBox.isChecked())
+                            selectedCommonIssues.add(jTrashBox.getText().toString());
+                        if (jOvergrownBox.isChecked())
+                            selectedCommonIssues.add(jOvergrownBox.getText().toString());
+                    }
+                    // add to selected common issues here (step 5)
+                    startActivity(Intent.createChooser(Utilities.genReport(propertyName, reportType, selectedCommonIssues, jReportEntry.getText().toString()), "Choose mail client")); // starts email activity
                     finish(); // finish the Report Activity after the email client has been opened... any further editing can be done by the user in the email client
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(ReportActivity.this, "no mail client installed.", Toast.LENGTH_SHORT).show();

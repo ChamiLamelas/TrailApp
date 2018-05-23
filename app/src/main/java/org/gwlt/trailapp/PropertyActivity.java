@@ -1,6 +1,8 @@
 package org.gwlt.trailapp;
 
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,12 +21,14 @@ public class PropertyActivity extends BaseActivity {
     private Button jSeeMoreButton; // button to see more
     private ImageView jPropertyImageView; // image view to hold image of property map
     private String propertyName; // name of property
+    private boolean reportType; // report type
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
         propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID); // get name of property from extra data passed by Intent
+        reportType = BaseActivity.DEFAULT_REPORT_TYPE;
         setUpUIComponents();
     }
 
@@ -44,7 +48,26 @@ public class PropertyActivity extends BaseActivity {
                     try {
                         Intent reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
                         reportIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, propertyName);
+
+                        AlertDialog.Builder reportTypeDialog = new AlertDialog.Builder(PropertyActivity.this);
+                        reportTypeDialog.setTitle(R.string.reportDialogTitle);
+                        reportTypeDialog.setMessage(R.string.reportDialogInfo);
+                        reportTypeDialog.setPositiveButton(R.string.reportDialogPositiveBtn, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // don't have to do anything reportType is initialized to BaseActivity.REPORT_SIGHTING
+                            }
+                        });
+                        reportTypeDialog.setNegativeButton(R.string.reportDialogNegativeBtn, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reportType = BaseActivity.REPORT_PROBLEM;
+                            }
+                        });
+
+                        reportIntent.putExtra(BaseActivity.REPORT_TYPE_ID, reportType);
                         startActivity(reportIntent);
+
                     } catch (ActivityNotFoundException ex) {
                         Toast.makeText(PropertyActivity.this, "could not open report tab", Toast.LENGTH_SHORT).show();
                     }
@@ -63,6 +86,9 @@ public class PropertyActivity extends BaseActivity {
                 try {
                     Intent seeMoreIntent = new Intent(PropertyActivity.this, SeeMoreActivity.class);
                     seeMoreIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, propertyName);
+
+
+
                     startActivity(seeMoreIntent);
                 }
                 catch (ActivityNotFoundException ex) {

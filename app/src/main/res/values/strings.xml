@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">Greater Worcester Land Trust</string>
     <string name="reportBtnTxt">Report</string>
+    <string name="reportDialogTitle">Report Type</string>
+    <string name="reportDialogInfo">Please choose a report type.</string>
+    <string name="reportDialogPositiveBtn">Sighting</string>
+    <string name="reportDialogNegativeBtn">Problem</string>
     <string name="learnMoreTxt">Learn More</string>
     <string name="helpTxt">Help</string>
     <string name="helpInstructions">1 2 3..</string>
     <string name="trashBoxTxt">Trash</string>
     <string name="overgrownBoxTxt">Overgrown</string>
     <string name="reportSubmitTxt">Email Report</string>
-    <string name="reportDescriptionTxt">The following items are common problems with our trails and you can choose whichever are applicable and add additional information in the field below them. Once you are finished, an email will be generated for you that will be sent to the Greater Worcester Land Trust. </string>
+    <string name="problemDescriptionTxt">The following items are common problems with our trails and you can choose whichever are applicable and add additional information in the field below them. Once you are finished, an email will be generated for you that will be sent to the Greater Worcester Land Trust. </string>
+    <string name="sightingDescriptionTxt">Please add anything you saw or wish to tell the Greater Worcester Land Trust on your visit to this property. This information will be used to improve the "see more" section for this property.</string>
     <string name="seeMoreTxt">See More</string>
     <string name="gwltMissionTxt">TEST POPUP</string>
     <!--add more properties here-->
