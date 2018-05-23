@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/helpText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="137dp"
-        android:layout_marginStart="137dp"
-        android:layout_marginTop="158dp"
+        android:layout_width="366dp"
+        android:layout_height="493dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="68dp"
         android:text="@string/helpTxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

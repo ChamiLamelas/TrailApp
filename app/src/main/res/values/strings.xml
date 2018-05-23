@@ -15,8 +15,12 @@
     <string name="sightingDescriptionTxt">Please add anything you saw or wish to tell the Greater Worcester Land Trust on your visit to this property. This information will be used to improve the "see more" section for this property.</string>
     <string name="seeMoreTxt">See More</string>
     <string name="gwltMissionTxt">TEST POPUP</string>
-    <!--add more properties here-->
+    <!--add more property names here-->
     <string name="oneTxt">One</string>
     <string name="twoTxt">Two</string>
     <string name="threeTxt">Three</string>
+    <!--add more property see more information here-->
+    <string name="oneSeeMore">One is blue</string>
+    <string name="twoSeeMore">Two is red</string>
+    <string name="threeSeeMore">Three is green</string>
 </resources>

@@ -1,26 +1,18 @@
 package org.gwlt.trailapp;
 
-import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.gesture.Gesture;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.v4.content.PermissionChecker;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.GestureDetector;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * To add a new property:
@@ -31,8 +23,10 @@ import java.util.HashMap;
  *      <item
  *          android:id="@+id/<insert id for new property></>"
  *          android:title="@string/<insert id of string with title of this property></>"/>
- * 4) In loadProperties(), use addProperty() to add a new property by passing in the id for string title of the property and the id for the image resource for the property
+ * 4) In loadProperties(), use addProperty() to add a new property by passing in the id for string title of the property, the id for the image resource for the property, and the id of the see more info string
  *      If the property has no map image, use Utilities.NO_IMG_ID as a placeholder to represent that there is no image for that property.
+ *
+ * To update a property's see more information, go to strings.xml and navigate to the see more info string that corresponds to the property to be updated
  */
 
 /**
@@ -41,7 +35,7 @@ import java.util.HashMap;
 public class MainActivity extends BaseActivity {
 
     private Toolbar jAppToolbar; // screen's toolbar
-    public static HashMap<String, Integer> properties; // properties map to link property names with their respective images
+    public static ArrayList<Property> properties; // list of properties
     private float scaleFactor; // scale factor for zooming
     private Matrix mapScalingMatrix; // matrix to scale image
     private ImageView jMapImgVIew; // image view to hold image
@@ -53,55 +47,41 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         scaleFactor = 1.0f; // initialize to 1 to represent starting image scale (and for multiplication later on)
         mapScalingMatrix = new Matrix();
-        scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize for this activity with class that extends ScaleGestureDetector.SimpleOnScaleGestureListener
         loadProperties();
         setUpUIComponents();
         Toast.makeText(MainActivity.this,"Press and hold to access a list of properties.",Toast.LENGTH_LONG).show();
     }
 
     /**
-     * Class to be used by scaleDetector for scaling the property's map image
-     */
-    private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            scaleFactor *= detector.getScaleFactor(); // update scale factor from detector's data
-            /*
-            check to see if updated scale factor is acceptable by checking:
-            1) is it smaller than minimum scale factor, if so set scale factor equal to the minimum scale factor
-            2) is it larger than maximum scale factor, if so set scale factor equal to the maximum scale factor
-             */
-            scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(BaseActivity.MAX_SCALE_FACTOR, scaleFactor));
-            mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set matrix x and y to be the scale factor
-            jMapImgVIew.setImageMatrix(mapScalingMatrix); // scale image using matrix
-            return true;
-        }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        scaleDetector.onTouchEvent(event);
-        return true;
-    }
-
-    /**
      * Add a new property to the hashmap
      * @param nameResID - id of the string resource containing the property name
      * @param imgResID - id of the image resource containing the property map
+     * @param seeMoreID - id of the string resource containing the property's see more info
      */
-    private void addProperty(int nameResID, int imgResID) {
-        String name = getResources().getString(nameResID);
-        properties.put(name, imgResID);
+    private void addProperty(int nameResID, int imgResID, int seeMoreID) {
+        properties.add(new Property(getResources().getString(nameResID), imgResID, seeMoreID));
     }
 
     /**
      * Loads properties into hashmap using addProperty()
      */
     private void loadProperties() {
-        properties = new HashMap<>();
-        addProperty(R.string.oneTxt, R.mipmap.southwick_muir);
-        addProperty(R.string.twoTxt, R.mipmap.tetasset);
-        addProperty(R.string.threeTxt, R.mipmap.sibley);
+        properties = new ArrayList<>();
+        addProperty(R.string.oneTxt, R.mipmap.southwick_muir, R.string.oneSeeMore);
+        addProperty(R.string.twoTxt, R.mipmap.tetasset, R.string.twoSeeMore);
+        addProperty(R.string.threeTxt, R.mipmap.sibley, R.string.threeSeeMore);
+    }
+
+    /**
+     * Gets the property with the provided name from the list of properties
+     * @param name - name of the desired property
+     * @return the Property with the provided name or null if a Property with the provided name cannot be fine
+     */
+    public static Property getPropertyWithName(String name) {
+        for (Property p : properties)
+            if (p.getName().equals(name))
+                return p;
+        return null;
     }
 
     /**
@@ -134,7 +114,6 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(jAppToolbar);
 
         jMapImgVIew = findViewById(R.id.mapImgView);
-        jMapImgVIew.setImageResource(R.drawable.gwlt_mission_img);
         jMapImgVIew.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

@@ -2,6 +2,7 @@ package org.gwlt.trailapp;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 /**
  * Class that represents a SeeMore Activity
@@ -9,11 +10,14 @@ import android.support.v7.widget.Toolbar;
 public class SeeMoreActivity extends BaseActivity {
 
     private Toolbar jSeeMoreToolbar; // screen's toolbar
+    private TextView jSeeMoreInfo; // screen's text info
+    private String propertyName; // property see more screen is displaying information about
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_more);
+        propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID);
         setUpUIComponents();
     }
 
@@ -22,6 +26,9 @@ public class SeeMoreActivity extends BaseActivity {
         // set up see more screen with property name
         jSeeMoreToolbar = findViewById(R.id.seeMoreToolbar);
         setSupportActionBar(jSeeMoreToolbar);
-        getSupportActionBar().setTitle("More about " + getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID));
+        getSupportActionBar().setTitle("More about " + propertyName);
+
+        jSeeMoreInfo = findViewById(R.id.seeMoreInfo);
+        jSeeMoreInfo.setText(getResources().getString(MainActivity.getPropertyWithName(propertyName).getSeeMoreResID()));
     }
 }
