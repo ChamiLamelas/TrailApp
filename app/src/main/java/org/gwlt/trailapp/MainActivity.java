@@ -27,6 +27,7 @@ import java.util.HashMap;
  *          android:id="@+id/<insert id for new property></>"
  *          android:title="@string/<insert id of string with title of this property></>"/>
  * 4) In loadProperties(), use addProperty() to add a new property by passing in the id for string title of the property and the id for the image resource for the property
+ *      If the property has no map image, use Utilities.NO_IMG_ID as a placeholder to represent that there is no image for that property.
  */
 
 /**
@@ -53,9 +54,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadProperties() {
-        addProperty(R.string.oneTxt, R.mipmap.asnebumskit);
-        addProperty(R.string.twoTxt, R.mipmap.bovenzi_g_1_1);
-        addProperty(R.string.threeTxt, R.mipmap.broadmeadow);
+        addProperty(R.string.oneTxt, R.mipmap.southwick_muir);
+        addProperty(R.string.twoTxt, R.mipmap.tetasset);
+        addProperty(R.string.threeTxt, R.mipmap.sibley);
     }
 
     /**

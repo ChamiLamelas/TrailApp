@@ -72,7 +72,9 @@ public class PropertyActivity extends BaseActivity {
         });
 
         jPropertyImageView = findViewById(R.id.propertyImageView);
-        jPropertyImageView.setImageResource(MainActivity.properties.get(propertyName));
+        int imgResID = MainActivity.properties.get(propertyName);
+        if (imgResID != Utilities.NO_IMG_ID)
+            jPropertyImageView.setImageResource(imgResID);
     }
 
 }
