@@ -8,8 +8,10 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 /**
@@ -31,6 +33,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static final boolean REPORT_PROBLEM = true; // report type: problem
     public static final boolean DEFAULT_REPORT_TYPE = REPORT_SIGHTING; // default report type
     public static final int NO_IMG_ID = -1; // value to identify properties with no image
+    public static final int DEFAULT_IMG_ID = R.drawable.gwlt_mission_img; // default image
+    public static final int NO_SEE_MORE_ID = -2; // value to identify properties with no see more
     public static final float MIN_SCALE_FACTOR = 0.1f; // minimum possible scale factor to be used in image scaling in MainActivity
     public static final float MAX_SCALE_FACTOR = 5.0f; // minimum possible scale factor to be used in image scaling in MainActivity
 

@@ -97,6 +97,8 @@ public class PropertyActivity extends BaseActivity {
         int imgResID = MainActivity.getPropertyWithName(propertyName).getImgResID();
         if (imgResID != BaseActivity.NO_IMG_ID)
             jPropertyImageView.setImageResource(imgResID);
+        else
+            jPropertyImageView.setImageResource(BaseActivity.DEFAULT_IMG_ID);
     }
 
 }

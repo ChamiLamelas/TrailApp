@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +25,8 @@ import java.util.ArrayList;
  *          android:id="@+id/<insert id for new property></>"
  *          android:title="@string/<insert id of string with title of this property></>"/>
  * 4) In loadProperties(), use addProperty() to add a new property by passing in the id for string title of the property, the id for the image resource for the property, and the id of the see more info string
- *      If the property has no map image, use Utilities.NO_IMG_ID as a placeholder to represent that there is no image for that property.
+ *      If the property has no map image, use BaseActivity.NO_IMG_ID as a placeholder to represent that there is no image for that property.
+ *      If the property has no see more information, use BaseActivity.NO_SEE_MORE_ID as a placeholder to represent that there is no string resource for that property.
  *
  * To update a property's see more information, go to strings.xml and navigate to the see more info string that corresponds to the property to be updated
  */
@@ -47,9 +49,30 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         scaleFactor = 1.0f; // initialize to 1 to represent starting image scale (and for multiplication later on)
         mapScalingMatrix = new Matrix();
+        scaleDetector = new ScaleGestureDetector(this, new ZoomListener());
         loadProperties();
         setUpUIComponents();
         Toast.makeText(MainActivity.this,"Press and hold to access a list of properties.",Toast.LENGTH_LONG).show();
+    }
+
+    private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            Toast.makeText(MainActivity.this,"",Toast.LENGTH_SHORT).show();
+            scaleFactor *= detector.getScaleFactor();
+            scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
+            mapScalingMatrix.setScale(scaleFactor, scaleFactor);
+            jMapImgVIew.setImageMatrix(mapScalingMatrix);
+            return true;
+        }
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getPointerCount() > 1)
+            scaleDetector.onTouchEvent(event);
+        else
+            openPropertiesMenu();
+        return true;
     }
 
     /**
@@ -118,12 +141,5 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(jAppToolbar);
 
         jMapImgVIew = findViewById(R.id.mapImgView);
-        jMapImgVIew.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                openPropertiesMenu();
-                return true;
-            }
-        });
     }
 }

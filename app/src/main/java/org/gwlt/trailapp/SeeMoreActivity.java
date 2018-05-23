@@ -29,6 +29,8 @@ public class SeeMoreActivity extends BaseActivity {
         getSupportActionBar().setTitle("More about " + propertyName);
 
         jSeeMoreInfo = findViewById(R.id.seeMoreInfo);
-        jSeeMoreInfo.setText(getResources().getString(MainActivity.getPropertyWithName(propertyName).getSeeMoreResID()));
+        int seeMoreInfoID = MainActivity.getPropertyWithName(propertyName).getSeeMoreResID();
+        if (seeMoreInfoID != BaseActivity.NO_SEE_MORE_ID)
+            jSeeMoreInfo.setText(getResources().getString(seeMoreInfoID));
     }
 }
