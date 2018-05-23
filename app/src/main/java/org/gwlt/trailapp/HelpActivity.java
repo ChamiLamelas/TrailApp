@@ -1,9 +1,7 @@
 package org.gwlt.trailapp;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -15,8 +13,8 @@ import android.widget.Toast;
  */
 public class HelpActivity extends BaseActivity {
 
-    private Toolbar jHelpToolbar;
-    private TextView jHelpText;
+    private Toolbar jHelpToolbar; // screen's toolbar
+    private TextView jHelpText; // help information
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

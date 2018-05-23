@@ -14,17 +14,17 @@ import android.widget.Toast;
  * Class that represents PropertyActivity of GWLT app.
  */
 public class PropertyActivity extends BaseActivity {
-    private Toolbar jPropertyToolbar;
-    private Button jReportButton;
-    private Button jSeeMoreButton;
-    private ImageView jPropertyImageView;
-    private String propertyName;
+    private Toolbar jPropertyToolbar; // screen's toolbar
+    private Button jReportButton; // button to report
+    private Button jSeeMoreButton; // button to see more
+    private ImageView jPropertyImageView; // image view to hold image of property map
+    private String propertyName; // name of property
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
-        propertyName = getIntent().getStringExtra(Utilities.PROPERTY_NAME_ID); // get name of property from extra data passed by Intent
+        propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID); // get name of property from extra data passed by Intent
         setUpUIComponents();
     }
 
@@ -43,7 +43,7 @@ public class PropertyActivity extends BaseActivity {
                 if (connectedToInternet()) {
                     try {
                         Intent reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
-                        reportIntent.putExtra(Utilities.PROPERTY_NAME_ID, propertyName);
+                        reportIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, propertyName);
                         startActivity(reportIntent);
                     } catch (ActivityNotFoundException ex) {
                         Toast.makeText(PropertyActivity.this, "could not open report tab", Toast.LENGTH_SHORT).show();
@@ -62,7 +62,7 @@ public class PropertyActivity extends BaseActivity {
             public void onClick(View v) {
                 try {
                     Intent seeMoreIntent = new Intent(PropertyActivity.this, SeeMoreActivity.class);
-                    seeMoreIntent.putExtra(Utilities.PROPERTY_NAME_ID, propertyName);
+                    seeMoreIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, propertyName);
                     startActivity(seeMoreIntent);
                 }
                 catch (ActivityNotFoundException ex) {
@@ -73,7 +73,7 @@ public class PropertyActivity extends BaseActivity {
 
         jPropertyImageView = findViewById(R.id.propertyImageView);
         int imgResID = MainActivity.properties.get(propertyName);
-        if (imgResID != Utilities.NO_IMG_ID)
+        if (imgResID != BaseActivity.NO_IMG_ID)
             jPropertyImageView.setImageResource(imgResID);
     }
 

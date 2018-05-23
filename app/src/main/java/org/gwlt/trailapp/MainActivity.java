@@ -2,19 +2,18 @@ package org.gwlt.trailapp;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -35,37 +34,73 @@ import java.util.HashMap;
  */
 public class MainActivity extends BaseActivity {
 
-    private Toolbar jAppToolbar;
+    private Toolbar jAppToolbar; // screen's toolbar
     private Button jPropertyButton;
-    public static HashMap<String, Integer> properties = new HashMap<>();
+    public static HashMap<String, Integer> properties; // properties map to link property names with their respective images
+    private float scaleFactor; // scale factor for zooming
+    private Matrix mapScalingMatrix; // matrix to scale image
+    private ImageView jMapImgVIew; // image view to hold image
+    private ScaleGestureDetector scaleDetector; // detector for scaling image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        scaleFactor = 1.0f; // initialize to 1 to represent starting image scale (and for multiplication later on)
+        mapScalingMatrix = new Matrix();
+        scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize for this activity with class that extends ScaleGestureDetector.SimpleOnScaleGestureListener
         loadProperties();
         setUpUIComponents();
         Toast.makeText(MainActivity.this,"Double-tap to access a list of properties.",Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Class to be used by scaleDetector for scaling the property's map image
+     */
+    private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaleFactor *= detector.getScaleFactor(); // update scale factor from detector's data
+            /*
+            check to see if updated scale factor is acceptable by checking:
+            1) is it smaller than minimum scale factor, if so set scale factor equal to the minimum scale factor
+            2) is it larger than maximum scale factor, if so set scale factor equal to the maximum scale factor
+             */
+            scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(BaseActivity.MAX_SCALE_FACTOR, scaleFactor));
+            mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set matrix x and y to be the scale factor
+            jMapImgVIew.setImageMatrix(mapScalingMatrix); // scale image using matrix
+            return true;
+        }
+    }
+
+    /**
+     * Add a new property to the hashmap
+     * @param nameResID - id of the string resource containing the property name
+     * @param imgResID - id of the image resource containing the property map
+     */
     private void addProperty(int nameResID, int imgResID) {
         String name = getResources().getString(nameResID);
         properties.put(name, imgResID);
     }
 
+    /**
+     * Loads properties into hashmap using addProperty()
+     */
     private void loadProperties() {
+        properties = new HashMap<>();
         addProperty(R.string.oneTxt, R.mipmap.southwick_muir);
         addProperty(R.string.twoTxt, R.mipmap.tetasset);
         addProperty(R.string.threeTxt, R.mipmap.sibley);
     }
 
-    /**
-     * Sets up UI components
-     */
+    @Override
     public void setUpUIComponents() {
         // set screen toolbar
         jAppToolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(jAppToolbar);
+
+        jMapImgVIew = findViewById(R.id.mapImgView);
+        jMapImgVIew.setImageResource(R.drawable.gwlt_mission_img);
 
         // set up property button
         jPropertyButton = findViewById(R.id.gwltMissionButton);
@@ -79,7 +114,7 @@ public class MainActivity extends BaseActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         try {
                             Intent propertyIntent = new Intent(MainActivity.this, PropertyActivity.class);
-                            propertyIntent.putExtra(Utilities.PROPERTY_NAME_ID, item.getTitle().toString());
+                            propertyIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, item.getTitle().toString());
                             startActivity(propertyIntent);
                         }
                         catch (ActivityNotFoundException ex) {

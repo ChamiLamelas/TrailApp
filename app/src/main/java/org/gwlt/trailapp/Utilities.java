@@ -12,9 +12,6 @@ import java.util.Calendar;
  */
 public final class Utilities {
 
-    public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing extra data between intents
-    public static final int NO_IMG_ID = -1;
-
     /**
      * Generates an Intent that holds an email with the provided information:
      * @param recipients - who to send the email to

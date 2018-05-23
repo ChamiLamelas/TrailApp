@@ -24,6 +24,12 @@ import android.widget.Toast;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    // moved these variables from Utilities because they seemed more suited to be properties of GWLT app activities rather than utilities to be used by GWLT activities
+    public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing extra data between intents
+    public static final int NO_IMG_ID = -1; // value to identify properties with no image
+    public static final float MIN_SCALE_FACTOR = 0.1f; // minimum possible scale factor to be used in image scaling in MainActivity
+    public static final float MAX_SCALE_FACTOR = 5.0f; // minimum possible scale factor to be used in image scaling in MainActivity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,5 +95,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         return connectedNetworkInfo != null && connectedNetworkInfo.isConnected();
     }
 
-    public abstract void setUpUIComponents();
+    public abstract void setUpUIComponents(); // all child classes must implement this
 }

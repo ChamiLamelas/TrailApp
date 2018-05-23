@@ -1,14 +1,9 @@
 package org.gwlt.trailapp;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -34,22 +29,22 @@ import java.util.ArrayList;
  */
 public class ReportActivity extends BaseActivity {
 
-    private Toolbar jReportToolbar;
-    private TextView jReportInfo;
-    private CheckBox jTrashBox;
-    private CheckBox jOvergrownBox;
+    private Toolbar jReportToolbar; // screen's toolbar
+    private TextView jReportInfo; // information on how the report system works
+    private CheckBox jTrashBox; // checkbox for trash on trail
+    private CheckBox jOvergrownBox; // checkbox for overgrown trail
     // add more checkboxes here (step 2)
-    private EditText jReportEntry;
-    private Button jReportSubmit;
-    private String time;
-    private String propertyName;
+    private EditText jReportEntry; // report entry
+    private Button jReportSubmit; // report submit button
+    private String time; // time of report
+    private String propertyName; // property that report is being submitted for
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
         time = Utilities.getFormattedTime("MM/dd/yy hh:mm");
-        propertyName = getIntent().getStringExtra(Utilities.PROPERTY_NAME_ID);
+        propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID);
         setUpUIComponents();
     }
 
@@ -63,6 +58,7 @@ public class ReportActivity extends BaseActivity {
         setSupportActionBar(jReportToolbar);
         getSupportActionBar().setTitle("Report");
 
+        // set report information
         jReportInfo = findViewById(R.id.reportInfo);
         jReportInfo.setText("Property: " + propertyName + "\nTime: " + time);
         jReportInfo.setTypeface(jReportInfo.getTypeface(), Typeface.BOLD);
