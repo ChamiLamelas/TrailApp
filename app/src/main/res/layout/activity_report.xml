@@ -68,7 +68,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
-        android:text="@string/reportDescriptionTxt"
+        android:text="@string/sightingDescriptionTxt"
         app:layout_constraintBottom_toTopOf="@+id/trashBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

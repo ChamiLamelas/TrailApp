@@ -66,7 +66,8 @@ public class ReportActivity extends BaseActivity {
 
         // set report description
         jReportDescription = findViewById(R.id.reportDescription);
-        jReportDescription.setText((reportType == BaseActivity.REPORT_PROBLEM) ? R.string.problemDescriptionTxt : R.string.sightingDescriptionTxt);
+        if (reportType == BaseActivity.REPORT_PROBLEM)
+            jReportDescription.setText(R.string.problemDescriptionTxt);
 
         // set up entry elements (checkboxes and text box)
         jTrashBox = findViewById(R.id.trashBox);
