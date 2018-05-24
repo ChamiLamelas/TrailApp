@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -90,6 +91,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.trailapp_menu, menu);
+        MenuItem propertiesItem = menu.findItem(R.id.properties);
+        propertiesItem.setVisible(false);
         return true;
     }
 
@@ -101,6 +104,31 @@ public abstract class BaseActivity extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo connectedNetworkInfo = connMgr.getActiveNetworkInfo();
         return connectedNetworkInfo != null && connectedNetworkInfo.isConnected();
+    }
+
+
+    /**
+     * Opens properties popup menu
+     */
+    public PopupMenu getPropertiesMenu(Context context, View view) {
+        final Context CONTEXT = context;
+        PopupMenu propertiesMenu = new PopupMenu(CONTEXT, view);
+        propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu());
+        propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                try {
+                    Intent propertyIntent = new Intent(CONTEXT, PropertyActivity.class);
+                    propertyIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, item.getTitle().toString());
+                    startActivity(propertyIntent);
+                }
+                catch (ActivityNotFoundException ex) {
+                    Toast.makeText(CONTEXT,"Could not open property",Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+        return propertiesMenu;
     }
 
     public abstract void setUpUIComponents(); // all child classes must implement this

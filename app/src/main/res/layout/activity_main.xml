@@ -27,6 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--android:scaleType="matrix" allows for image scaling-->
     <ImageView
         android:id="@+id/mapImgView"
         android:layout_width="0dp"

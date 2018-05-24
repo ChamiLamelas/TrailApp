@@ -13,4 +13,10 @@
         android:title="@string/learnMoreTxt"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/properties"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/propertiesTxt"
+        app:showAsAction="always" />
+
 </menu>

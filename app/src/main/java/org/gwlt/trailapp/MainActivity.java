@@ -1,14 +1,12 @@
 package org.gwlt.trailapp;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -49,16 +47,18 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         scaleFactor = 1.0f; // initialize to 1 to represent starting image scale (and for multiplication later on)
         mapScalingMatrix = new Matrix();
-        scaleDetector = new ScaleGestureDetector(this, new ZoomListener());
+        scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         loadProperties();
         setUpUIComponents();
-        Toast.makeText(MainActivity.this,"Press and hold to access a list of properties.",Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this,"Click the map icon to access a list of properties.",Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Helper class that listens for zoom actions and scales the image accordingly
+     */
     private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            Toast.makeText(MainActivity.this,"",Toast.LENGTH_SHORT).show();
             scaleFactor *= detector.getScaleFactor();
             scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
             mapScalingMatrix.setScale(scaleFactor, scaleFactor);
@@ -67,16 +67,18 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Enables the zoom listener to work on touch events on this activity
+     * @param event - a motion event
+     * @return whether or not the action could be performed
+     */
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getPointerCount() > 1)
-            scaleDetector.onTouchEvent(event);
-        else
-            openPropertiesMenu();
+        scaleDetector.onTouchEvent(event);
         return true;
     }
 
     /**
-     * Add a new property to the hashmap
+     * Add a new property to the properties list with the following attributes
      * @param nameResID - id of the string resource containing the property name
      * @param imgResID - id of the image resource containing the property map
      * @param seeMoreID - id of the string resource containing the property's see more info
@@ -86,7 +88,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * Loads properties into hashmap using addProperty()
+     * Loads properties into properties list using addProperty()
      */
     private void loadProperties() {
         properties = new ArrayList<>();
@@ -111,35 +113,40 @@ public class MainActivity extends BaseActivity {
         return null;
     }
 
-    /**
-     * Opens properties popup menu
-     */
-    private void openPropertiesMenu() {
-        PopupMenu propertiesMenu = new PopupMenu(MainActivity.this, jMapImgVIew);
-        propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu());
-        propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                try {
-                    Intent propertyIntent = new Intent(MainActivity.this, PropertyActivity.class);
-                    propertyIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, item.getTitle().toString());
-                    startActivity(propertyIntent);
-                }
-                catch (ActivityNotFoundException ex) {
-                    Toast.makeText(MainActivity.this,"Could not open property",Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
-        propertiesMenu.show();
-    }
-
     @Override
     public void setUpUIComponents() {
         // set screen toolbar
         jAppToolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(jAppToolbar);
-
         jMapImgVIew = findViewById(R.id.mapImgView);
+    }
+
+    /**
+     * MainActivity must override BaseActivity's onCreateOptionsMenu() in order to make the properties list menu item visible
+     * @param menu - menu being added to the toolbar
+     * @return whether or not the action could be performed
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.properties).setVisible(true);
+        return true;
+    }
+
+    /**
+     * Main Activity must override BaseActivity's onOptionsItemSelected() in order to add functionality to the properties list menu item
+     * @param item - menu item that has been triggered
+     * @return whether or not the action could be performed
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.properties) {
+            PopupMenu popupMenu = getPropertiesMenu(this, jAppToolbar);
+            popupMenu.show();
+            return true;
+        }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }
