@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Greater Worcester Land Trust</string>
+    <string name="app_name">GWLT Trails</string>
     <string name="reportBtnTxt">Report</string>
     <string name="reportDialogTitle">Report Type</string>
     <string name="reportDialogInfo">Please choose a report type.</string>

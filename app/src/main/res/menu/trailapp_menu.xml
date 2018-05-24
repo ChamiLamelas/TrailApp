@@ -2,10 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/helpButton"
-        android:icon="@android:drawable/ic_menu_help"
-        android:title="@string/helpTxt"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/properties"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/propertiesTxt"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/learnMoreButton"
@@ -14,9 +14,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/properties"
-        android:icon="@android:drawable/ic_menu_mapmode"
-        android:title="@string/propertiesTxt"
-        app:showAsAction="always" />
+        android:id="@+id/helpButton"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/helpTxt"
+        app:showAsAction="ifRoom" />
 
 </menu>
