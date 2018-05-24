@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,13 +20,16 @@ import android.widget.Toast;
 /**
  * Class that represents PropertyActivity of GWLT app.
  */
-public class PropertyActivity extends BaseActivity {
+public final class PropertyActivity extends BaseActivity {
     private Toolbar jPropertyToolbar; // screen's toolbar
     private Button jReportButton; // button to report
     private Button jSeeMoreButton; // button to see more
     private ImageView jPropertyImageView; // image view to hold image of property map
     private String propertyName; // name of property
     private Intent reportIntent; // Intent to pass report data to ReportActivity
+    private float scaleFactor; // scale factor for zooming
+    private Matrix mapScalingMatrix; // matrix to scale image
+    private ScaleGestureDetector scaleDetector; // detector for scaling image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +37,35 @@ public class PropertyActivity extends BaseActivity {
         setContentView(R.layout.activity_property);
         propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID); // get name of property from extra data passed by Intent
         reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
+        scaleFactor = BaseActivity.INITIAL_SCALE; // initialize to 1 to represent starting image scale (and for multiplication later on)
+        mapScalingMatrix = new Matrix();
+        scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
+    }
+
+    /**
+     * Helper class that listens for zoom actions and scales the image accordingly
+     */
+    private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaleFactor *= detector.getScaleFactor();
+            scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
+            mapScalingMatrix.setScale(scaleFactor, scaleFactor);
+            jPropertyImageView.setImageMatrix(mapScalingMatrix);
+            return true;
+        }
+    }
+
+    /**
+     * Enables the zoom listener to work on touch events on this activity
+     * @param event - a motion event
+     * @return whether or not the action could be performed
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        scaleDetector.onTouchEvent(event);
+        return true;
     }
 
     @Override

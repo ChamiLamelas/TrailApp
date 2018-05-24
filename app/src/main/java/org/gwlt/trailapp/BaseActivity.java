@@ -36,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static final int NO_IMG_ID = -1; // value to identify properties with no image
     public static final int DEFAULT_IMG_ID = R.drawable.gwlt_mission_img; // default image
     public static final int NO_SEE_MORE_ID = -2; // value to identify properties with no see more
+    public static final float INITIAL_SCALE = 1.0f; // initial scale value
     public static final float MIN_SCALE_FACTOR = 0.1f; // minimum possible scale factor to be used in image scaling in MainActivity
     public static final float MAX_SCALE_FACTOR = 5.0f; // minimum possible scale factor to be used in image scaling in MainActivity
 
@@ -92,6 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.trailapp_menu, menu);
         MenuItem propertiesItem = menu.findItem(R.id.properties);
+        propertiesItem.setEnabled(false);
         propertiesItem.setVisible(false);
         return true;
     }

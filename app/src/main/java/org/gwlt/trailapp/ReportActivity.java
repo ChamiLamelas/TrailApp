@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Class that represents a ReportActivity which is the Report screen for the GWLT app.
  */
-public class ReportActivity extends BaseActivity {
+public final class ReportActivity extends BaseActivity {
 
     private Toolbar jReportToolbar; // screen's toolbar
     private TextView jReportInfo; // information on the report

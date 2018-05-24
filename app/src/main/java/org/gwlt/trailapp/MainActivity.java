@@ -32,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Class that represents the Main Activity of the GWLT app.
  */
-public class MainActivity extends BaseActivity {
+public final class MainActivity extends BaseActivity {
 
     private Toolbar jAppToolbar; // screen's toolbar
     public static ArrayList<Property> properties; // list of properties
@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        scaleFactor = 1.0f; // initialize to 1 to represent starting image scale (and for multiplication later on)
+        scaleFactor = BaseActivity.INITIAL_SCALE; // initialize to 1 to represent starting image scale (and for multiplication later on)
         mapScalingMatrix = new Matrix();
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         loadProperties();
@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity {
      * @param event - a motion event
      * @return whether or not the action could be performed
      */
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         scaleDetector.onTouchEvent(event);
         return true;
@@ -129,7 +130,9 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        menu.findItem(R.id.properties).setVisible(true);
+        MenuItem propertiesBtn = menu.findItem(R.id.properties);
+        propertiesBtn.setEnabled(true);
+        propertiesBtn.setVisible(true);
         return true;
     }
 

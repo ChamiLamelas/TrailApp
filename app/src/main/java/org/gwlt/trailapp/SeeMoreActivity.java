@@ -9,7 +9,7 @@ import android.widget.TextView;
 /**
  * Class that represents a SeeMore Activity
  */
-public class SeeMoreActivity extends BaseActivity {
+public final class SeeMoreActivity extends BaseActivity {
 
     private Toolbar jSeeMoreToolbar; // screen's toolbar
     private TextView jSeeMoreInfo; // screen's text info
