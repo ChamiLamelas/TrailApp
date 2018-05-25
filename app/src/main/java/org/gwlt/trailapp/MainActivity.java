@@ -45,7 +45,7 @@ public final class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        scaleFactor = BaseActivity.INITIAL_SCALE; // initialize to 1 to represent starting image scale (and for multiplication later on)
+        scaleFactor = BaseActivity.MIN_SCALE_FACTOR;
         mapScalingMatrix = new Matrix();
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         loadProperties();
@@ -120,6 +120,8 @@ public final class MainActivity extends BaseActivity {
         jAppToolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(jAppToolbar);
         jMapImgVIew = findViewById(R.id.mapImgView);
+        mapScalingMatrix.setScale(scaleFactor, scaleFactor);
+        jMapImgVIew.setImageMatrix(mapScalingMatrix);
     }
 
     /**

@@ -32,6 +32,11 @@ import java.util.ArrayList;
  */
 public final class ReportActivity extends BaseActivity {
 
+    public static final String REPORT_TYPE_ID = "reportType"; // name of the report type ID for passing between intents
+    public static final boolean REPORT_SIGHTING = false; // report type: sighting
+    public static final boolean REPORT_PROBLEM = true; // report type: problem
+    public static final boolean DEFAULT_REPORT_TYPE = REPORT_SIGHTING; // default report type
+
     private Toolbar jReportToolbar; // screen's toolbar
     private TextView jReportInfo; // information on the report
     private TextView jReportDescription; // description of how the particular type of report works
@@ -47,8 +52,8 @@ public final class ReportActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID);
-        reportType = getIntent().getBooleanExtra(BaseActivity.REPORT_TYPE_ID, BaseActivity.DEFAULT_REPORT_TYPE);
+        propertyName = getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID);
+        reportType = getIntent().getBooleanExtra(REPORT_TYPE_ID, DEFAULT_REPORT_TYPE);
         setUpUIComponents();
     }
 
@@ -62,13 +67,13 @@ public final class ReportActivity extends BaseActivity {
         // set report information
         jReportInfo = findViewById(R.id.reportInfo);
         String reportInfoStr = "Property: " + propertyName + "\nType: ";
-        reportInfoStr += (reportType == BaseActivity.REPORT_PROBLEM) ? "Problem":"Sighting";
+        reportInfoStr += (reportType == REPORT_PROBLEM) ? "Problem":"Sighting";
         jReportInfo.setText(reportInfoStr);
         jReportInfo.setTypeface(jReportInfo.getTypeface(), Typeface.BOLD);
 
         // set report description
         jReportDescription = findViewById(R.id.reportDescription);
-        if (reportType == BaseActivity.REPORT_PROBLEM)
+        if (reportType == REPORT_PROBLEM)
             jReportDescription.setText(R.string.problemDescriptionTxt);
 
         // set up entry elements (checkboxes and text box)
@@ -77,7 +82,7 @@ public final class ReportActivity extends BaseActivity {
         // initialize checkbox here (step 3)
 
         // set checkboxes as invisible if the report is a sighting
-        if (reportType == BaseActivity.REPORT_SIGHTING) {
+        if (reportType == REPORT_SIGHTING) {
             jTrashBox.setVisibility(View.GONE);
             jOvergrownBox.setVisibility(View.GONE);
             // add other checkboxes here (step 4)
@@ -93,7 +98,7 @@ public final class ReportActivity extends BaseActivity {
             public void onClick(View v) {
                 try {
                     ArrayList<String> selectedCommonIssues = new ArrayList<>();
-                    if (reportType == BaseActivity.REPORT_PROBLEM) {
+                    if (reportType == REPORT_PROBLEM) {
                         if (jTrashBox.isChecked())
                             selectedCommonIssues.add(jTrashBox.getText().toString());
                         if (jOvergrownBox.isChecked())

@@ -7,14 +7,12 @@ import android.content.Intent;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.Toast;
 
 /**
@@ -25,20 +23,21 @@ public final class PropertyActivity extends BaseActivity {
     private Button jReportButton; // button to report
     private Button jSeeMoreButton; // button to see more
     private ImageView jPropertyImageView; // image view to hold image of property map
-    private String propertyName; // name of property
+    private Property property; // name of property
     private Intent reportIntent; // Intent to pass report data to ReportActivity
     private float scaleFactor; // scale factor for zooming
-    private Matrix mapScalingMatrix; // matrix to scale image
+    private Matrix propertyScalingMatrix; // matrix to scale image
     private ScaleGestureDetector scaleDetector; // detector for scaling image
+    public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing between intents
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
-        propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID); // get name of property from extra data passed by Intent
+        property = MainActivity.getPropertyWithName(getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
         reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
-        scaleFactor = BaseActivity.INITIAL_SCALE; // initialize to 1 to represent starting image scale (and for multiplication later on)
-        mapScalingMatrix = new Matrix();
+        scaleFactor = BaseActivity.MIN_SCALE_FACTOR;
+        propertyScalingMatrix = new Matrix();
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
     }
@@ -51,8 +50,8 @@ public final class PropertyActivity extends BaseActivity {
         public boolean onScale(ScaleGestureDetector detector) {
             scaleFactor *= detector.getScaleFactor();
             scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
-            mapScalingMatrix.setScale(scaleFactor, scaleFactor);
-            jPropertyImageView.setImageMatrix(mapScalingMatrix);
+            propertyScalingMatrix.setScale(scaleFactor, scaleFactor);
+            jPropertyImageView.setImageMatrix(propertyScalingMatrix);
             return true;
         }
     }
@@ -73,7 +72,7 @@ public final class PropertyActivity extends BaseActivity {
         // set appropriate title for property screen
         jPropertyToolbar = findViewById(R.id.propertyToolbar);
         setSupportActionBar(jPropertyToolbar);
-        getSupportActionBar().setTitle(propertyName);
+        getSupportActionBar().setTitle(property.getName());
 
         // set report button to launch report Intent when clicked
         jReportButton = findViewById(R.id.reportButton);
@@ -82,7 +81,7 @@ public final class PropertyActivity extends BaseActivity {
             public void onClick(View v) {
                 if (connectedToInternet()) {
                     try {
-                        reportIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, propertyName);
+                        reportIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, property.getName());
 
                         AlertDialog.Builder reportTypeDialog = new AlertDialog.Builder(PropertyActivity.this);
                         reportTypeDialog.setTitle(R.string.reportDialogTitle);
@@ -90,14 +89,14 @@ public final class PropertyActivity extends BaseActivity {
                         reportTypeDialog.setPositiveButton(R.string.reportDialogPositiveBtn, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                reportIntent.putExtra(BaseActivity.REPORT_TYPE_ID, BaseActivity.REPORT_SIGHTING);
+                                reportIntent.putExtra(ReportActivity.REPORT_TYPE_ID, ReportActivity.REPORT_SIGHTING);
                                 startActivity(reportIntent);
                             }
                         });
                         reportTypeDialog.setNegativeButton(R.string.reportDialogNegativeBtn, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                reportIntent.putExtra(BaseActivity.REPORT_TYPE_ID, BaseActivity.REPORT_PROBLEM);
+                                reportIntent.putExtra(ReportActivity.REPORT_TYPE_ID, ReportActivity.REPORT_PROBLEM);
                                 startActivity(reportIntent);
                             }
                         });
@@ -120,7 +119,7 @@ public final class PropertyActivity extends BaseActivity {
             public void onClick(View v) {
                 try {
                     Intent seeMoreIntent = new Intent(PropertyActivity.this, SeeMoreActivity.class);
-                    seeMoreIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, propertyName);
+                    seeMoreIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, property.getName());
                     startActivity(seeMoreIntent);
                 }
                 catch (ActivityNotFoundException ex) {
@@ -130,11 +129,13 @@ public final class PropertyActivity extends BaseActivity {
         });
 
         jPropertyImageView = findViewById(R.id.propertyImageView);
-        int imgResID = MainActivity.getPropertyWithName(propertyName).getImgResID();
+        int imgResID = MainActivity.getPropertyWithName(property.getName()).getImgResID();
         if (imgResID != BaseActivity.NO_IMG_ID)
             jPropertyImageView.setImageResource(imgResID);
         else
             jPropertyImageView.setImageResource(BaseActivity.DEFAULT_IMG_ID);
+        propertyScalingMatrix.setScale(scaleFactor, scaleFactor);
+        jPropertyImageView.setImageMatrix(propertyScalingMatrix);
     }
 
 }

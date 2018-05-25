@@ -11,6 +11,8 @@ import android.widget.TextView;
  */
 public final class SeeMoreActivity extends BaseActivity {
 
+    public static final int NO_SEE_MORE_ID = -2; // value to identify properties with no see more
+
     private Toolbar jSeeMoreToolbar; // screen's toolbar
     private TextView jSeeMoreInfo; // screen's text info
     private String propertyName; // property see more screen is displaying information about
@@ -19,7 +21,7 @@ public final class SeeMoreActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_more);
-        propertyName = getIntent().getStringExtra(BaseActivity.PROPERTY_NAME_ID);
+        propertyName = getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID);
         setUpUIComponents();
     }
 
@@ -32,7 +34,7 @@ public final class SeeMoreActivity extends BaseActivity {
 
         jSeeMoreInfo = findViewById(R.id.seeMoreInfo);
         int seeMoreInfoID = MainActivity.getPropertyWithName(propertyName).getSeeMoreResID();
-        if (seeMoreInfoID != BaseActivity.NO_SEE_MORE_ID)
+        if (seeMoreInfoID != NO_SEE_MORE_ID)
             jSeeMoreInfo.setText(getResources().getString(seeMoreInfoID));
     }
 }

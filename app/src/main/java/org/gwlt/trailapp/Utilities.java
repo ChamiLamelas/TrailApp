@@ -40,7 +40,7 @@ public final class Utilities {
     public static Intent genReport(String name, boolean type, ArrayList<String> selectedCommonIssues, String msg) {
         String reportBody = "";
         String reportTitle = "[";
-        if (type == BaseActivity.REPORT_PROBLEM)
+        if (type == ReportActivity.REPORT_PROBLEM)
             reportTitle += "PROBLEM";
         else
             reportTitle += "SIGHTING";

@@ -28,16 +28,9 @@ import android.widget.Toast;
 public abstract class BaseActivity extends AppCompatActivity {
 
     // moved these variables from Utilities because they seemed more suited to be properties of GWLT app activities rather than utilities to be used by GWLT activities
-    public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing between intents
-    public static final String REPORT_TYPE_ID = "reportType"; // name of the report type ID for passing between intents
-    public static final boolean REPORT_SIGHTING = false; // report type: sighting
-    public static final boolean REPORT_PROBLEM = true; // report type: problem
-    public static final boolean DEFAULT_REPORT_TYPE = REPORT_SIGHTING; // default report type
     public static final int NO_IMG_ID = -1; // value to identify properties with no image
     public static final int DEFAULT_IMG_ID = R.drawable.gwlt_mission_img; // default image
-    public static final int NO_SEE_MORE_ID = -2; // value to identify properties with no see more
-    public static final float INITIAL_SCALE = 1.0f; // initial scale value
-    public static final float MIN_SCALE_FACTOR = 0.1f; // minimum possible scale factor to be used in image scaling in MainActivity
+    public static final float MIN_SCALE_FACTOR = 0.3f; // minimum possible scale factor to be used in image scaling in MainActivity
     public static final float MAX_SCALE_FACTOR = 5.0f; // minimum possible scale factor to be used in image scaling in MainActivity
 
     @Override
@@ -121,7 +114,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 try {
                     Intent propertyIntent = new Intent(CONTEXT, PropertyActivity.class);
-                    propertyIntent.putExtra(BaseActivity.PROPERTY_NAME_ID, item.getTitle().toString());
+                    propertyIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, item.getTitle().toString());
                     startActivity(propertyIntent);
                 }
                 catch (ActivityNotFoundException ex) {
