@@ -23,4 +23,11 @@ public final class Property {
         return name;
     }
 
+    public float getMinScaleFactor() {
+        // scale to something
+        // get width
+        // get factor from screen width's relationship with original width
+        return 1.0f;
+    }
+
 }
