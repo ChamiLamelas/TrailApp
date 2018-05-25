@@ -1,5 +1,8 @@
 package org.gwlt.trailapp;
 
+import android.content.res.Resources;
+import android.widget.ImageView;
+
 public final class Property {
     private String name;
     private int imgResID;
@@ -21,13 +24,6 @@ public final class Property {
 
     public String getName() {
         return name;
-    }
-
-    public float getMinScaleFactor() {
-        // scale to something
-        // get width
-        // get factor from screen width's relationship with original width
-        return 1.0f;
     }
 
 }

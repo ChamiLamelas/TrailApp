@@ -1,7 +1,14 @@
 package org.gwlt.trailapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,5 +56,14 @@ public final class Utilities {
             reportBody += selectedCommonIssue + ":Yes\n";
         reportBody += msg;
         return genEmailToGWLT(reportTitle, reportBody);
+    }
+
+    public static float calcMinScaleFactor(ImageView imageView) {
+        float initWidth = imageView.getDrawable().getIntrinsicWidth();
+        float screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
+        float leftMarginInPixels = layoutParams.leftMargin;
+        float rightMarginInPixels = layoutParams.rightMargin;
+        return (screenWidth-(rightMarginInPixels+leftMarginInPixels))/initWidth;
     }
 }

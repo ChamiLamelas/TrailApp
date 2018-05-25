@@ -3,6 +3,7 @@ package org.gwlt.trailapp;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -37,6 +38,7 @@ public final class MainActivity extends BaseActivity {
     private Toolbar jAppToolbar; // screen's toolbar
     public static ArrayList<Property> properties; // list of properties
     private float scaleFactor; // scale factor for zooming
+    private float minScaleFactor;
     private Matrix mapScalingMatrix; // matrix to scale image
     private ImageView jMapImgVIew; // image view to hold image
     private ScaleGestureDetector scaleDetector; // detector for scaling image
@@ -45,8 +47,6 @@ public final class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        scaleFactor = BaseActivity.MIN_SCALE_FACTOR;
-        mapScalingMatrix = new Matrix();
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         loadProperties();
         setUpUIComponents();
@@ -60,7 +60,7 @@ public final class MainActivity extends BaseActivity {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             scaleFactor *= detector.getScaleFactor();
-            scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
+            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
             mapScalingMatrix.setScale(scaleFactor, scaleFactor);
             jMapImgVIew.setImageMatrix(mapScalingMatrix);
             return true;
@@ -120,6 +120,9 @@ public final class MainActivity extends BaseActivity {
         jAppToolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(jAppToolbar);
         jMapImgVIew = findViewById(R.id.mapImgView);
+        minScaleFactor = Utilities.calcMinScaleFactor(jMapImgVIew);
+        mapScalingMatrix = new Matrix();
+        scaleFactor = minScaleFactor;
         mapScalingMatrix.setScale(scaleFactor, scaleFactor);
         jMapImgVIew.setImageMatrix(mapScalingMatrix);
     }
