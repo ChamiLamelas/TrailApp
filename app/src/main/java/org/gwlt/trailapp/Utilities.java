@@ -1,18 +1,12 @@
 package org.gwlt.trailapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Utilities Library to be used by Activity classes
@@ -58,12 +52,17 @@ public final class Utilities {
         return genEmailToGWLT(reportTitle, reportBody);
     }
 
+    /**
+     * Calculates the minimum scale factor for the provided image view based on the resource being stored in the ImageView and the display's screen size
+     * @param imageView - provided image view that holds the image to be scaled
+     * @return minimum scale factor as a float
+     */
     public static float calcMinScaleFactor(ImageView imageView) {
-        float initWidth = imageView.getDrawable().getIntrinsicWidth();
-        float screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
+        float initWidth = imageView.getDrawable().getIntrinsicWidth(); // get default width of image view's image resource in pixels
+        float screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels; // get screen width in pixels
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams(); // must account for image view's margins
         float leftMarginInPixels = layoutParams.leftMargin;
         float rightMarginInPixels = layoutParams.rightMargin;
-        return (screenWidth-(rightMarginInPixels+leftMarginInPixels))/initWidth;
+        return (screenWidth-(rightMarginInPixels+leftMarginInPixels))/initWidth; // scale factor = (screen width - margins)/initial width (i.e. how much to scale initial image dimensions)
     }
 }

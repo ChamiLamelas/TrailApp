@@ -1,12 +1,12 @@
 package org.gwlt.trailapp;
 
-import android.content.res.Resources;
-import android.widget.ImageView;
-
+/**
+ * Class that represents a Property
+ */
 public final class Property {
-    private String name;
-    private int imgResID;
-    private int seeMoreResID;
+    private String name; // property name
+    private int imgResID; // image resource id
+    private int seeMoreResID; // see more string resource id
 
     public Property(String aName, int anImgResID, int aSeeMoreResID) {
         name = aName;

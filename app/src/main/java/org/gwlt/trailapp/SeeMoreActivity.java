@@ -30,7 +30,7 @@ public final class SeeMoreActivity extends BaseActivity {
         // set up see more screen with property name
         jSeeMoreToolbar = findViewById(R.id.seeMoreToolbar);
         setSupportActionBar(jSeeMoreToolbar);
-        getSupportActionBar().setTitle("More about " + propertyName);
+        getSupportActionBar().setTitle(propertyName);
 
         jSeeMoreInfo = findViewById(R.id.seeMoreInfo);
         int seeMoreInfoID = MainActivity.getPropertyWithName(propertyName).getSeeMoreResID();

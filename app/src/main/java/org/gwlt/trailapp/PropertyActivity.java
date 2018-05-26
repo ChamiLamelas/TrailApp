@@ -26,6 +26,7 @@ public final class PropertyActivity extends BaseActivity {
     private Property property; // name of property
     private Intent reportIntent; // Intent to pass report data to ReportActivity
     private float scaleFactor; // scale factor for zooming
+    private float minScaleFactor; // minimum scale factor for this activity
     private Matrix propertyScalingMatrix; // matrix to scale image
     private ScaleGestureDetector scaleDetector; // detector for scaling image
     public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing between intents
@@ -36,8 +37,6 @@ public final class PropertyActivity extends BaseActivity {
         setContentView(R.layout.activity_property);
         property = MainActivity.getPropertyWithName(getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
         reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
-        scaleFactor = BaseActivity.MIN_SCALE_FACTOR;
-        propertyScalingMatrix = new Matrix();
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
     }
@@ -49,7 +48,7 @@ public final class PropertyActivity extends BaseActivity {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             scaleFactor *= detector.getScaleFactor();
-            scaleFactor = Math.max(BaseActivity.MIN_SCALE_FACTOR, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
+            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
             propertyScalingMatrix.setScale(scaleFactor, scaleFactor);
             jPropertyImageView.setImageMatrix(propertyScalingMatrix);
             return true;
@@ -129,11 +128,14 @@ public final class PropertyActivity extends BaseActivity {
         });
 
         jPropertyImageView = findViewById(R.id.propertyImageView);
-        int imgResID = MainActivity.getPropertyWithName(property.getName()).getImgResID();
+        int imgResID = property.getImgResID();
         if (imgResID != BaseActivity.NO_IMG_ID)
             jPropertyImageView.setImageResource(imgResID);
         else
             jPropertyImageView.setImageResource(BaseActivity.DEFAULT_IMG_ID);
+        minScaleFactor = Utilities.calcMinScaleFactor(jPropertyImageView);
+        propertyScalingMatrix = new Matrix();
+        scaleFactor = minScaleFactor;
         propertyScalingMatrix.setScale(scaleFactor, scaleFactor);
         jPropertyImageView.setImageMatrix(propertyScalingMatrix);
     }

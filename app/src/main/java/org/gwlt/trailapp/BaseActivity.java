@@ -31,7 +31,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static final int NO_IMG_ID = -1; // value to identify properties with no image
     public static final int DEFAULT_IMG_ID = R.drawable.gwlt_mission_img; // default image
     public static final float MAX_SCALE_FACTOR = 5.0f; // maximum possible scale factor to be used in image scaling in MainActivity
-    public static final float MIN_SCALE_FACTOR = 0.3f;
     public static final String LOG_TAG = "[GWLT Trail App]";
 
     @Override
