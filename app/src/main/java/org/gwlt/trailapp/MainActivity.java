@@ -93,13 +93,13 @@ public final class MainActivity extends BaseActivity {
      */
     private void loadProperties() {
         properties = new ArrayList<>();
-        addProperty(R.string.asnebumskit, R.mipmap.asnebumskit, R.string.oneSeeMore);
-        addProperty(R.string.cascades, R.mipmap.cascades, R.string.twoSeeMore);
-        addProperty(R.string.cookPond, R.mipmap.cooks_pond, R.string.threeSeeMore);
-        addProperty(R.string.donkerCooksBrook, R.mipmap.donker_cooks_brook, R.string.threeSeeMore);
-        addProperty(R.string.kinneyWoods, R.mipmap.kinney_woods, R.string.twoSeeMore);
-        addProperty(R.string.morelandWoods, R.mipmap.moreland_woods, R.string.twoSeeMore);
-        addProperty(R.string.southwickMuir, R.mipmap.southwick_muir, R.string.twoSeeMore);
+        addProperty(R.string.asnebumskit, R.mipmap.asnebumskit, SeeMoreActivity.NO_SEE_MORE_ID);
+        addProperty(R.string.cascades, R.mipmap.cascades, SeeMoreActivity.NO_SEE_MORE_ID);
+        addProperty(R.string.cookPond, R.mipmap.cooks_pond, SeeMoreActivity.NO_SEE_MORE_ID);
+        addProperty(R.string.donkerCooksBrook, R.mipmap.donker_cooks_brook, SeeMoreActivity.NO_SEE_MORE_ID);
+        addProperty(R.string.kinneyWoods, R.mipmap.kinney_woods, SeeMoreActivity.NO_SEE_MORE_ID);
+        addProperty(R.string.morelandWoods, R.mipmap.moreland_woods, SeeMoreActivity.NO_SEE_MORE_ID);
+        addProperty(R.string.southwickMuir, R.mipmap.southwick_muir, SeeMoreActivity.NO_SEE_MORE_ID);
     }
 
     /**
