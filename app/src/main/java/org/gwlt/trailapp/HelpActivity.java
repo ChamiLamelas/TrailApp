@@ -1,17 +1,14 @@
 package org.gwlt.trailapp;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
- * Class that represents the Help Activity of the GWLT app.
+ * Class that represents the Help Activity of the GWLT app. This is the screen that is displayed when the user clicks the help button.
  */
 public final class HelpActivity extends BaseActivity {
 
@@ -34,7 +31,7 @@ public final class HelpActivity extends BaseActivity {
 
         // set up text view
         jHelpTxt = findViewById(R.id.helpText);
-        jHelpTxt.setMovementMethod(new ScrollingMovementMethod());
+        jHelpTxt.setMovementMethod(new ScrollingMovementMethod()); // allow TextView to be scrollable
 
     }
 

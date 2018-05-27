@@ -16,7 +16,9 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 /**
- * Represents the Base Activity of Activities of the GWLT app, this is why this class does not have an associated layout XML file.
+ * All Activities of the GWLT trail app inherit their properties from BaseActivity.
+ * Note that this class is abstract, which means it cannot be implemented and thus does not have an associated XML file like the other GWLT Activities.
+ * Therefore, the following rules apply to GWLT trail app activities:
  *
  * All GWLT app activities will have a shared toolbar with "learn more" and help buttons.
  *      Title of toolbar can be edited after toolbar is set as the supportActionBar.
@@ -26,12 +28,8 @@ import android.widget.Toast;
  * Subclass activities must override setUpUIComponents() to implement the activity's UI components.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-
-    // moved these variables from Utilities because they seemed more suited to be properties of GWLT app activities rather than utilities to be used by GWLT activities
-    public static final int NO_IMG_ID = -1; // value to identify properties with no image
-    public static final int DEFAULT_IMG_ID = R.drawable.gwlt_mission_img; // default image
     public static final float MAX_SCALE_FACTOR = 5.0f; // maximum possible scale factor to be used in image scaling in MainActivity
-    public static final String LOG_TAG = "[GWLT Trail App]";
+    public static final String LOG_TAG = "[GWLT Trail App]"; // log tag to be used by Log
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        int id = item.getItemId(); // get item id to identify item using resource ids
         if (id == R.id.learnMoreButton) {
             if (connectedToInternet()) {
                 try {
@@ -54,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     browserIntent.setData(Uri.parse("http://www.gwlt.org")); // sets data the Intent will work on
                     startActivity(Intent.createChooser(browserIntent, "Choose browser.. "));
                 } catch (android.content.ActivityNotFoundException ex) { // thrown by startActivity
-                    Toast.makeText(this, "no browser installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "A browser must be installed to complete this action.", Toast.LENGTH_SHORT).show();
                 }
             }
             else {
@@ -64,11 +62,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         else if (id == R.id.helpButton) {
             try {
-                Intent helpIntent = new Intent(this, HelpActivity.class);
+                Intent helpIntent = new Intent(this, HelpActivity.class); // opens help screen
                 startActivity(helpIntent);
             }
             catch (ActivityNotFoundException ex) {
-                Toast.makeText(this, "could not open help", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "The help screen could not be opened.", Toast.LENGTH_SHORT).show();
             }
             return true;
         }
@@ -84,7 +82,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.trailapp_menu, menu);
+        getMenuInflater().inflate(R.menu.trailapp_menu, menu); // display menu
+        // disable properties button and make it invisible
         MenuItem propertiesItem = menu.findItem(R.id.properties);
         propertiesItem.setEnabled(false);
         propertiesItem.setVisible(false);
@@ -96,24 +95,38 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return whether not Content is connected to the Internet
      */
     public boolean connectedToInternet() {
+        /*
+        ConnectivityManager is the "class that answers queries about the state of network connectivity. It also notifies applications when network connectivity changes."
+        It must be retrieved using this code:
+         */
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo connectedNetworkInfo = connMgr.getActiveNetworkInfo();
+        NetworkInfo connectedNetworkInfo = connMgr.getActiveNetworkInfo(); // get network info on the active network
+        /*
+        If there is no active network, connectedNetworkInfo == null, so that check must be performed first in order to avoid NullPointerException when isConnected() is called
+        Thus, this returns false if connectedNetworkInfo == null or if connectedNetworkInfo.isConnected() returns false
+         */
         return connectedNetworkInfo != null && connectedNetworkInfo.isConnected();
     }
 
-
     /**
-     * Opens properties popup menu
+     * Gets properties popup menu for a provided Context connected to a provided View
+     * @param context - context the popup menu will be displayed on
+     * @param view - view that the popup menu will be connected on
+     * @return popup menu with the properties list
      */
     public PopupMenu getPropertiesMenu(Context context, View view) {
-        final Context CONTEXT = context;
-        PopupMenu propertiesMenu = new PopupMenu(CONTEXT, view);
-        propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu());
-        propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        final Context CONTEXT = context; // must store as final variable to be used in PopupMenu.OnMenuItemClickListener implementation
+        PopupMenu propertiesMenu = new PopupMenu(CONTEXT, view); // instantiate PopupMenu with provided arguments
+        propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu()); // display menu
+        propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() { // set up listener for popup menu item clicks
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 try {
-                    Intent propertyIntent = new Intent(CONTEXT, PropertyActivity.class);
+                    Intent propertyIntent = new Intent(CONTEXT, PropertyActivity.class); // create Property Intent on the provided Context
+                    /*
+                    In order for the PropertyActivity to load the correct data, the Property Intent must hold Property name identifier data
+                    This data is the title of the PopupMenu item and will be used by getPropertyWithName() to get the Property object
+                     */
                     propertyIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, item.getTitle().toString());
                     startActivity(propertyIntent);
                 }

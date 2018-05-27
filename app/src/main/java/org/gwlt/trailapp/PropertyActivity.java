@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
- * Class that represents PropertyActivity of GWLT app.
+ * Class that represents PropertyActivity of GWLT app. This is the screen that applies when a user clicks on a Property name that drops down from the PopupMenu on the main screen.
  */
 public final class PropertyActivity extends BaseActivity {
     private Toolbar jPropertyToolbar; // screen's toolbar
@@ -29,14 +29,19 @@ public final class PropertyActivity extends BaseActivity {
     private float minScaleFactor; // minimum scale factor for this activity
     private Matrix propertyScalingMatrix; // matrix to scale image
     private ScaleGestureDetector scaleDetector; // detector for scaling image
+    private AlertDialog.Builder reportTypeDialog; // alert dialog for selecting report type
+
     public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing between intents
+    public static final int NO_IMG_ID = -1; // value to identify properties with no image
+    public static final int DEFAULT_IMG_ID = R.drawable.gwlt_mission_img; // default property image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
         property = MainActivity.getPropertyWithName(getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
-        reportIntent = new Intent(PropertyActivity.this, ReportActivity.class);
+        reportIntent = new Intent(PropertyActivity.this, ReportActivity.class); // set up Report Intent
+        reportIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, property.getName()); // put property name as extra String data
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
     }
@@ -45,12 +50,25 @@ public final class PropertyActivity extends BaseActivity {
      * Helper class that listens for zoom actions and scales the image accordingly
      */
     private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        /**
+         * Override this method in order to update image when user makes a scaling gesture
+         * @param detector - detector of scale gesture
+         * @return whether or not the operation could be performed successfully
+         */
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            scaleFactor *= detector.getScaleFactor();
+            scaleFactor *= detector.getScaleFactor(); // update scale factor by multiplying by old scale factor
+            /*
+            Using Math.max() and Math.min() a longer if statement can be avoided, however this is what it would be:
+
+            if the maximum scale factor is smaller than the current scale factor
+                scale factor = maximum scale factor
+            if the minimum scale factor is larger than the current scale factor
+                scale factor = minimum scale factor
+             */
             scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
-            propertyScalingMatrix.setScale(scaleFactor, scaleFactor);
-            jPropertyImageView.setImageMatrix(propertyScalingMatrix);
+            propertyScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix
+            jPropertyImageView.setImageMatrix(propertyScalingMatrix); // apply scale to image using matrix
             return true;
         }
     }
@@ -73,6 +91,33 @@ public final class PropertyActivity extends BaseActivity {
         setSupportActionBar(jPropertyToolbar);
         getSupportActionBar().setTitle(property.getName());
 
+        // set up report type dialog
+        reportTypeDialog = new AlertDialog.Builder(this);
+        reportTypeDialog.setTitle(R.string.reportDialogTitle);
+        reportTypeDialog.setMessage(R.string.reportDialogInfo);
+        /*
+         Alert dialogs have 2 buttons that are referred to the positive and negative buttons
+         For its use here, it does not matter which choice is positive or negative
+
+         Positive: report type=sighting                 Negative: report type=problem
+
+         These are passed through the Report Intent extra String
+          */
+        reportTypeDialog.setPositiveButton(R.string.reportDialogPositiveBtn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                reportIntent.putExtra(ReportActivity.REPORT_TYPE_ID, ReportActivity.REPORT_SIGHTING);
+                startActivity(reportIntent);
+            }
+        });
+        reportTypeDialog.setNegativeButton(R.string.reportDialogNegativeBtn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                reportIntent.putExtra(ReportActivity.REPORT_TYPE_ID, ReportActivity.REPORT_PROBLEM);
+                startActivity(reportIntent);
+            }
+        });
+
         // set report button to launch report Intent when clicked
         jReportButton = findViewById(R.id.reportButton);
         jReportButton.setOnClickListener(new OnClickListener() {
@@ -80,29 +125,9 @@ public final class PropertyActivity extends BaseActivity {
             public void onClick(View v) {
                 if (connectedToInternet()) {
                     try {
-                        reportIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, property.getName());
-
-                        AlertDialog.Builder reportTypeDialog = new AlertDialog.Builder(PropertyActivity.this);
-                        reportTypeDialog.setTitle(R.string.reportDialogTitle);
-                        reportTypeDialog.setMessage(R.string.reportDialogInfo);
-                        reportTypeDialog.setPositiveButton(R.string.reportDialogPositiveBtn, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reportIntent.putExtra(ReportActivity.REPORT_TYPE_ID, ReportActivity.REPORT_SIGHTING);
-                                startActivity(reportIntent);
-                            }
-                        });
-                        reportTypeDialog.setNegativeButton(R.string.reportDialogNegativeBtn, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                reportIntent.putExtra(ReportActivity.REPORT_TYPE_ID, ReportActivity.REPORT_PROBLEM);
-                                startActivity(reportIntent);
-                            }
-                        });
                         reportTypeDialog.show();
-
                     } catch (ActivityNotFoundException ex) {
-                        Toast.makeText(PropertyActivity.this, "could not open report tab", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PropertyActivity.this, "The report screen could not be opened.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
@@ -117,27 +142,30 @@ public final class PropertyActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    // set up see more Intent with extra String data being Property name
                     Intent seeMoreIntent = new Intent(PropertyActivity.this, SeeMoreActivity.class);
                     seeMoreIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, property.getName());
                     startActivity(seeMoreIntent);
                 }
                 catch (ActivityNotFoundException ex) {
-                    Toast.makeText(PropertyActivity.this, "could not open see more tab",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PropertyActivity.this, "The see more screen could not be opened.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         jPropertyImageView = findViewById(R.id.propertyImageView);
-        int imgResID = property.getImgResID();
-        if (imgResID != BaseActivity.NO_IMG_ID)
+        int imgResID = property.getImgResID(); // get image resource id from property
+        /*
+        If the property's image resource id is not equal to the no id placeholder, set the image to the image resource with the provided id
+        By default, the image resource is set to the default image (done in app/res/layout/activity_property.xml)
+         */
+        if (imgResID != PropertyActivity.NO_IMG_ID)
             jPropertyImageView.setImageResource(imgResID);
-        else
-            jPropertyImageView.setImageResource(BaseActivity.DEFAULT_IMG_ID);
-        minScaleFactor = Utilities.calcMinScaleFactor(jPropertyImageView);
-        propertyScalingMatrix = new Matrix();
-        scaleFactor = minScaleFactor;
-        propertyScalingMatrix.setScale(scaleFactor, scaleFactor);
-        jPropertyImageView.setImageMatrix(propertyScalingMatrix);
+        minScaleFactor = Utilities.calcMinScaleFactor(jPropertyImageView); // calculate minimum scale factor
+        propertyScalingMatrix = new Matrix(); // set up matrix
+        scaleFactor = minScaleFactor; // initialize scale factor with minimum scale factor
+        propertyScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix
+        jPropertyImageView.setImageMatrix(propertyScalingMatrix); // scale image using scaling matrix
     }
 
 }

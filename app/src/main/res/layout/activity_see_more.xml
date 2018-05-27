@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Use this file to edit the screen displayed for SeeMoreActivity -->
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -27,6 +30,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--
+    Initialize this text view with the default see more text using:
+    android:text="@string/defaultSeeMoreTxt"
+    -->
     <TextView
         android:id="@+id/seeMoreInfo"
         android:layout_width="0dp"

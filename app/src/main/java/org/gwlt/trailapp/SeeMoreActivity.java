@@ -22,7 +22,7 @@ public final class SeeMoreActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_more);
-        property = MainActivity.getPropertyWithName(getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID));
+        property = MainActivity.getPropertyWithName(getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
         setUpUIComponents();
     }
 
@@ -35,9 +35,13 @@ public final class SeeMoreActivity extends BaseActivity {
 
         // set up text view
         jSeeMoreInfo = findViewById(R.id.seeMoreInfo);
+        /*
+        If the property's see more resource id is not equal to the no id placeholder, set text to the string resource with see more id
+        By default, the see more text is set to the default see more text (done in app/res/layout/activity_see_more.xml)
+         */
         int seeMoreInfoID = property.getSeeMoreResID();
         if (seeMoreInfoID != NO_SEE_MORE_ID)
             jSeeMoreInfo.setText(getResources().getString(seeMoreInfoID));
-        jSeeMoreInfo.setMovementMethod(new ScrollingMovementMethod());
+        jSeeMoreInfo.setMovementMethod(new ScrollingMovementMethod()); // allow TextView to be scrollable
     }
 }

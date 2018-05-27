@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Use this file to edit the screen displayed for PropertyActivity -->
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -48,7 +51,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:titleTextColor="@color/white" />
 
-    <!--android:scaleType="matrix" allows for image scaling-->
+    <!--
+    Initialize this image view with the default property image using:
+    app:srcCompat="@drawable/gwlt_mission_img"
+
+    android:scaleType="matrix" allows for image scaling
+    -->
     <ImageView
         android:id="@+id/propertyImageView"
         android:layout_width="0dp"
@@ -63,6 +71,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/gwlt_mission_img" />
 
 </android.support.constraint.ConstraintLayout>

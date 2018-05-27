@@ -1,6 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ Use this file to define string resources for use in both Java files using R.string.resourceName and in XML files.
+ AndroidStudio encourages you to define string resources here than to hardcode them when calling functions such as setText(), setTitle(), etc.
+-->
+
 <resources>
     <string name="app_name">GWLT Trails</string>
     <string name="reportBtnTxt">Report</string>
+    <string name="reportTitleTxt">Report</string>
     <string name="reportDialogTitle">Report Type</string>
     <string name="reportDialogInfo">Please choose a report type.</string>
     <string name="reportDialogPositiveBtn">Sighting</string>
