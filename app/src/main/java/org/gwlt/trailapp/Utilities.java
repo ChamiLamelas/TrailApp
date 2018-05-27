@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 /**
- * Utilities Library to be used by Activity classes
+ * Utilities Library to be used by GWLT trail app Activities.
  */
 public final class Utilities {
 

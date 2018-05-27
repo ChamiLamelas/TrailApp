@@ -1,14 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ Use this file to define string resources for use in both Java files using R.string.resourceName and in XML files.
+ AndroidStudio encourages you to define string resources here than to hardcode them when calling functions such as setText(), setTitle(), etc.
+-->
+
 <resources>
     <string name="app_name">GWLT Trails</string>
     <string name="reportBtnTxt">Report</string>
+    <string name="reportTitleTxt">Report</string>
     <string name="reportDialogTitle">Report Type</string>
     <string name="reportDialogInfo">Please choose a report type.</string>
     <string name="reportDialogPositiveBtn">Sighting</string>
     <string name="reportDialogNegativeBtn">Problem</string>
     <string name="learnMoreTxt">Learn More</string>
-    <string name="helpTxt">Help</string>
+    <string name="helpTitle">Help</string>
+    <string name="helpTxt">
+        Navigating the Main Screen:\n
+        \nTo access the list of properties, click the map icon in the upper right.
+        \nTo learn more about the Greater Worcester Land Trust, click the information icon to visit their website.
+        \n\nNavigating the Property Screen:\n
+        \nTo see more information about the property, click the "See More" button. This includes sightings reported by other users.
+        \nTo report either a sighting or a problem, click the "Report" button. You will then be prompted to choose between a sighting and a problem, and the app will then transfer to the report screen.
+        \n\nNavigating the Report Screen:\n
+        \nThe report screen will tell you the property you are reporting on and the type of report (sighting or problem).
+        \nIf you selected the problem report type, you can fill in the checkboxes which are for common problems on properties.
+        \nFor either type of report, you can fill in a text box with more details on the report.
+        \nYou will then be prompted to choose an email client to send the report.
+        \nOnce you have selected the email client, an email with the data you filled in on the report screen in addition to a subject and recipients will be generated.
+    </string>
     <string name="propertiesTxt">Properties</string>
-    <string name="helpInstructions">1 2 3..</string>
     <string name="trashBoxTxt">Trash</string>
     <string name="overgrownBoxTxt">Overgrown</string>
     <string name="reportSubmitTxt">Email Report</string>
@@ -26,7 +47,4 @@
     <string name="morelandWoods">Moreland Woods</string>
     <string name="southwickMuir">Southwick Muir</string>
     <!--add more property see more information here-->
-    <string name="oneSeeMore">One is blue</string>
-    <string name="twoSeeMore">Two is red</string>
-    <string name="threeSeeMore">Three is green</string>
 </resources>
