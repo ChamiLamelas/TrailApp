@@ -121,4 +121,15 @@ public final class Utilities {
         boolean yIsValid = y > minY && y < maxY(imageView, scaleFactor);
         return xIsValid && yIsValid;
     }
+
+    public static boolean moveIsValid(ImageView imageView, float dx, float dy, float scaleFactor) {
+        float initWidth = imageView.getDrawable().getIntrinsicWidth();
+        float initHeight = imageView.getDrawable().getIntrinsicHeight();
+        float finalX = initWidth + Math.abs(dx);
+        float finalY = initHeight + Math.abs(dy);
+        boolean xMoveIsValid = finalX < maxX(imageView, scaleFactor);
+        boolean yMoveIsValid = finalY < maxY(imageView, scaleFactor);
+        Log.i(LOG_TAG, "finalX="+finalX+"\tfinalY="+finalY+"\tmaxX="+maxX(imageView, scaleFactor)+"\tmaxY="+maxY(imageView, scaleFactor));
+        return xMoveIsValid && yMoveIsValid;
+    }
 }

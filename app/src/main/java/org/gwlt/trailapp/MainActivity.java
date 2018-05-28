@@ -15,6 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import static org.gwlt.trailapp.Utilities.LOG_TAG;
+import static org.gwlt.trailapp.Utilities.moveIsValid;
+import static org.gwlt.trailapp.Utilities.pointIsOnImage;
 
 /**
  * Class that represents the Main Activity of the GWLT app. This is the screen that is displayed when the user first opens the app.
@@ -44,6 +46,8 @@ public final class MainActivity extends BaseActivity {
     private ScaleGestureDetector scaleDetector; // detector for scaling image
     private float saveX;
     private float saveY;
+    private float startX;
+    private float startY;
     private float dx;
     private float dy;
 
@@ -54,6 +58,10 @@ public final class MainActivity extends BaseActivity {
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         saveX = 0.0f;
         saveY = 0.0f;
+        startX = 0.0f;
+        startY = 0.0f;
+        dx = 0.0f;
+        dy = 0.0f;
         loadProperties();
         setUpUIComponents();
         Toast.makeText(MainActivity.this,"Click the map icon to access a list of properties.",Toast.LENGTH_LONG).show();
@@ -88,25 +96,34 @@ public final class MainActivity extends BaseActivity {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        final int ACTION = event.getActionMasked();
-        final float TMP_X = event.getX();
-        final float TMP_Y = event.getY();
-        if (Utilities.pointIsOnImage(this, jMapImgVIew, TMP_X, TMP_Y, scaleFactor)) {
-            if (ACTION == MotionEvent.ACTION_DOWN) {
-                saveX = TMP_X;
-                saveY = TMP_Y;
-            } else if (ACTION == MotionEvent.ACTION_MOVE) {
-                dx = TMP_X - saveX;
-                dy = TMP_Y - saveY;
-            } else if (ACTION == MotionEvent.ACTION_UP) {
-
+        if (event.getPointerCount() == 1) {
+            final int ACTION = event.getActionMasked();
+            final float TMP_X = event.getX();
+            final float TMP_Y = event.getY();
+            if (pointIsOnImage(this, jMapImgVIew, TMP_X, TMP_Y, scaleFactor)) {
+                if (ACTION == MotionEvent.ACTION_DOWN) {
+                    startX = TMP_X;
+                    startY = TMP_Y;
+                } else if (ACTION == MotionEvent.ACTION_MOVE) {
+                    dx = TMP_X - startX;
+                    dy = TMP_Y - startY;
+                } else if (ACTION == MotionEvent.ACTION_UP) {
+                    saveX = TMP_X;
+                    saveY = TMP_Y;
+                }
+                Log.i(LOG_TAG, TMP_X + ";\t" + TMP_Y);
+                mapScalingMatrix.setScale(scaleFactor, scaleFactor);
+                if (moveIsValid(jMapImgVIew, dx, dy, scaleFactor)) {
+                    mapScalingMatrix.postTranslate(dx, dy);
+                } else {
+                    mapScalingMatrix.postTranslate(0,0);
+                }
+                jMapImgVIew.setImageMatrix(mapScalingMatrix);
             }
-            Log.i(LOG_TAG, TMP_X + ";" + TMP_Y);
-            mapScalingMatrix.setScale(scaleFactor, scaleFactor);
-            mapScalingMatrix.postTranslate(dx, dy);
-            jMapImgVIew.setImageMatrix(mapScalingMatrix);
         }
-        scaleDetector.onTouchEvent(event);
+        else {
+            scaleDetector.onTouchEvent(event);
+        }
         return true;
     }
 
