@@ -1,8 +1,11 @@
 package org.gwlt.trailapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.net.Uri;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -64,5 +67,56 @@ public final class Utilities {
         float leftMarginInPixels = layoutParams.leftMargin;
         float rightMarginInPixels = layoutParams.rightMargin;
         return (screenWidth-(rightMarginInPixels+leftMarginInPixels))/initWidth; // scale factor = (screen width - margins)/initial width (i.e. how much to scale initial image dimensions)
+    }
+
+    /**
+     * Gets the action bar height of a Context.
+     * @param context - context with action bar to be measured
+     * @return height of the action bar or -1.0f if the Context has no action bar
+     */
+    public static float getActionBarHeight(Context context) {
+        TypedValue outValue = new TypedValue();
+        if (context.getTheme().resolveAttribute(R.attr.actionBarSize,outValue,true))
+            return TypedValue.complexToDimension(outValue.data, context.getResources().getDisplayMetrics());
+        return -1.0f;
+    }
+
+    /**
+     * Gets the maximum x-value this image can have
+     * @param imageView - image view holding the image
+     * @param xScaleFactor - x scale factor being applied to the image
+     * @return the maximum x-value this image can have
+     */
+    public static float maxX(ImageView imageView, float xScaleFactor) {
+        float initWidth = imageView.getDrawable().getIntrinsicWidth();
+        return initWidth * xScaleFactor;
+    }
+
+    /**
+     * Gets the maximum y-value this image can have
+     * @param imageView - image view holding the image
+     * @param yScaleFactor - y scale factor being applied to the image
+     * @return the maximum y-value this image can have
+     */
+    public static float maxY(ImageView imageView, float yScaleFactor) {
+        float initHeight = imageView.getDrawable().getIntrinsicHeight();
+        return initHeight * yScaleFactor;
+    }
+
+    /**
+     * Determines whether or not the point is on this image
+     * @param context - Context the ImageView is on
+     * @param imageView - the ImageView holding the image
+     * @param x - the x-value of the point
+     * @param y - the y-value of the point
+     * @param scaleFactor - scale factor being applied to the x and y of the image
+     * @return boolean state of whether or not the point is on the image 
+     */
+    public static boolean pointIsOnImage(Context context, ImageView imageView, float x, float y, float scaleFactor) {
+        float minX = ((ViewGroup.MarginLayoutParams) imageView.getLayoutParams()).leftMargin;
+        float minY = getActionBarHeight(context);
+        boolean xIsValid = x > minX && x < maxX(imageView, scaleFactor);
+        boolean yIsValid = y > minY && y < maxY(imageView, scaleFactor);
+        return xIsValid && yIsValid;
     }
 }
