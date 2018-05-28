@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.net.Uri;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
  * Utilities Library to be used by GWLT trail app Activities.
  */
 public final class Utilities {
+    public static final String LOG_TAG = "[GWLT Trail App]"; // log tag to be used by Log
 
     /**
      * Generates an Intent that holds an email to GWLT with the provided information:
@@ -110,7 +112,7 @@ public final class Utilities {
      * @param x - the x-value of the point
      * @param y - the y-value of the point
      * @param scaleFactor - scale factor being applied to the x and y of the image
-     * @return boolean state of whether or not the point is on the image 
+     * @return boolean state of whether or not the point is on the image
      */
     public static boolean pointIsOnImage(Context context, ImageView imageView, float x, float y, float scaleFactor) {
         float minX = ((ViewGroup.MarginLayoutParams) imageView.getLayoutParams()).leftMargin;

@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static org.gwlt.trailapp.Utilities.LOG_TAG;
+
 /**
  * Class that represents the Main Activity of the GWLT app. This is the screen that is displayed when the user first opens the app.
  *
@@ -40,12 +42,18 @@ public final class MainActivity extends BaseActivity {
     private Matrix mapScalingMatrix; // matrix to scale image
     private ImageView jMapImgVIew; // image view to hold image
     private ScaleGestureDetector scaleDetector; // detector for scaling image
+    private float saveX;
+    private float saveY;
+    private float dx;
+    private float dy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
+        saveX = 0.0f;
+        saveY = 0.0f;
         loadProperties();
         setUpUIComponents();
         Toast.makeText(MainActivity.this,"Click the map icon to access a list of properties.",Toast.LENGTH_LONG).show();
@@ -57,10 +65,18 @@ public final class MainActivity extends BaseActivity {
     private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            scaleFactor *= detector.getScaleFactor();
+            scaleFactor *= detector.getScaleFactor(); // update scale factor by multiplying by old scale factor
+            /*
+            Using Math.max() and Math.min() a longer if statement can be avoided, however this is what it would be:
+
+            if the maximum scale factor is smaller than the current scale factor
+                scale factor = maximum scale factor
+            if the minimum scale factor is larger than the current scale factor
+                scale factor = minimum scale factor
+             */
             scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
-            mapScalingMatrix.setScale(scaleFactor, scaleFactor);
-            jMapImgVIew.setImageMatrix(mapScalingMatrix);
+            mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix
+            jMapImgVIew.setImageMatrix(mapScalingMatrix); // apply scale to image using matrix
             return true;
         }
     }
@@ -72,6 +88,24 @@ public final class MainActivity extends BaseActivity {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        final int ACTION = event.getActionMasked();
+        final float TMP_X = event.getX();
+        final float TMP_Y = event.getY();
+        if (Utilities.pointIsOnImage(this, jMapImgVIew, TMP_X, TMP_Y, scaleFactor)) {
+            if (ACTION == MotionEvent.ACTION_DOWN) {
+                saveX = TMP_X;
+                saveY = TMP_Y;
+            } else if (ACTION == MotionEvent.ACTION_MOVE) {
+                dx = TMP_X - saveX;
+                dy = TMP_Y - saveY;
+            } else if (ACTION == MotionEvent.ACTION_UP) {
+
+            }
+            Log.i(LOG_TAG, TMP_X + ";" + TMP_Y);
+            mapScalingMatrix.setScale(scaleFactor, scaleFactor);
+            mapScalingMatrix.postTranslate(dx, dy);
+            jMapImgVIew.setImageMatrix(mapScalingMatrix);
+        }
         scaleDetector.onTouchEvent(event);
         return true;
     }

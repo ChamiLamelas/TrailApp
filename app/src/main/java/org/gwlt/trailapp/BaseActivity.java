@@ -29,7 +29,6 @@ import android.widget.Toast;
  */
 public abstract class BaseActivity extends AppCompatActivity {
     public static final float MAX_SCALE_FACTOR = 5.0f; // maximum possible scale factor to be used in image scaling in MainActivity
-    public static final String LOG_TAG = "[GWLT Trail App]"; // log tag to be used by Log
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
