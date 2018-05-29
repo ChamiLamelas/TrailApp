@@ -14,6 +14,9 @@
     <string name="reportDialogPositiveBtn">Sighting</string>
     <string name="reportDialogNegativeBtn">Problem</string>
     <string name="learnMoreTxt">Learn More</string>
+    <string name="learnMoreLink">http://www.gwlt.org</string>
+    <string name="joinTxt">Become a Member</string>
+    <string name="joinLink">http://www.gwlt.org/contact-us/</string>
     <string name="helpTitle">Help</string>
     <string name="helpTxt">
         Navigating the Main Screen:\n

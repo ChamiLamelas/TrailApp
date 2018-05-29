@@ -61,6 +61,7 @@ public final class ReportActivity extends BaseActivity {
         jReportToolbar = findViewById(R.id.reportToolbar);
         setSupportActionBar(jReportToolbar);
         getSupportActionBar().setTitle(R.string.reportTitleTxt);
+        setLearnMoreToolbar(jReportToolbar);
 
         // set report information
         jReportInfo = findViewById(R.id.reportInfo);

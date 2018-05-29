@@ -18,6 +18,12 @@ import java.util.ArrayList;
 public final class Utilities {
     public static final String LOG_TAG = "[GWLT Trail App]"; // log tag to be used by Log
 
+    public static Intent genBrowseIntent(String uriString) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW); // specifies Intent is for viewing a URI
+        browserIntent.setData(Uri.parse(uriString)); // sets data the Intent will work on
+        return browserIntent;
+    }
+
     /**
      * Generates an Intent that holds an email to GWLT with the provided information:
      * @param subject - subject of the email

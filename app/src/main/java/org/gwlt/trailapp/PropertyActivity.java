@@ -95,6 +95,7 @@ public final class PropertyActivity extends BaseActivity {
         jPropertyToolbar = findViewById(R.id.propertyToolbar);
         setSupportActionBar(jPropertyToolbar);
         getSupportActionBar().setTitle(property.getName());
+        setLearnMoreToolbar(jPropertyToolbar);
 
         // set up report type dialog
         reportTypeDialog = new AlertDialog.Builder(this);

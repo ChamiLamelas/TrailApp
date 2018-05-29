@@ -35,6 +35,7 @@ public final class SeeMoreActivity extends BaseActivity {
         jSeeMoreToolbar = findViewById(R.id.seeMoreToolbar);
         setSupportActionBar(jSeeMoreToolbar);
         getSupportActionBar().setTitle(property.getName());
+        setLearnMoreToolbar(jSeeMoreToolbar);
 
         // set up text view
         jSeeMoreInfo = findViewById(R.id.seeMoreInfo);

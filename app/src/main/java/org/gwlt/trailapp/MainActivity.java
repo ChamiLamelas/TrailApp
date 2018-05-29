@@ -177,6 +177,7 @@ public final class MainActivity extends BaseActivity {
         // set screen toolbar
         jAppToolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(jAppToolbar);
+        setLearnMoreToolbar(jAppToolbar);
         jMapImgVIew = findViewById(R.id.mapImgView);
         minScaleFactor = Utilities.calcMinScaleFactor(jMapImgVIew); // calculate minimum scale factor using Utility function
         mapScalingMatrix = new Matrix(); // set up image scaling matrix
@@ -217,4 +218,5 @@ public final class MainActivity extends BaseActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
 }
