@@ -122,11 +122,19 @@ public final class Utilities {
         return xIsValid && yIsValid;
     }
 
+    /**
+     * Checks whether a move is valid given a change in x and y would exceed the image boundaries.
+     * @param imageView - the ImageView holding the image
+     * @param dx - change in x
+     * @param dy - change in y
+     * @param scaleFactor - scale factor being applied to the x and y of the image
+     * @return boolean state of whether or not the move is valid
+     */
     public static boolean moveIsValid(ImageView imageView, float dx, float dy, float scaleFactor) {
         float initWidth = imageView.getDrawable().getIntrinsicWidth();
         float initHeight = imageView.getDrawable().getIntrinsicHeight();
-        float finalX = initWidth + Math.abs(dx);
-        float finalY = initHeight + Math.abs(dy);
+        float finalX = initWidth*scaleFactor + Math.abs(dx);
+        float finalY = initHeight*scaleFactor + Math.abs(dy);
         boolean xMoveIsValid = finalX < maxX(imageView, scaleFactor);
         boolean yMoveIsValid = finalY < maxY(imageView, scaleFactor);
         Log.i(LOG_TAG, "finalX="+finalX+"\tfinalY="+finalY+"\tmaxX="+maxX(imageView, scaleFactor)+"\tmaxY="+maxY(imageView, scaleFactor));

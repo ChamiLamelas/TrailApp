@@ -96,7 +96,7 @@ public final class MainActivity extends BaseActivity {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getPointerCount() == 1) {
+        if (event.getPointerCount() == 1 && !scaleDetector.isInProgress()) {
             final int ACTION = event.getActionMasked();
             final float TMP_X = event.getX();
             final float TMP_Y = event.getY();
@@ -107,17 +107,17 @@ public final class MainActivity extends BaseActivity {
                 } else if (ACTION == MotionEvent.ACTION_MOVE) {
                     dx = TMP_X - startX;
                     dy = TMP_Y - startY;
+                    mapScalingMatrix.postTranslate(dx, dy);
                 } else if (ACTION == MotionEvent.ACTION_UP) {
                     saveX = TMP_X;
                     saveY = TMP_Y;
+                    if (!moveIsValid(jMapImgVIew, dx, dy, scaleFactor)) {
+                        mapScalingMatrix.postTranslate(0, 0);
+                        Log.i(LOG_TAG, "Invalid move; dx="+dx+"; dy="+dy);
+                    }
                 }
-                Log.i(LOG_TAG, TMP_X + ";\t" + TMP_Y);
+                //Log.i(LOG_TAG, TMP_X + ";\t" + TMP_Y);
                 mapScalingMatrix.setScale(scaleFactor, scaleFactor);
-                if (moveIsValid(jMapImgVIew, dx, dy, scaleFactor)) {
-                    mapScalingMatrix.postTranslate(dx, dy);
-                } else {
-                    mapScalingMatrix.postTranslate(0,0);
-                }
                 jMapImgVIew.setImageMatrix(mapScalingMatrix);
             }
         }
