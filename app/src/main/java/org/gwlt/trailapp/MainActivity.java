@@ -103,19 +103,26 @@ public final class MainActivity extends BaseActivity {
                 } else if (ACTION == MotionEvent.ACTION_MOVE) {
                     dx = TMP_X - startX;
                     dy = TMP_Y - startY;
-                    mapScalingMatrix.postTranslate(dx, dy);
                 } else if (ACTION == MotionEvent.ACTION_UP) {
+                    //Log.i(LOG_TAG, "Finger up");
                     saveX = TMP_X;
                     saveY = TMP_Y;
                     if (!moveIsValid(jMapImgVIew, dx, dy, scaleFactor)) {
-                        mapScalingMatrix.postTranslate(0, 0);
-                        Log.i(LOG_TAG, "Invalid move; dx="+dx+"; dy="+dy);
+                        dx = 0;
+                        dy = 0;
+                        //Log.i(LOG_TAG, "Invalid move; dx="+dx+"; dy="+dy);
                     }
                 }
-                //Log.i(LOG_TAG, TMP_X + ";\t" + TMP_Y);
-                mapScalingMatrix.setScale(scaleFactor, scaleFactor);
-                jMapImgVIew.setImageMatrix(mapScalingMatrix);
             }
+            else {
+                dx = 0;
+                dy = 0;
+            }
+            //Log.i(LOG_TAG, TMP_X + ";\t" + TMP_Y);
+            Log.i(LOG_TAG, "point is on image");
+            mapScalingMatrix.setScale(scaleFactor, scaleFactor);
+            mapScalingMatrix.postTranslate(dx, dy);
+            jMapImgVIew.setImageMatrix(mapScalingMatrix);
         }
         else {
             scaleDetector.onTouchEvent(event);
