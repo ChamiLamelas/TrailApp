@@ -35,5 +35,5 @@ Also view the list of [contributors](https://github.com/LiquidsShadow/TrailApp/g
 ## Acknowledgments
 
 * The Android development tutorials on [tutorialspoint](https://www.tutorialspoint.com/android/index.htm) .
-* The [template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) for this file. 
+* [PurpleBooth](https://github.com/PurpleBooth) who wrote the [template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) for this file. 
 
