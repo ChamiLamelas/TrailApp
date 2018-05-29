@@ -105,18 +105,24 @@ public final class MainActivity extends BaseActivity {
                     dy = TMP_Y - startY;
                 } else if (ACTION == MotionEvent.ACTION_UP) {
                     //Log.i(LOG_TAG, "Finger up");
-                    saveX = TMP_X;
-                    saveY = TMP_Y;
                     if (!moveIsValid(jMapImgVIew, dx, dy, scaleFactor)) {
                         dx = 0;
                         dy = 0;
+                        saveX = 0;
+                        saveY = 0;
                         //Log.i(LOG_TAG, "Invalid move; dx="+dx+"; dy="+dy);
+                    }
+                    else {
+                        saveX = TMP_X;
+                        saveY = TMP_Y;
                     }
                 }
             }
             else {
                 dx = 0;
                 dy = 0;
+                saveX = 0;
+                saveY = 0;
             }
             //Log.i(LOG_TAG, TMP_X + ";\t" + TMP_Y);
             Log.i(LOG_TAG, "point is on image");
