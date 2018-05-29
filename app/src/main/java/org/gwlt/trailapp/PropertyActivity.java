@@ -15,6 +15,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import static org.gwlt.trailapp.MainActivity.getPropertyWithName;
+import static org.gwlt.trailapp.ReportActivity.REPORT_PROBLEM;
+import static org.gwlt.trailapp.ReportActivity.REPORT_SIGHTING;
+import static org.gwlt.trailapp.ReportActivity.REPORT_TYPE_ID;
+import static org.gwlt.trailapp.Utilities.calcMinScaleFactor;
+
 /**
  * Class that represents PropertyActivity of GWLT app. This is the screen that applies when a user clicks on a Property name that drops down from the PopupMenu on the main screen.
  */
@@ -33,15 +39,14 @@ public final class PropertyActivity extends BaseActivity {
 
     public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing between intents
     public static final int NO_IMG_ID = -1; // value to identify properties with no image
-    public static final int DEFAULT_IMG_ID = R.drawable.gwlt_mission_img; // default property image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
-        property = MainActivity.getPropertyWithName(getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
+        property = getPropertyWithName(getIntent().getStringExtra(PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
         reportIntent = new Intent(PropertyActivity.this, ReportActivity.class); // set up Report Intent
-        reportIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, property.getName()); // put property name as extra String data
+        reportIntent.putExtra(PROPERTY_NAME_ID, property.getName()); // put property name as extra String data
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
     }
@@ -66,7 +71,7 @@ public final class PropertyActivity extends BaseActivity {
             if the minimum scale factor is larger than the current scale factor
                 scale factor = minimum scale factor
              */
-            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
+            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, MAX_SCALE_FACTOR));
             propertyScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix
             jPropertyImageView.setImageMatrix(propertyScalingMatrix); // apply scale to image using matrix
             return true;
@@ -106,14 +111,14 @@ public final class PropertyActivity extends BaseActivity {
         reportTypeDialog.setPositiveButton(R.string.reportDialogPositiveBtn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                reportIntent.putExtra(ReportActivity.REPORT_TYPE_ID, ReportActivity.REPORT_SIGHTING);
+                reportIntent.putExtra(REPORT_TYPE_ID, REPORT_SIGHTING);
                 startActivity(reportIntent);
             }
         });
         reportTypeDialog.setNegativeButton(R.string.reportDialogNegativeBtn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                reportIntent.putExtra(ReportActivity.REPORT_TYPE_ID, ReportActivity.REPORT_PROBLEM);
+                reportIntent.putExtra(REPORT_TYPE_ID, REPORT_PROBLEM);
                 startActivity(reportIntent);
             }
         });
@@ -144,7 +149,7 @@ public final class PropertyActivity extends BaseActivity {
                 try {
                     // set up see more Intent with extra String data being Property name
                     Intent seeMoreIntent = new Intent(PropertyActivity.this, SeeMoreActivity.class);
-                    seeMoreIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, property.getName());
+                    seeMoreIntent.putExtra(PROPERTY_NAME_ID, property.getName());
                     startActivity(seeMoreIntent);
                 }
                 catch (ActivityNotFoundException ex) {
@@ -161,7 +166,7 @@ public final class PropertyActivity extends BaseActivity {
          */
         if (imgResID != PropertyActivity.NO_IMG_ID)
             jPropertyImageView.setImageResource(imgResID);
-        minScaleFactor = Utilities.calcMinScaleFactor(jPropertyImageView); // calculate minimum scale factor
+        minScaleFactor = calcMinScaleFactor(jPropertyImageView); // calculate minimum scale factor
         propertyScalingMatrix = new Matrix(); // set up matrix
         scaleFactor = minScaleFactor; // initialize scale factor with minimum scale factor
         propertyScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix

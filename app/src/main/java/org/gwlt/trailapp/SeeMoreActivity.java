@@ -7,6 +7,9 @@ import android.view.MenuItem;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import static org.gwlt.trailapp.MainActivity.getPropertyWithName;
+import static org.gwlt.trailapp.PropertyActivity.PROPERTY_NAME_ID;
+
 /**
  * Class that represents a SeeMore Activity
  */
@@ -22,7 +25,7 @@ public final class SeeMoreActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_more);
-        property = MainActivity.getPropertyWithName(getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
+        property = getPropertyWithName(getIntent().getStringExtra(PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
         setUpUIComponents();
     }
 

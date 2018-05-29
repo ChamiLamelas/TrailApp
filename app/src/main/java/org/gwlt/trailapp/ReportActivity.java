@@ -4,16 +4,16 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static org.gwlt.trailapp.Utilities.genReport;
 
 /**Class that represents a ReportActivity for the GWLT app. This is the screen that is displayed when a user clicks on the Report button on the Property Screen.
  * Reports can be of two types: sighting or problem.
@@ -103,7 +103,7 @@ public final class ReportActivity extends BaseActivity {
                             selectedCommonIssues.add(jOvergrownBox.getText().toString());
                         // ********************************************************************* add to selected common issues here (step 5) *********************************************************************
                     }
-                    startActivity(Intent.createChooser(Utilities.genReport(propertyName, reportType, selectedCommonIssues, jReportEntry.getText().toString()), "Choose mail client")); // starts email activity
+                    startActivity(Intent.createChooser(genReport(propertyName, reportType, selectedCommonIssues, jReportEntry.getText().toString()), "Choose mail client")); // starts email activity
                     finish(); // finish the Report Activity after the email client has been opened... any further editing can be done by the user in the email client
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(ReportActivity.this, "An email client must be installed in order to complete this action.", Toast.LENGTH_SHORT).show();

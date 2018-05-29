@@ -24,7 +24,7 @@ import static org.gwlt.trailapp.Utilities.pointIsOnImage;
  * To add a new property:
  *
  * 1) Add a new string to app/res/values/strings.xml with the name of the new property
- * 2) Add an image for the property to either drawable or mipmap
+ * 2) Add an image for the property to either drawable or mipmap (test which works by having the Java program try to load the image)
  * 3) Add a new item to the app/res/menu/property_popup_menu.xml file with the following format:
  *      <item
  *          android:id="@+id/<insert id for new property></>"
@@ -89,11 +89,7 @@ public final class MainActivity extends BaseActivity {
         }
     }
 
-    /**
-     * Enables the zoom listener to work on touch events on this activity
-     * @param event - a motion event
-     * @return whether or not the action could be performed
-     */
+    // TODO fix zoom and pan
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getPointerCount() == 1 && !scaleDetector.isInProgress()) {
