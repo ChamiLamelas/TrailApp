@@ -31,7 +31,7 @@ public final class Utilities {
      * @return - email Intent that holds the data
      */
     public static Intent genEmailToGWLT(String subject, String body) {
-        String recipients[] = {"cstephenson@bancroftschool.org","slamelas@bancroftschool.org"};
+        String recipients[] = {"trailapp@gwlt.org"};
         Intent emailIntent = new Intent(Intent.ACTION_SEND); // specifies that the Intent is for email
         emailIntent.setData(Uri.parse("mailto:")); // sets the type of data Intent will be handling
         emailIntent.setType("text/plain"); // sets MIME type (just text, text w/ attachments, etc.)

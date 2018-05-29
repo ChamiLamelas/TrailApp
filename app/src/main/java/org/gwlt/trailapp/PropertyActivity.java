@@ -19,7 +19,7 @@ import static org.gwlt.trailapp.MainActivity.getPropertyWithName;
 import static org.gwlt.trailapp.ReportActivity.REPORT_PROBLEM;
 import static org.gwlt.trailapp.ReportActivity.REPORT_SIGHTING;
 import static org.gwlt.trailapp.ReportActivity.REPORT_TYPE_ID;
-import static org.gwlt.trailapp.Utilities.calcMinScaleFactor;
+import static org.gwlt.trailapp.Utilities.*;
 
 /**
  * Class that represents PropertyActivity of GWLT app. This is the screen that applies when a user clicks on a Property name that drops down from the PopupMenu on the main screen.
@@ -30,7 +30,6 @@ public final class PropertyActivity extends BaseActivity {
     private Button jSeeMoreButton; // button to see more
     private ImageView jPropertyImageView; // image view to hold image of property map
     private Property property; // name of property
-    private Intent reportIntent; // Intent to pass report data to ReportActivity
     private float scaleFactor; // scale factor for zooming
     private float minScaleFactor; // minimum scale factor for this activity
     private Matrix propertyScalingMatrix; // matrix to scale image
@@ -45,8 +44,6 @@ public final class PropertyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
         property = getPropertyWithName(getIntent().getStringExtra(PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
-        reportIntent = new Intent(PropertyActivity.this, ReportActivity.class); // set up Report Intent
-        reportIntent.putExtra(PROPERTY_NAME_ID, property.getName()); // put property name as extra String data
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
     }
@@ -112,15 +109,23 @@ public final class PropertyActivity extends BaseActivity {
         reportTypeDialog.setPositiveButton(R.string.reportDialogPositiveBtn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                reportIntent.putExtra(REPORT_TYPE_ID, REPORT_SIGHTING);
-                startActivity(reportIntent);
+                try {
+                    startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.reportLink)),"Choose a browser.."));
+                }
+                catch (ActivityNotFoundException ex) {
+                    Toast.makeText(PropertyActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG);
+                }
             }
         });
         reportTypeDialog.setNegativeButton(R.string.reportDialogNegativeBtn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                reportIntent.putExtra(REPORT_TYPE_ID, REPORT_PROBLEM);
-                startActivity(reportIntent);
+                try {
+                    startActivity(Intent.createChooser(genEmailToGWLT("[Report Image] " + property.getName(), getResources().getString(R.string.reportImageBody)), "Choose email client.."));
+                }
+                catch (ActivityNotFoundException ex) {
+                    Toast.makeText(PropertyActivity.this, "An email client must be installed to complete this action.", Toast.LENGTH_LONG);
+                }
             }
         });
 

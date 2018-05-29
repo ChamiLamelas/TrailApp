@@ -11,8 +11,10 @@
     <string name="reportTitleTxt">Report</string>
     <string name="reportDialogTitle">Report Type</string>
     <string name="reportDialogInfo">Please choose a report type.</string>
-    <string name="reportDialogPositiveBtn">Sighting</string>
-    <string name="reportDialogNegativeBtn">Problem</string>
+    <string name="reportDialogPositiveBtn">Fill out Report</string>
+    <string name="reportLink">https://docs.google.com/forms/d/e/1FAIpQLSdXgnpEiFHR2w-M8jNd8jZvrPWLLx6n5W6aR4qi_AAnrS7f-w/viewform</string>
+    <string name="reportImageBody">Please attach an image below of what you have to report on the property you visited."</string>
+    <string name="reportDialogNegativeBtn">Email an Image</string>
     <string name="learnMoreTxt">Learn More</string>
     <string name="learnMoreLink">http://www.gwlt.org</string>
     <string name="joinTxt">Become a Member</string>
