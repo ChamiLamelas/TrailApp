@@ -50,6 +50,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PropertyActivity" />
         </activity>
+        <activity android:name=".RegionalMapActivity"></activity>
     </application>
 
 </manifest>

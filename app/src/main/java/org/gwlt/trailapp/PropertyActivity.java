@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Matrix;
+import android.graphics.Region;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
@@ -15,11 +16,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import static org.gwlt.trailapp.MainActivity.getPropertyWithName;
-import static org.gwlt.trailapp.ReportActivity.REPORT_PROBLEM;
-import static org.gwlt.trailapp.ReportActivity.REPORT_SIGHTING;
-import static org.gwlt.trailapp.ReportActivity.REPORT_TYPE_ID;
-import static org.gwlt.trailapp.Utilities.*;
+import static org.gwlt.trailapp.Utilities.calcMinScaleFactor;
+import static org.gwlt.trailapp.Utilities.genBrowseIntent;
+import static org.gwlt.trailapp.Utilities.genEmailToGWLT;
+
 
 /**
  * Class that represents PropertyActivity of GWLT app. This is the screen that applies when a user clicks on a Property name that drops down from the PopupMenu on the main screen.
@@ -36,14 +36,11 @@ public final class PropertyActivity extends BaseActivity {
     private ScaleGestureDetector scaleDetector; // detector for scaling image
     private AlertDialog.Builder reportTypeDialog; // alert dialog for selecting report type
 
-    public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing between intents
-    public static final int NO_IMG_ID = -1; // value to identify properties with no image
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
-        property = getPropertyWithName(getIntent().getStringExtra(PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
+        loadProperty();
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
     }
@@ -73,6 +70,11 @@ public final class PropertyActivity extends BaseActivity {
             jPropertyImageView.setImageMatrix(propertyScalingMatrix); // apply scale to image using matrix
             return true;
         }
+    }
+
+    private void loadProperty() {
+        RegionalMap propertysParentMap = MainActivity.getRegionalMapWithName(getIntent().getStringExtra(RegionalMap.REGIONAL_MAP_NAME_ID));
+        property = propertysParentMap.getPropertyWithName(getIntent().getStringExtra(Property.PROPERTY_NAME_ID));
     }
 
     /**
@@ -122,6 +124,7 @@ public final class PropertyActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     startActivity(Intent.createChooser(genEmailToGWLT("[Report Image] " + property.getName(), getResources().getString(R.string.reportImageBody)), "Choose email client.."));
+                    finish();
                 }
                 catch (ActivityNotFoundException ex) {
                     Toast.makeText(PropertyActivity.this, "An email client must be installed to complete this action.", Toast.LENGTH_LONG);
@@ -153,13 +156,14 @@ public final class PropertyActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    // set up see more Intent with extra String data being Property name
-                    Intent seeMoreIntent = new Intent(PropertyActivity.this, SeeMoreActivity.class);
-                    seeMoreIntent.putExtra(PROPERTY_NAME_ID, property.getName());
-                    startActivity(seeMoreIntent);
+                    int seeMoreLink = property.getSeeMoreResID();
+                    if (seeMoreLink != Property.PROPERTY_NO_SEE_MORE_ID)
+                        startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(seeMoreLink)),"Choose browser.."));
+                    else
+                        Toast.makeText(PropertyActivity.this,"There is no information on this property.", Toast.LENGTH_LONG);
                 }
                 catch (ActivityNotFoundException ex) {
-                    Toast.makeText(PropertyActivity.this, "The see more screen could not be opened.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PropertyActivity.this, "A browser must be installed to complete this action.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -170,7 +174,7 @@ public final class PropertyActivity extends BaseActivity {
         If the property's image resource id is not equal to the no id placeholder, set the image to the image resource with the provided id
         By default, the image resource is set to the default image (done in app/res/layout/activity_property.xml)
          */
-        if (imgResID != PropertyActivity.NO_IMG_ID)
+        if (imgResID != Property.PROPERTY_NO_IMG_ID)
             jPropertyImageView.setImageResource(imgResID);
         minScaleFactor = calcMinScaleFactor(jPropertyImageView); // calculate minimum scale factor
         propertyScalingMatrix = new Matrix(); // set up matrix

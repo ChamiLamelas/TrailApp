@@ -74,9 +74,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.trailapp_menu, menu); // display menu
         // disable properties button and make it invisible
-        MenuItem propertiesItem = menu.findItem(R.id.properties);
-        propertiesItem.setEnabled(false);
-        propertiesItem.setVisible(false);
+        MenuItem popupMenu = menu.findItem(R.id.popupMenu);
+        popupMenu.setEnabled(false);
+        popupMenu.setVisible(false);
         return true;
     }
 

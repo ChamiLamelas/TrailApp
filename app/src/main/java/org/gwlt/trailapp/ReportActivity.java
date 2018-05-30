@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 import static org.gwlt.trailapp.Utilities.genReport;
 
+@Deprecated
+
 /**Class that represents a ReportActivity for the GWLT app. This is the screen that is displayed when a user clicks on the Report button on the Property Screen.
  * Reports can be of two types: sighting or problem.
  *
@@ -50,7 +52,7 @@ public final class ReportActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        propertyName = getIntent().getStringExtra(PropertyActivity.PROPERTY_NAME_ID); // for reports, no other property attributes besides the property name are necessary
+        propertyName = getIntent().getStringExtra(Property.PROPERTY_NAME_ID); // for reports, no other property attributes besides the property name are necessary
         reportType = getIntent().getBooleanExtra(REPORT_TYPE_ID, DEFAULT_REPORT_TYPE); // get extra boolean data with report type ID to get report type
         setUpUIComponents();
     }

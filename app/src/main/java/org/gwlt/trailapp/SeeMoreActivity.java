@@ -7,16 +7,12 @@ import android.view.MenuItem;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import static org.gwlt.trailapp.MainActivity.getPropertyWithName;
-import static org.gwlt.trailapp.PropertyActivity.PROPERTY_NAME_ID;
+@Deprecated
 
 /**
  * Class that represents a SeeMore Activity
  */
 public final class SeeMoreActivity extends BaseActivity {
-
-    public static final int NO_SEE_MORE_ID = -2; // value to identify properties with no see more
-
     private Toolbar jSeeMoreToolbar; // screen's toolbar
     private TextView jSeeMoreInfo; // screen's text info
     private Property property; // property see more screen is displaying information about
@@ -25,7 +21,7 @@ public final class SeeMoreActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_more);
-        property = getPropertyWithName(getIntent().getStringExtra(PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
+        //property = getPropertyWithName(getIntent().getStringExtra(Property.PROPERTY_NAME_ID)); // get name of property from extra data passed by Intent
         setUpUIComponents();
     }
 
@@ -44,7 +40,7 @@ public final class SeeMoreActivity extends BaseActivity {
         By default, the see more text is set to the default see more text (done in app/res/layout/activity_see_more.xml)
          */
         int seeMoreInfoID = property.getSeeMoreResID();
-        if (seeMoreInfoID != NO_SEE_MORE_ID)
+        if (seeMoreInfoID != Property.PROPERTY_NO_SEE_MORE_ID)
             jSeeMoreInfo.setText(getResources().getString(seeMoreInfoID));
         jSeeMoreInfo.setMovementMethod(new ScrollingMovementMethod()); // allow TextView to be scrollable
     }
