@@ -3,7 +3,6 @@ package org.gwlt.trailapp;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Matrix;
-import android.graphics.Region;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -41,10 +40,10 @@ public final class MainActivity extends BaseActivity {
     private float dx;
     private float dy;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         saveX = 0.0f;
         saveY = 0.0f;
@@ -54,7 +53,6 @@ public final class MainActivity extends BaseActivity {
         dy = 0.0f;
         loadMaps();
         setUpUIComponents();
-        setContentView(R.layout.activity_main);
     }
 
     private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
@@ -98,14 +96,12 @@ public final class MainActivity extends BaseActivity {
                         saveX = 0;
                         saveY = 0;
                         //Log.i(LOG_TAG, "Invalid move; dx="+dx+"; dy="+dy);
-                    }
-                    else {
+                    } else {
                         saveX = TMP_X;
                         saveY = TMP_Y;
                     }
                 }
-            }
-            else {
+            } else {
                 dx = 0;
                 dy = 0;
                 saveX = 0;
@@ -116,8 +112,7 @@ public final class MainActivity extends BaseActivity {
             mapScalingMatrix.setScale(scaleFactor, scaleFactor);
             mapScalingMatrix.postTranslate(dx, dy);
             jMapImgVIew.setImageMatrix(mapScalingMatrix);
-        }
-        else {
+        } else {
             scaleDetector.onTouchEvent(event);
         }
         return true;
@@ -137,14 +132,24 @@ public final class MainActivity extends BaseActivity {
         jMapImgVIew.setImageMatrix(mapScalingMatrix); // use matrix to scale image
     }
 
-    public RegionalMap addMap(int nameID, int imgID, int menuID) {
-        return new RegionalMap(getResources().getString(nameID), imgID, menuID);
+    private RegionalMap addMap(int nameID, int imgID, int menuID) {
+        RegionalMap newMap = new RegionalMap(getResources().getString(nameID), imgID, menuID);
+        maps.add(newMap);
+        return newMap;
     }
 
-    public void loadMaps() {
+    private void loadMaps() {
         maps = new ArrayList<>();
         // add maps using addMap()
         // add properties for each map using addProperty()
+        RegionalMap fourTownGreenway = addMap(R.string.fourTownGreenWayTxt, R.drawable.four_town_greenway_1, R.menu.four_town_greenway_menu);
+        fourTownGreenway.addProperty(this, R.string.asnebumskit, R.mipmap.asnebumskit, Property.PROPERTY_NO_SEE_MORE_ID);
+        fourTownGreenway.addProperty(this, R.string.cascades, R.mipmap.cascades, Property.PROPERTY_NO_SEE_MORE_ID);
+        fourTownGreenway.addProperty(this, R.string.cookPond, R.mipmap.cooks_pond, Property.PROPERTY_NO_SEE_MORE_ID);
+        fourTownGreenway.addProperty(this, R.string.donkerCooksBrook, R.mipmap.donker_cooks_brook, Property.PROPERTY_NO_SEE_MORE_ID);
+        fourTownGreenway.addProperty(this, R.string.kinneyWoods, R.mipmap.kinney_woods, Property.PROPERTY_NO_SEE_MORE_ID);
+        fourTownGreenway.addProperty(this, R.string.morelandWoods, R.mipmap.moreland_woods, Property.PROPERTY_NO_SEE_MORE_ID);
+        fourTownGreenway.addProperty(this, R.string.southwickMuir, R.mipmap.southwick_muir, Property.PROPERTY_NO_SEE_MORE_ID);
     }
 
     public static RegionalMap getRegionalMapWithName(String name) {
@@ -174,8 +179,7 @@ public final class MainActivity extends BaseActivity {
                         Intent mapIntent = new Intent(MainActivity.this, RegionalMapActivity.class);
                         mapIntent.putExtra(RegionalMap.REGIONAL_MAP_NAME_ID, item.getTitle().toString());
                         startActivity(mapIntent);
-                    }
-                    catch (ActivityNotFoundException ex) {
+                    } catch (ActivityNotFoundException ex) {
                         Toast.makeText(MainActivity.this, "Regional map screen could not be opened.", Toast.LENGTH_LONG);
                     }
                     return true;
@@ -183,8 +187,7 @@ public final class MainActivity extends BaseActivity {
             });
             mapsMenu.show();
             return true;
-        }
-        else {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }

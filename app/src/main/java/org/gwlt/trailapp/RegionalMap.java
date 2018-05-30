@@ -1,5 +1,7 @@
 package org.gwlt.trailapp;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 public final class RegionalMap {
@@ -19,8 +21,8 @@ public final class RegionalMap {
         propertiesMenuResID = menuID;
     }
 
-    public void addProperty(String propertyName, int propertyImgResID, int propertySeeMoreResID) {
-        properties.add(new Property(propertyName, propertyImgResID, propertySeeMoreResID, regionName));
+    public void addProperty(Context context, int propertyNameResID, int propertyImgResID, int propertySeeMoreResID) {
+        properties.add(new Property(context.getResources().getString(propertyNameResID), propertyImgResID, propertySeeMoreResID));
     }
 
     /**

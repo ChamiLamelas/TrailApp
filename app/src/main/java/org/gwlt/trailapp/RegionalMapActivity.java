@@ -3,12 +3,11 @@ package org.gwlt.trailapp;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Matrix;
-import android.graphics.Region;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -22,6 +21,7 @@ public class RegionalMapActivity extends BaseActivity {
     private float scaleFactor;
     private float minScaleFactor;
     private Matrix mapScalingMatrix;
+    private ScaleGestureDetector scaleDetector; // detector for scaling image
 
     private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
@@ -47,7 +47,13 @@ public class RegionalMapActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regional_map);
         regionalMap = MainActivity.getRegionalMapWithName(getIntent().getStringExtra(RegionalMap.REGIONAL_MAP_NAME_ID));
+        scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        scaleDetector.onTouchEvent(event);
+        return true;
     }
 
     public void setUpUIComponents() {
@@ -78,7 +84,7 @@ public class RegionalMapActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.popupMenu) {
             int propertiesResID = regionalMap.getPropertiesMenuResID();
-            if (propertiesResID == RegionalMap.REGIONAL_MAP_NO_PROPERTIES_ID) {
+            if (propertiesResID != RegionalMap.REGIONAL_MAP_NO_PROPERTIES_ID) {
                 PopupMenu propertiesMenu = new PopupMenu(this, jRMapToolbar);
                 propertiesMenu.getMenuInflater().inflate(propertiesResID, propertiesMenu.getMenu());
                 propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -90,14 +96,15 @@ public class RegionalMapActivity extends BaseActivity {
                             propertyIntent.putExtra(RegionalMap.REGIONAL_MAP_NAME_ID, regionalMap.getRegionName());
                             startActivity(propertyIntent);
                         } catch (ActivityNotFoundException ex) {
-                            Toast.makeText(RegionalMapActivity.this, "Property screen could not be opened.", Toast.LENGTH_LONG);
+                            Toast.makeText(RegionalMapActivity.this, "Property screen could not be opened.", Toast.LENGTH_LONG).show();
                         }
                         return true;
                     }
                 });
+                propertiesMenu.show();
             }
             else {
-                Toast.makeText(this, "There are no properties currently listed for this region.", Toast.LENGTH_LONG);
+                Toast.makeText(this, "There are no properties currently listed for this region.", Toast.LENGTH_LONG).show();
             }
             return true;
         }

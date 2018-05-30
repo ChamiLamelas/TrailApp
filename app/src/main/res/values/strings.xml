@@ -13,7 +13,7 @@
     <string name="reportDialogInfo">Please choose a report type.</string>
     <string name="reportDialogPositiveBtn">Fill out Report</string>
     <string name="reportLink">https://docs.google.com/forms/d/e/1FAIpQLSdXgnpEiFHR2w-M8jNd8jZvrPWLLx6n5W6aR4qi_AAnrS7f-w/viewform</string>
-    <string name="reportImageBody">Please attach an image below of what you have to report on the property you visited."</string>
+    <string name="reportImageBody">Please attach an image below of what you have to report on your visit to "</string>
     <string name="reportDialogNegativeBtn">Email an Image</string>
     <string name="learnMoreTxt">Learn More</string>
     <string name="learnMoreLink">http://www.gwlt.org</string>
@@ -43,7 +43,8 @@
     <string name="seeMoreTxt">See More</string>
     <string name="defaultSeeMoreTxt">There has been no information reported on this property.</string>
     <string name="gwltMissionTxt">TEST POPUP</string>
-    <!--add more property names here (step 1) -->
+
+    <string name="fourTownGreenWayTxt">Four Town Greenway</string>>
     <string name="asnebumskit">Asnebumskit</string>
     <string name="cascades">Cascades</string>
     <string name="cookPond">Cook\'s Pond</string>
@@ -51,5 +52,4 @@
     <string name="kinneyWoods">Kinney Woods</string>
     <string name="morelandWoods">Moreland Woods</string>
     <string name="southwickMuir">Southwick Muir</string>
-    <!--add more property see more information here-->
 </resources>

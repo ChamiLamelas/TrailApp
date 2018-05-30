@@ -48,7 +48,38 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId(); // get item id to identify item using resource ids
         if (id == R.id.learnMoreButton) {
-            PopupMenu learnMoreMenu = getLearnMoreMenu(this, learnMoreToolbar);
+            PopupMenu learnMoreMenu = new PopupMenu(this, learnMoreToolbar);
+            learnMoreMenu.getMenuInflater().inflate(R.menu.learn_more_options_menu, learnMoreMenu.getMenu());
+            learnMoreMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int itemID = item.getItemId();
+                    if (itemID == R.id.learnMoreChoice) {
+                        if (connectedToInternet()) {
+                            try {
+                                startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.learnMoreLink)), "Choose browser.."));
+                            } catch (ActivityNotFoundException ex) {
+                                Toast.makeText(BaseActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(BaseActivity.this, "An Internet connection is required to  complete this action.", Toast.LENGTH_LONG).show();
+                        }
+                    } else if (itemID == R.id.joinChoice) {
+                        if (connectedToInternet()) {
+                            try {
+                                startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.joinLink)), "Choose browser.."));
+                            } catch (ActivityNotFoundException ex) {
+                                Toast.makeText(BaseActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(BaseActivity.this, "An Internet connection is required to  complete this action.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    return true;
+                }
+            });
             learnMoreMenu.show();
             return true;
         } else if (id == R.id.helpButton) {
@@ -99,70 +130,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         return connectedNetworkInfo != null && connectedNetworkInfo.isConnected();
     }
 
-    /**
-     * Gets properties popup menu for a provided Context connected to a provided View
-     *
-     * @param context - context the popup menu will be displayed on
-     * @param view    - view that the popup menu will be connected on
-     * @return popup menu with the properties list
-     */
-    public PopupMenu getPropertiesMenu(Context context, View view) {
-        final Context CONTEXT = context; // must store as final variable to be used in PopupMenu.OnMenuItemClickListener implementation
-        PopupMenu propertiesMenu = new PopupMenu(CONTEXT, view); // instantiate PopupMenu with provided arguments
-        propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu()); // display menu
-        propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() { // set up listener for popup menu item clicks
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                try {
-                    Intent propertyIntent = new Intent(CONTEXT, PropertyActivity.class); // create Property Intent on the provided Context
-                    /*
-                    In order for the PropertyActivity to load the correct data, the Property Intent must hold Property name identifier data
-                    This data is the title of the PopupMenu item and will be used by getPropertyWithName() to get the Property object
-                     */
-                    propertyIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, item.getTitle().toString());
-                    startActivity(propertyIntent);
-                } catch (ActivityNotFoundException ex) {
-                    Toast.makeText(CONTEXT, "Could not open property", Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
-        return propertiesMenu;
-    }
-
-    public PopupMenu getLearnMoreMenu(Context context, View view) {
-        final Context CONTEXT = context;
-        final PopupMenu learnMoreMenu = new PopupMenu(CONTEXT, view);
-        learnMoreMenu.getMenuInflater().inflate(R.menu.learn_more_options_menu, learnMoreMenu.getMenu());
-        learnMoreMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int itemID = item.getItemId();
-                if (itemID == R.id.learnMoreChoice) {
-                    try {
-                        startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.learnMoreLink)), "Choose browser.."));
-                    }
-                    catch (ActivityNotFoundException ex) {
-                        Toast.makeText(CONTEXT, "A browser must be installed to complete this action.", Toast.LENGTH_LONG);
-                    }
-                }
-                else if (itemID == R.id.joinChoice) {
-                    try {
-                        startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.joinLink)), "Choose browser.."));
-                    }
-                    catch (ActivityNotFoundException ex) {
-                        Toast.makeText(CONTEXT, "A browser must be installed to complete this action.", Toast.LENGTH_LONG);
-                    }
-                }
-                return true;
-            }
-        });
-        return learnMoreMenu;
-    }
-
     public abstract void setUpUIComponents(); // all child classes must implement this
 
-    public void setLearnMoreToolbar (Toolbar toolbar) {
+    public void setLearnMoreToolbar(Toolbar toolbar) {
         learnMoreToolbar = toolbar;
     }
 }

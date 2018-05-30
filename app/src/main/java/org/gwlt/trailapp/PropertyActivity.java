@@ -20,7 +20,6 @@ import static org.gwlt.trailapp.Utilities.calcMinScaleFactor;
 import static org.gwlt.trailapp.Utilities.genBrowseIntent;
 import static org.gwlt.trailapp.Utilities.genEmailToGWLT;
 
-
 /**
  * Class that represents PropertyActivity of GWLT app. This is the screen that applies when a user clicks on a Property name that drops down from the PopupMenu on the main screen.
  */
@@ -115,7 +114,7 @@ public final class PropertyActivity extends BaseActivity {
                     startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.reportLink)),"Choose a browser.."));
                 }
                 catch (ActivityNotFoundException ex) {
-                    Toast.makeText(PropertyActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG);
+                    Toast.makeText(PropertyActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -123,11 +122,11 @@ public final class PropertyActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    startActivity(Intent.createChooser(genEmailToGWLT("[Report Image] " + property.getName(), getResources().getString(R.string.reportImageBody)), "Choose email client.."));
+                    startActivity(Intent.createChooser(genEmailToGWLT("[Report Image] " + property.getName(), getResources().getString(R.string.reportImageBody) + property.getName() + "."), "Choose email client.."));
                     finish();
                 }
                 catch (ActivityNotFoundException ex) {
-                    Toast.makeText(PropertyActivity.this, "An email client must be installed to complete this action.", Toast.LENGTH_LONG);
+                    Toast.makeText(PropertyActivity.this, "An email client must be installed to complete this action.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -155,15 +154,19 @@ public final class PropertyActivity extends BaseActivity {
         jSeeMoreButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    int seeMoreLink = property.getSeeMoreResID();
-                    if (seeMoreLink != Property.PROPERTY_NO_SEE_MORE_ID)
-                        startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(seeMoreLink)),"Choose browser.."));
-                    else
-                        Toast.makeText(PropertyActivity.this,"There is no information on this property.", Toast.LENGTH_LONG);
+                if (connectedToInternet()) {
+                    try {
+                        int seeMoreLink = property.getSeeMoreResID();
+                        if (seeMoreLink != Property.PROPERTY_NO_SEE_MORE_ID)
+                            startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(seeMoreLink)), "Choose browser.."));
+                        else
+                            Toast.makeText(PropertyActivity.this, "There is currently no information on this property.", Toast.LENGTH_LONG).show();
+                    } catch (ActivityNotFoundException ex) {
+                        Toast.makeText(PropertyActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                catch (ActivityNotFoundException ex) {
-                    Toast.makeText(PropertyActivity.this, "A browser must be installed to complete this action.",Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(PropertyActivity.this, "An Internet connection is required to  complete this action.", Toast.LENGTH_LONG).show();
                 }
             }
         });

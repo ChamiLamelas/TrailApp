@@ -41,6 +41,7 @@ public final class Utilities {
         return emailIntent;
     }
 
+    @Deprecated
     /**
      * Generates a report email using genEmail() and getFormattedTime() as helper methods
      * @param name - name of the property being reported
