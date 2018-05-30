@@ -97,7 +97,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * Adds menu to the toolbar
-     *
      * @param menu - menu being added to the toolbar
      * @return true to display menu
      */

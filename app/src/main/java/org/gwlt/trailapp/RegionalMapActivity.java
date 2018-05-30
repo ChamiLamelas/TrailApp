@@ -13,16 +13,22 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+/**
+ * Class that represents the Regional Map Activity. This is the screen that is displayed when Regional maps are displayed.
+ */
 public class RegionalMapActivity extends BaseActivity {
 
-    private RegionalMap regionalMap;
-    private Toolbar jRMapToolbar;
-    private ImageView jRMapView;
-    private float scaleFactor;
-    private float minScaleFactor;
-    private Matrix mapScalingMatrix;
+    private RegionalMap regionalMap; // regional map being represented
+    private Toolbar jRMapToolbar; // screen's toolbar
+    private ImageView jRMapView; // image view holding regional map image
+    private float scaleFactor; // current scale factor being applied to the image
+    private float minScaleFactor; // minimum scale factor
+    private Matrix mapScalingMatrix; // matrix being used to scale the image
     private ScaleGestureDetector scaleDetector; // detector for scaling image
 
+    /**
+     * Helper class that listens for zoom actions and scales the image accordingly
+     */
     private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
@@ -51,11 +57,13 @@ public class RegionalMapActivity extends BaseActivity {
         setUpUIComponents();
     }
 
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         scaleDetector.onTouchEvent(event);
         return true;
     }
 
+    @Override
     public void setUpUIComponents() {
         jRMapToolbar = findViewById(R.id.rMapToolbar);
         setSupportActionBar(jRMapToolbar);
@@ -72,6 +80,12 @@ public class RegionalMapActivity extends BaseActivity {
         jRMapView.setImageMatrix(mapScalingMatrix); // use matrix to scale image
     }
 
+    /**
+     * RegionalMapActivity must override this in order to enable the popup button to show the popup menu for the regional map's list of properties
+     * @param menu - menu being added to the toolbar
+     * @return true to display menu
+     */
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuItem popupBtn = menu.findItem(R.id.popupMenu);
@@ -80,6 +94,11 @@ public class RegionalMapActivity extends BaseActivity {
         return true;
     }
 
+    /**
+     * RegionalMapActivity must override this in order to enable the popup menu of properties to be clicked
+     * @param item - menu item that has been triggered
+     * @return true to display menu
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.popupMenu) {

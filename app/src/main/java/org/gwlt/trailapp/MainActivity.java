@@ -22,6 +22,13 @@ import static org.gwlt.trailapp.Utilities.pointIsOnImage;
 
 /**
  * Class that represents the Main Activity of the GWLT app. This is the screen that is displayed when the user first opens the app.
+ *
+ * How to add a new RegionalMap with Properties
+ *
+ * 1) Add the name of the region and names of the properties to app/res/values/strings.xml
+ * 2) Add the image for the region map to its respective folder in app/res/
+ * 3) Add the menu file with the list of properties to app/res/menu/
+ *
  */
 
 public final class MainActivity extends BaseActivity {
@@ -55,6 +62,9 @@ public final class MainActivity extends BaseActivity {
         setUpUIComponents();
     }
 
+    /**
+     * Helper class that listens for zoom actions and scales the image accordingly
+     */
     private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
