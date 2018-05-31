@@ -4,15 +4,19 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-public final class RegionalMap {
-    private String regionName;
-    private int regionalMapResID;
-    private ArrayList<Property> properties;
-    private int propertiesMenuResID;
+/**
+ * Class that represents a RegionalMap.
+ */
 
-    public static final String REGIONAL_MAP_NAME_ID = "regionalMapName";
-    public static final int REGIONAL_MAP_NO_IMG_ID = -3;
-    public static final int REGIONAL_MAP_NO_PROPERTIES_ID = -4;
+public final class RegionalMap {
+    private String regionName; // region name
+    private int regionalMapResID; // id of image resource for the regional map
+    private ArrayList<Property> properties; // property list for this map
+    private int propertiesMenuResID; // id of menu resource for the regional map
+
+    public static final String REGIONAL_MAP_NAME_ID = "regionalMapName"; // regional map name id for passing between Intents
+    public static final int REGIONAL_MAP_NO_IMG_ID = -3; // no image place holder for regional maps
+    public static final int REGIONAL_MAP_NO_PROPERTIES_ID = -4; // no properties list for regional maps
 
     public RegionalMap(String name, int mapID, int menuID) {
         regionName = name;
@@ -21,6 +25,13 @@ public final class RegionalMap {
         propertiesMenuResID = menuID;
     }
 
+    /**
+     * Adds a property to the map in the Context where the map was created with the provided resources.
+     * @param context - Context where the map as created
+     * @param propertyNameResID - id of the property's name resource
+     * @param propertyImgResID - id of the property's image resource
+     * @param propertySeeMoreResID - id of the property's see more resource
+     */
     public void addProperty(Context context, int propertyNameResID, int propertyImgResID, int propertySeeMoreResID) {
         properties.add(new Property(context.getResources().getString(propertyNameResID), propertyImgResID, propertySeeMoreResID));
     }

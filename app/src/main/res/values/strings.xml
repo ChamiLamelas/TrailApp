@@ -41,7 +41,7 @@
     <string name="problemDescriptionTxt">The following items are common problems with our trails and you can choose whichever are applicable and add additional information in the field below them. Once you are finished, an email will be generated for you that will be sent to the Greater Worcester Land Trust. </string>
     <string name="sightingDescriptionTxt">Please add anything you saw or wish to tell the Greater Worcester Land Trust on your visit to this property. This information will be used to improve the "see more" section for this property.</string>
     <string name="seeMoreTxt">See More</string>
-    <string name="defaultSeeMoreTxt">There has been no information reported on this property.</string>
+    <string name="defaultSeeMoreTxt">There has been no information reported on </string>
     <string name="gwltMissionTxt">TEST POPUP</string>
 
     <string name="fourTownGreenWayTxt">Four Town Greenway</string>>

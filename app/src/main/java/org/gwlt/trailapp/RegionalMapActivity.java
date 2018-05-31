@@ -2,13 +2,10 @@ package org.gwlt.trailapp;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -21,46 +18,13 @@ public class RegionalMapActivity extends BaseActivity {
     private RegionalMap regionalMap; // regional map being represented
     private Toolbar jRMapToolbar; // screen's toolbar
     private ImageView jRMapView; // image view holding regional map image
-    private float scaleFactor; // current scale factor being applied to the image
-    private float minScaleFactor; // minimum scale factor
-    private Matrix mapScalingMatrix; // matrix being used to scale the image
-    private ScaleGestureDetector scaleDetector; // detector for scaling image
-
-    /**
-     * Helper class that listens for zoom actions and scales the image accordingly
-     */
-    private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            scaleFactor *= detector.getScaleFactor(); // update scale factor by multiplying by old scale factor
-            /*
-            Using Math.max() and Math.min() a longer if statement can be avoided, however this is what it would be:
-
-            if the maximum scale factor is smaller than the current scale factor
-                scale factor = maximum scale factor
-            if the minimum scale factor is larger than the current scale factor
-                scale factor = minimum scale factor
-             */
-            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
-            mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix
-            jRMapView.setImageMatrix(mapScalingMatrix); // apply scale to image using matrix
-            return true;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regional_map);
         regionalMap = MainActivity.getRegionalMapWithName(getIntent().getStringExtra(RegionalMap.REGIONAL_MAP_NAME_ID));
-        scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        scaleDetector.onTouchEvent(event);
-        return true;
     }
 
     @Override
@@ -73,11 +37,6 @@ public class RegionalMapActivity extends BaseActivity {
         int mapImgID = regionalMap.getRegionalMapResID();
         if (mapImgID != RegionalMap.REGIONAL_MAP_NO_IMG_ID)
             jRMapView.setImageResource(mapImgID);
-        minScaleFactor = Utilities.calcMinScaleFactor(jRMapView); // calculate minimum scale factor using Utility function
-        mapScalingMatrix = new Matrix(); // set up image scaling matrix
-        scaleFactor = minScaleFactor; // initialize scaleFactor to minimum scale factor
-        mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set matrix x,y scales to scale factor
-        jRMapView.setImageMatrix(mapScalingMatrix); // use matrix to scale image
     }
 
     /**

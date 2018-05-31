@@ -4,19 +4,14 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Matrix;
-import android.graphics.Region;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import static org.gwlt.trailapp.Utilities.calcMinScaleFactor;
 import static org.gwlt.trailapp.Utilities.genBrowseIntent;
 import static org.gwlt.trailapp.Utilities.genEmailToGWLT;
 
@@ -29,10 +24,6 @@ public final class PropertyActivity extends BaseActivity {
     private Button jSeeMoreButton; // button to see more
     private ImageView jPropertyImageView; // image view to hold image of property map
     private Property property; // name of property
-    private float scaleFactor; // scale factor for zooming
-    private float minScaleFactor; // minimum scale factor for this activity
-    private Matrix propertyScalingMatrix; // matrix to scale image
-    private ScaleGestureDetector scaleDetector; // detector for scaling image
     private AlertDialog.Builder reportTypeDialog; // alert dialog for selecting report type
 
     @Override
@@ -40,51 +31,15 @@ public final class PropertyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
         loadProperty();
-        scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
         setUpUIComponents();
     }
 
     /**
-     * Helper class that listens for zoom actions and scales the image accordingly
+     * Loading the activity's property using the regional map name and property name provided with the Intent.
      */
-    private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        /**
-         * Override this method in order to update image when user makes a scaling gesture
-         * @param detector - detector of scale gesture
-         * @return whether or not the operation could be performed successfully
-         */
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            scaleFactor *= detector.getScaleFactor(); // update scale factor by multiplying by old scale factor
-            /*
-            Using Math.max() and Math.min() a longer if statement can be avoided, however this is what it would be:
-
-            if the maximum scale factor is smaller than the current scale factor
-                scale factor = maximum scale factor
-            if the minimum scale factor is larger than the current scale factor
-                scale factor = minimum scale factor
-             */
-            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, MAX_SCALE_FACTOR));
-            propertyScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix
-            jPropertyImageView.setImageMatrix(propertyScalingMatrix); // apply scale to image using matrix
-            return true;
-        }
-    }
-
     private void loadProperty() {
         RegionalMap propertysParentMap = MainActivity.getRegionalMapWithName(getIntent().getStringExtra(RegionalMap.REGIONAL_MAP_NAME_ID));
         property = propertysParentMap.getPropertyWithName(getIntent().getStringExtra(Property.PROPERTY_NAME_ID));
-    }
-
-    /**
-     * Enables the zoom listener to work on touch events on this activity
-     * @param event - a motion event
-     * @return whether or not the action could be performed
-     */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        scaleDetector.onTouchEvent(event);
-        return true;
     }
 
     @Override
@@ -160,7 +115,7 @@ public final class PropertyActivity extends BaseActivity {
                         if (seeMoreLink != Property.PROPERTY_NO_SEE_MORE_ID)
                             startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(seeMoreLink)), "Choose browser.."));
                         else
-                            Toast.makeText(PropertyActivity.this, "There is currently no information on this property.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(PropertyActivity.this, R.string.defaultSeeMoreTxt + property.getName() + ".", Toast.LENGTH_LONG).show();
                     } catch (ActivityNotFoundException ex) {
                         Toast.makeText(PropertyActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_SHORT).show();
                     }
@@ -179,11 +134,6 @@ public final class PropertyActivity extends BaseActivity {
          */
         if (imgResID != Property.PROPERTY_NO_IMG_ID)
             jPropertyImageView.setImageResource(imgResID);
-        minScaleFactor = calcMinScaleFactor(jPropertyImageView); // calculate minimum scale factor
-        propertyScalingMatrix = new Matrix(); // set up matrix
-        scaleFactor = minScaleFactor; // initialize scale factor with minimum scale factor
-        propertyScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix
-        jPropertyImageView.setImageMatrix(propertyScalingMatrix); // scale image using scaling matrix
     }
 
 }

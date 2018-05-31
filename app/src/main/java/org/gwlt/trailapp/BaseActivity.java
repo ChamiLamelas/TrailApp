@@ -5,13 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -40,7 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * Detects clicks on Toolbar menu items and runs desired functions
-     *
      * @param item - menu item that has been triggered
      * @return false to allow normal menu processing to proceed, true to consume it here.
      */
@@ -112,7 +109,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * If the Context (and thus the Activity) has an active Internet connection
-     *
      * @return whether not Content is connected to the Internet
      */
     public boolean connectedToInternet() {
@@ -131,6 +127,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract void setUpUIComponents(); // all child classes must implement this
 
+    /**
+     * Used by subclasses to set the toolbar to be used by learn more popup menu.
+     * @param toolbar - Toolbar from subclass and its associated resource file
+     */
     public void setLearnMoreToolbar(Toolbar toolbar) {
         learnMoreToolbar = toolbar;
     }
