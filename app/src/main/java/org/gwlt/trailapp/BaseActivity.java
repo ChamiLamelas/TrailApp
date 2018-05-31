@@ -3,17 +3,25 @@ package org.gwlt.trailapp;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Matrix;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import static org.gwlt.trailapp.Utilities.LOG_TAG;
 import static org.gwlt.trailapp.Utilities.genBrowseIntent;
+import static org.gwlt.trailapp.Utilities.moveIsValid;
+import static org.gwlt.trailapp.Utilities.pointIsOnImage;
 
 /**
  * All Activities of the GWLT trail app inherit their properties from BaseActivity.
@@ -30,10 +38,28 @@ import static org.gwlt.trailapp.Utilities.genBrowseIntent;
 public abstract class BaseActivity extends AppCompatActivity {
     public static final float MAX_SCALE_FACTOR = 5.0f; // maximum possible scale factor to be used in image scaling in MainActivity
     private Toolbar learnMoreToolbar;
+    ImageView imageView;
+    private float scaleFactor; // scale factor for zooming
+    private float minScaleFactor; // minimum scale factor for this activity
+    private Matrix mapScalingMatrix; // matrix to scale image
+    private ScaleGestureDetector scaleDetector; // detector for scaling image
+    private float saveX;
+    private float saveY;
+    private float startX;
+    private float startY;
+    private float dx;
+    private float dy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        scaleDetector = new ScaleGestureDetector(this, new ZoomListener()); // initialize scale detector to use ZoomListener class
+        saveX = 0.0f;
+        saveY = 0.0f;
+        startX = 0.0f;
+        startY = 0.0f;
+        dx = 0.0f;
+        dy = 0.0f;
     }
 
     /**
@@ -125,13 +151,84 @@ public abstract class BaseActivity extends AppCompatActivity {
         return connectedNetworkInfo != null && connectedNetworkInfo.isConnected();
     }
 
-    public abstract void setUpUIComponents(); // all child classes must implement this
-
     /**
      * Used by subclasses to set the toolbar to be used by learn more popup menu.
      * @param toolbar - Toolbar from subclass and its associated resource file
      */
     public void setLearnMoreToolbar(Toolbar toolbar) {
         learnMoreToolbar = toolbar;
+    }
+
+    public void setImageView(ImageView imgView) {
+        imageView = imgView;
+    }
+
+    public void setUpUIComponents() {
+        minScaleFactor = Utilities.calcMinScaleFactor(imageView); // calculate minimum scale factor using Utility function
+        mapScalingMatrix = new Matrix(); // set up image scaling matrix
+        scaleFactor = minScaleFactor; // initialize scaleFactor to minimum scale factor
+        mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set matrix x,y scales to scale factor
+        imageView.setImageMatrix(mapScalingMatrix); // use matrix to scale image
+    }
+
+    /**
+     * Helper class that listens for zoom actions and scales the image accordingly
+     */
+    private class ZoomListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaleFactor *= detector.getScaleFactor(); // update scale factor by multiplying by old scale factor
+            /*
+            Using Math.max() and Math.min() a longer if statement can be avoided, however this is what it would be:
+
+            if the maximum scale factor is smaller than the current scale factor
+                scale factor = maximum scale factor
+            if the minimum scale factor is larger than the current scale factor
+                scale factor = minimum scale factor
+             */
+            scaleFactor = Math.max(minScaleFactor, Math.min(scaleFactor, BaseActivity.MAX_SCALE_FACTOR));
+            mapScalingMatrix.setScale(scaleFactor, scaleFactor); // set x,y scales for scaling matrix
+            imageView.setImageMatrix(mapScalingMatrix); // apply scale to image using matrix
+            return true;
+        }
+    }
+
+    // TODO fix zoom and pan
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (imageView != null) {
+            if (event.getPointerCount() == 1 && !scaleDetector.isInProgress()) {
+                mapScalingMatrix.setScale(scaleFactor, scaleFactor);
+                final int ACTION = event.getActionMasked();
+                final float TMP_X = event.getX();
+                final float TMP_Y = event.getY();
+                if (pointIsOnImage(this, imageView, TMP_X, TMP_Y, scaleFactor)) {
+                    if (ACTION == MotionEvent.ACTION_DOWN) {
+                        startX = TMP_X;
+                        startY = TMP_Y;
+                    } else if (ACTION == MotionEvent.ACTION_MOVE) {
+                        dx = TMP_X - startX;
+                        dy = TMP_Y - startY;
+                        mapScalingMatrix.postTranslate(dx+saveX, dy+saveY);
+                    } else if (ACTION == MotionEvent.ACTION_UP) {
+                        mapScalingMatrix.postTranslate(dx+saveX, dy+saveY);
+                        saveX = TMP_X-startX;
+                        saveY = TMP_Y-startY;
+                    }
+                } else {
+                    dx = 0;
+                    dy = 0;
+                    saveX = 0;
+                    saveY = 0;
+                }
+                Log.i(LOG_TAG, "DELTA: " + dx + ";\t" + dy);
+                Log.i(LOG_TAG, "SAVE: " + saveX + ";\t" + saveY);
+                //Log.i(LOG_TAG, "point is on image");
+                imageView.setImageMatrix(mapScalingMatrix);
+            } else {
+                scaleDetector.onTouchEvent(event);
+            }
+        }
+        return true;
     }
 }

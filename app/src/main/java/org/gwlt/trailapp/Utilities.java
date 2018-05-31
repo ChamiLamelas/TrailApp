@@ -112,6 +112,14 @@ public final class Utilities {
         return initHeight * yScaleFactor;
     }
 
+    public static float minX(ImageView imageView) {
+        return ((ViewGroup.MarginLayoutParams) imageView.getLayoutParams()).leftMargin;
+    }
+
+    public static float minY(Context context) {
+        return getActionBarHeight(context);
+    }
+
     /**
      * Determines whether or not the point is on this image
      * @param context - Context the ImageView is on
@@ -122,10 +130,8 @@ public final class Utilities {
      * @return boolean state of whether or not the point is on the image
      */
     public static boolean pointIsOnImage(Context context, ImageView imageView, float x, float y, float scaleFactor) {
-        float minX = ((ViewGroup.MarginLayoutParams) imageView.getLayoutParams()).leftMargin;
-        float minY = getActionBarHeight(context);
-        boolean xIsValid = x > minX && x < maxX(imageView, scaleFactor);
-        boolean yIsValid = y > minY && y < maxY(imageView, scaleFactor);
+        boolean xIsValid = x > minX(imageView) && x < maxX(imageView, scaleFactor);
+        boolean yIsValid = y > minY(context) && y < maxY(imageView, scaleFactor);
         return xIsValid && yIsValid;
     }
 
@@ -137,14 +143,9 @@ public final class Utilities {
      * @param scaleFactor - scale factor being applied to the x and y of the image
      * @return boolean state of whether or not the move is valid
      */
-    public static boolean moveIsValid(ImageView imageView, float dx, float dy, float scaleFactor) {
-        float initWidth = imageView.getDrawable().getIntrinsicWidth();
-        float initHeight = imageView.getDrawable().getIntrinsicHeight();
-        float finalX = initWidth*scaleFactor + Math.abs(dx);
-        float finalY = initHeight*scaleFactor + Math.abs(dy);
-        boolean xMoveIsValid = finalX < maxX(imageView, scaleFactor);
-        boolean yMoveIsValid = finalY < maxY(imageView, scaleFactor);
-        Log.i(LOG_TAG, "finalX="+finalX+"\tfinalY="+finalY+"\tmaxX="+maxX(imageView, scaleFactor)+"\tmaxY="+maxY(imageView, scaleFactor));
+    public static boolean moveIsValid(Context context, ImageView imageView, float startX, float startY, float dx, float dy, float scaleFactor) {
+        boolean xMoveIsValid = false;
+        boolean yMoveIsValid = false;
         return xMoveIsValid && yMoveIsValid;
     }
 }
