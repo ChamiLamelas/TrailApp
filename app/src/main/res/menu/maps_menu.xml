@@ -4,4 +4,8 @@
         android:id="@+id/one"
         android:title="Four Town Greenway"
     />
+    <item
+        android:id="@+id/two"
+        android:title="Other GWLT Properties"
+        />
 </menu>
