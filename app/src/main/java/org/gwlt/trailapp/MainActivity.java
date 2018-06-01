@@ -15,14 +15,14 @@ import java.util.ArrayList;
 /**
  * Class that represents the Main Activity of the GWLT app. This is the screen that is displayed when the user first opens the app.
  *
- * All of this should be done in loadMaps()
+ * All of the Java code for this should be written in loadRegionalMaps()
  *
  * How to add a new RegionalMap
  *
  * 1) Add the name of the region and names of the properties to app/res/values/strings.xml
  * 2) Add the image for the region map to the appropriate folder in app/res/ if it has an image
  * 3) Add the menu file with the list of properties to app/res/menu/ if it has a property list
- * 4) Use addMap() to add (see its documentation) a new map to list of maps
+ * 4) Use addRegionalMap() to add (see its documentation) a new map to list of maps
  *      If the map has no image, use RegionalMap.REGIONAL_MAP_NO_IMG_ID as a placeholder
  *      If the map has no property list, use RegionalMap.REGIONAL_MAP_NO_PROPERTIES_ID as a placeholder
  *
@@ -46,7 +46,7 @@ public final class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadMaps();
+        loadRegionalMaps();
         setUpUIComponents();
     }
 
@@ -57,7 +57,7 @@ public final class MainActivity extends BaseActivity {
         setSupportActionBar(jAppToolbar);
         setLearnMoreToolbar(jAppToolbar);
         jMapImgVIew = findViewById(R.id.mapImgView);
-        setImageView(jMapImgVIew);
+        setZoomableImageView(jMapImgVIew);
         super.setUpUIComponents();
     }
 
@@ -68,7 +68,7 @@ public final class MainActivity extends BaseActivity {
      * @param menuID - ID of the menu resource of the map's list of properties
      * @return the new RegionalMap that has been created
      */
-    private RegionalMap addMap(int nameID, int imgID, int menuID) {
+    private RegionalMap addRegionalMap(int nameID, int imgID, int menuID) {
         RegionalMap newMap = new RegionalMap(getResources().getString(nameID), imgID, menuID);
         maps.add(newMap);
         return newMap;
@@ -77,11 +77,9 @@ public final class MainActivity extends BaseActivity {
     /**
      * This function initializes the map list, creates new maps, and then adds properties to the new maps.
      */
-    private void loadMaps() {
+    private void loadRegionalMaps() {
         maps = new ArrayList<>();
-        // add maps using addMap()
-        // add properties for each map using addProperty()
-        RegionalMap allProperties = addMap(R.string.allProperties,R.drawable.trust_lands,R.menu.all_properties_map_menu);
+        RegionalMap allProperties = addRegionalMap(R.string.allProperties,R.drawable.trust_lands,R.menu.all_properties_map_menu);
         allProperties.addProperty(this,R.string.bovenzi,R.mipmap.bovenzi,Property.PROPERTY_NO_SEE_MORE_ID );
         allProperties.addProperty(this,R.string.nicksWoods,R.mipmap.nicks_woods_g_1,Property.PROPERTY_NO_SEE_MORE_ID );
         allProperties.addProperty(this,R.string.coesReservoir,R.mipmap.coes_reservoir,Property.PROPERTY_NO_SEE_MORE_ID );
@@ -91,7 +89,8 @@ public final class MainActivity extends BaseActivity {
         allProperties.addProperty(this,R.string.broadmeadow,R.mipmap.broadmeadow,Property.PROPERTY_NO_SEE_MORE_ID );
         allProperties.addProperty(this,R.string.sibley,R.mipmap.sibley,Property.PROPERTY_NO_SEE_MORE_ID );
         allProperties.addProperty(this,R.string.elmersSeat,R.mipmap.elmers_seat,Property.PROPERTY_NO_SEE_MORE_ID );
-        RegionalMap fourTownGreenway = addMap(R.string.fourTownGreenWayTxt, R.drawable.four_town_greenway_1, R.menu.four_town_greenway_menu);
+        allProperties.addProperty(this,R.string.pineGlen, R.mipmap.pine_glen, Property.PROPERTY_NO_SEE_MORE_ID);
+        RegionalMap fourTownGreenway = addRegionalMap(R.string.fourTownGreenWayTxt, R.drawable.four_town_greenway_1, R.menu.four_town_greenway_menu);
         fourTownGreenway.addProperty(this, R.string.asnebumskit, R.mipmap.asnebumskit, Property.PROPERTY_NO_SEE_MORE_ID);
         fourTownGreenway.addProperty(this, R.string.cascades, R.mipmap.cascades, Property.PROPERTY_NO_SEE_MORE_ID);
         fourTownGreenway.addProperty(this, R.string.cookPond, R.mipmap.cooks_pond, Property.PROPERTY_NO_SEE_MORE_ID);
@@ -146,7 +145,7 @@ public final class MainActivity extends BaseActivity {
                         mapIntent.putExtra(RegionalMap.REGIONAL_MAP_NAME_ID, item.getTitle().toString());
                         startActivity(mapIntent);
                     } catch (ActivityNotFoundException ex) {
-                        Toast.makeText(MainActivity.this, "Regional map screen could not be opened.", Toast.LENGTH_LONG);
+                        Toast.makeText(MainActivity.this, "Regional map screen could not be opened.", Toast.LENGTH_LONG).show();
                     }
                     return true;
                 }

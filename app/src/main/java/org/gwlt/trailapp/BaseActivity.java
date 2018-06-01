@@ -159,7 +159,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         learnMoreToolbar = toolbar;
     }
 
-    public void setImageView(ImageView imgView) {
+    /**
+     * Subclass activities should use this to contain an image view that the user can zoom in/out on and pan
+     * @param imgView - image view that will be zoomable and can be panned
+     */
+    public void setZoomableImageView(ImageView imgView) {
         imageView = imgView;
     }
 
@@ -193,6 +197,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    private void resetMove() {
+        Log.i(LOG_TAG, " reset");
+        dx = 0;
+        dy = 0;
+        saveX = 0;
+        saveY = 0;
+    }
+
     // TODO fix zoom and pan
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -209,6 +221,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                     } else if (ACTION == MotionEvent.ACTION_MOVE) {
                         dx = TMP_X - startX;
                         dy = TMP_Y - startY;
+//                        if (!moveIsValid(imageView, startX, startY, dx, dy, scaleFactor)) {
+//                            resetMove();
+//                        }
                         mapScalingMatrix.postTranslate(dx+saveX, dy+saveY);
                     } else if (ACTION == MotionEvent.ACTION_UP) {
                         mapScalingMatrix.postTranslate(dx+saveX, dy+saveY);
@@ -216,14 +231,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                         saveY = TMP_Y-startY;
                     }
                 } else {
-                    dx = 0;
-                    dy = 0;
-                    saveX = 0;
-                    saveY = 0;
+                    resetMove();
                 }
-                Log.i(LOG_TAG, "DELTA: " + dx + ";\t" + dy);
-                Log.i(LOG_TAG, "SAVE: " + saveX + ";\t" + saveY);
-                //Log.i(LOG_TAG, "point is on image");
+                Log.i(LOG_TAG," saveX:"+saveX+" dx:"+dx);
                 imageView.setImageMatrix(mapScalingMatrix);
             } else {
                 scaleDetector.onTouchEvent(event);

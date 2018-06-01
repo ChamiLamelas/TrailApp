@@ -143,9 +143,19 @@ public final class Utilities {
      * @param scaleFactor - scale factor being applied to the x and y of the image
      * @return boolean state of whether or not the move is valid
      */
-    public static boolean moveIsValid(Context context, ImageView imageView, float startX, float startY, float dx, float dy, float scaleFactor) {
+    public static boolean moveIsValid(ImageView imageView, float startX, float startY, float dx, float dy, float scaleFactor) {
         boolean xMoveIsValid = false;
-        boolean yMoveIsValid = false;
+        boolean yMoveIsValid = true;
+        float maxXMove = 0.0f;
+        float maxYMove = 0.0f;
+        if (dx < 0) {
+            maxXMove = startX * scaleFactor;
+            xMoveIsValid = Math.abs(dx) < maxXMove;
+        }
+        else {
+            xMoveIsValid = (startX+dx) <= maxX(imageView, scaleFactor);
+        }
+        Log.i(LOG_TAG, "startX="+startX+"; dx="+dx+"; max="+maxX(imageView, scaleFactor));
         return xMoveIsValid && yMoveIsValid;
     }
 }

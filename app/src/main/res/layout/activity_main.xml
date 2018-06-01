@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appToolbar"
-        app:srcCompat="@drawable/gwlt_mission_img" />
+        app:srcCompat="@drawable/trust_lands" />
 
 </android.support.constraint.ConstraintLayout>
 
