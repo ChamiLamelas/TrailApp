@@ -44,12 +44,38 @@
     <string name="defaultSeeMoreTxt">There has been no information reported on </string>
     <string name="gwltMissionTxt">TEST POPUP</string>
 
+    //Four town Greenway:
     <string name="fourTownGreenWayTxt">Four Town Greenway</string>>
-    <string name="asnebumskit">Asnebumskit</string>
-    <string name="cascades">Cascades</string>
+    <string name="asnebumskit">Asnebumskit Ridge</string>
+    <string name="cascades">The Cascades</string>
     <string name="cookPond">Cook\'s Pond</string>
-    <string name="donkerCooksBrook">Donker Cook\'s Brook</string>
-    <string name="kinneyWoods">Kinney Woods</string>
+    <string name="donkerCooksBrook">Donker Farm and Cook\'s Brook</string>
+    <string name="kinneywoods">Kinneywoods</string>
     <string name="morelandWoods">Moreland Woods</string>
     <string name="southwickMuir">Southwick Muir</string>
+
+    //North Worcester
+    <string name="bovenzi">Bovenzi</string>
+    <string name="nicksWoods">Nick\'s Woods</string>
+
+    //West Worcester
+    <string name="coesReservoir">Coe\'s Reservoir</string>
+    <string name="crowHill">Crow Hill &amp; Fitzgerald Brook</string>
+    <string name="tetasset">Tetasset Ridge</string>
+
+    //East Worcester
+    <string name="eastsidetrail">East Side Trail</string>
+
+    //South Worcester
+    <string name="broadmeadow">Broad Meadow Brook Savannah</string>
+
+    //Spencer
+    <string name="sibley">Sibley Farm</string>
+
+    //Boylston
+    <string name="elmersSeat">Elmer\'s Seat Pleasant Hill</string>
+
+    //West Boylston
+    <string name="pineGlen">Pine Glen</string>
+
 </resources>
