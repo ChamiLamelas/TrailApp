@@ -81,12 +81,22 @@ public final class MainActivity extends BaseActivity {
         maps = new ArrayList<>();
         // add maps using addMap()
         // add properties for each map using addProperty()
+        RegionalMap allProperties = addMap(R.string.allProperties,R.drawable.trust_lands,R.menu.all_properties_map_menu);
+        allProperties.addProperty(this,R.string.bovenzi,R.mipmap.bovenzi,Property.PROPERTY_NO_SEE_MORE_ID );
+        allProperties.addProperty(this,R.string.nicksWoods,R.mipmap.nicks_woods_g_1,Property.PROPERTY_NO_SEE_MORE_ID );
+        allProperties.addProperty(this,R.string.coesReservoir,R.mipmap.coes_reservoir,Property.PROPERTY_NO_SEE_MORE_ID );
+        allProperties.addProperty(this,R.string.crowHill,R.mipmap.crow_hill,Property.PROPERTY_NO_SEE_MORE_ID );
+        allProperties.addProperty(this,R.string.tetasset,R.mipmap.tetasset,Property.PROPERTY_NO_SEE_MORE_ID );
+        allProperties.addProperty(this,R.string.eastsidetrail,R.mipmap.east_side_trail_map_1,Property.PROPERTY_NO_SEE_MORE_ID );
+        allProperties.addProperty(this,R.string.broadmeadow,R.mipmap.broadmeadow,Property.PROPERTY_NO_SEE_MORE_ID );
+        allProperties.addProperty(this,R.string.sibley,R.mipmap.sibley,Property.PROPERTY_NO_SEE_MORE_ID );
+        allProperties.addProperty(this,R.string.elmersSeat,R.mipmap.elmers_seat,Property.PROPERTY_NO_SEE_MORE_ID );
         RegionalMap fourTownGreenway = addMap(R.string.fourTownGreenWayTxt, R.drawable.four_town_greenway_1, R.menu.four_town_greenway_menu);
         fourTownGreenway.addProperty(this, R.string.asnebumskit, R.mipmap.asnebumskit, Property.PROPERTY_NO_SEE_MORE_ID);
         fourTownGreenway.addProperty(this, R.string.cascades, R.mipmap.cascades, Property.PROPERTY_NO_SEE_MORE_ID);
         fourTownGreenway.addProperty(this, R.string.cookPond, R.mipmap.cooks_pond, Property.PROPERTY_NO_SEE_MORE_ID);
         fourTownGreenway.addProperty(this, R.string.donkerCooksBrook, R.mipmap.donker_cooks_brook, Property.PROPERTY_NO_SEE_MORE_ID);
-        fourTownGreenway.addProperty(this, R.string.kinneyWoods, R.mipmap.kinney_woods, Property.PROPERTY_NO_SEE_MORE_ID);
+        fourTownGreenway.addProperty(this, R.string.kinneywoods, R.mipmap.kinney_woods, Property.PROPERTY_NO_SEE_MORE_ID);
         fourTownGreenway.addProperty(this, R.string.morelandWoods, R.mipmap.moreland_woods, Property.PROPERTY_NO_SEE_MORE_ID);
         fourTownGreenway.addProperty(this, R.string.southwickMuir, R.mipmap.southwick_muir, Property.PROPERTY_NO_SEE_MORE_ID);
     }

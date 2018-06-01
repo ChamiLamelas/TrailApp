@@ -44,6 +44,9 @@
     <string name="defaultSeeMoreTxt">There has been no information reported on </string>
     <string name="gwltMissionTxt">TEST POPUP</string>
 
+    //All Properties Map:
+    <string name="allProperties">All GWLT Properties</string>
+
     //Four town Greenway:
     <string name="fourTownGreenWayTxt">Four Town Greenway</string>>
     <string name="asnebumskit">Asnebumskit Ridge</string>
@@ -54,28 +57,28 @@
     <string name="morelandWoods">Moreland Woods</string>
     <string name="southwickMuir">Southwick Muir</string>
 
-    //North Worcester
+    //North Worcester:
     <string name="bovenzi">Bovenzi</string>
     <string name="nicksWoods">Nick\'s Woods</string>
 
-    //West Worcester
+    //West Worcester:
     <string name="coesReservoir">Coe\'s Reservoir</string>
     <string name="crowHill">Crow Hill &amp; Fitzgerald Brook</string>
     <string name="tetasset">Tetasset Ridge</string>
 
-    //East Worcester
+    //East Worcester:
     <string name="eastsidetrail">East Side Trail</string>
 
-    //South Worcester
+    //South Worcester:
     <string name="broadmeadow">Broad Meadow Brook Savannah</string>
 
-    //Spencer
+    //Spencer:
     <string name="sibley">Sibley Farm</string>
 
-    //Boylston
+    //Boylston:
     <string name="elmersSeat">Elmer\'s Seat Pleasant Hill</string>
 
-    //West Boylston
+    //West Boylston:
     <string name="pineGlen">Pine Glen</string>
 
 </resources>
