@@ -19,7 +19,7 @@
         android:title="@string/donkerCooksBrook"/>
     <item
         android:id="@+id/five"
-        android:title="@string/kinneyWoods"/>
+        android:title="@string/kinneywoods"/>
     <item
         android:id="@+id/six"
         android:title="@string/morelandWoods"/>
