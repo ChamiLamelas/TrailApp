@@ -39,11 +39,11 @@ Also view the list of [contributors](https://github.com/LiquidsShadow/TrailApp/g
 
 ## License 
 
-PhotoView, which was used to implement image panning and zooming, was written entirely by [Chris Banes](https://github.com/chrisbanes) . He used the following license when creating PhotoView. Please view the README of the following repository for [more information](https://github.com/chrisbanes/PhotoView) about PhotoView
+PhotoView, which was used to implement image panning and zooming, was written entirely by [Chris Banes](https://github.com/chrisbanes) . He used the following license when creating PhotoView. Please view the README of [this repository](https://github.com/chrisbanes/PhotoView) for more information about PhotoView
 
 PhotoView, which "aims to help produce an easily usable implementation of a zooming Android ImageView", was licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
-You may obtain a copy of the License [here](http://www.apache.org/licenses/LICENSE-2.0)
+You may obtain a copy of the License [here](http://www.apache.org/licenses/LICENSE-2.0) .
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
