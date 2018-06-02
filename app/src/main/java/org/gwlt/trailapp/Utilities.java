@@ -3,8 +3,6 @@ package org.gwlt.trailapp;
 import android.content.Intent;
 import android.net.Uri;
 
-import java.util.ArrayList;
-
 /**
  * Utilities Library to be used by GWLT trail app Activities.
  */

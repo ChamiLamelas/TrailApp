@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * 1) Add the name of the region and names of the properties to app/res/values/strings.xml
  * 2) Add the image for the region map to the appropriate folder in app/res/ if it has an image
  * 3) Add the menu file with the list of properties to app/res/menu/ if it has a property list
- * 4) Use addRegionalMap() to add (see its documentation) a new map to list of maps
+ * 4) Use addRegionalMap() to add (see its documentation) a new map to list of regionalMaps
  *      If the map has no image, use RegionalMap.REGIONAL_MAP_NO_IMG_ID as a placeholder
  *      If the map has no property list, use RegionalMap.REGIONAL_MAP_NO_PROPERTIES_ID as a placeholder
  *
@@ -37,9 +37,9 @@ import java.util.ArrayList;
 
 public final class MainActivity extends BaseActivity {
 
-    private static ArrayList<RegionalMap> maps;
+    private static ArrayList<RegionalMap> regionalMaps; // list of regional maps
     private Toolbar jAppToolbar; // screen's toolbar
-    private PhotoView jPhotoView;
+    private PhotoView jPhotoView; // photo view that holds overall map
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,14 @@ public final class MainActivity extends BaseActivity {
         jAppToolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(jAppToolbar);
         setLearnMoreToolbar(jAppToolbar);
+
+        // set up photo view with correct image resource
         jPhotoView = findViewById(R.id.mapPhotoView);
         jPhotoView.setImageResource(R.drawable.trust_lands);
     }
 
     /**
-     * Creates a new RegionalMap using the provided parameters, adds it to the list of maps, and then returns it.
+     * Creates a new RegionalMap using the provided parameters, adds it to the list of regionalMaps, and then returns it.
      * @param nameID - ID of string resource of the map name
      * @param imgID - ID of image resource of the map
      * @param menuID - ID of the menu resource of the map's list of properties
@@ -68,15 +70,15 @@ public final class MainActivity extends BaseActivity {
      */
     private RegionalMap addRegionalMap(int nameID, int imgID, int menuID) {
         RegionalMap newMap = new RegionalMap(getResources().getString(nameID), imgID, menuID);
-        maps.add(newMap);
+        regionalMaps.add(newMap);
         return newMap;
     }
 
     /**
-     * This function initializes the map list, creates new maps, and then adds properties to the new maps.
+     * This function initializes the map list, creates new regionalMaps, and then adds properties to the new regionalMaps.
      */
     private void loadRegionalMaps() {
-        maps = new ArrayList<>();
+        regionalMaps = new ArrayList<>();
         RegionalMap allProperties = addRegionalMap(R.string.allProperties,R.drawable.trust_lands,R.menu.all_properties_map_menu);
         allProperties.addProperty(this,R.string.bovenzi,R.mipmap.bovenzi,R.string.bovenziLink );
         allProperties.addProperty(this,R.string.nicksWoods,R.mipmap.nicks_woods_g_1,R.string.nicksWoodsLink );
@@ -104,7 +106,7 @@ public final class MainActivity extends BaseActivity {
      * @return the regional map with the provided name
      */
     public static RegionalMap getRegionalMapWithName(String name) {
-        for (RegionalMap map : maps) {
+        for (RegionalMap map : regionalMaps) {
             if (map.getRegionName().equals(name))
                 return map;
         }

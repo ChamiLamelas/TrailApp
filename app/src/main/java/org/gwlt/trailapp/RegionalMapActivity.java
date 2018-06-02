@@ -16,7 +16,7 @@ public class RegionalMapActivity extends BaseActivity {
 
     private RegionalMap regionalMap; // regional map being represented
     private Toolbar jRMapToolbar; // screen's toolbar
-    private PhotoView jRMapView; // image view holding regional map image
+    private PhotoView jRMapView; // photo view holding regional map image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,19 @@ public class RegionalMapActivity extends BaseActivity {
 
     @Override
     public void setUpUIComponents() {
+        // set up toolbar
         jRMapToolbar = findViewById(R.id.rMapToolbar);
         setSupportActionBar(jRMapToolbar);
         getSupportActionBar().setTitle(regionalMap.getRegionName());
         setLearnMoreToolbar(jRMapToolbar);
+
+        // set up photo view
         jRMapView = findViewById(R.id.rMapPhotoView);
         int mapImgID = regionalMap.getRegionalMapResID();
+        /*
+        If the regional map's image resource id is not equal to the no id placeholder, set the image to the image resource with the provided id
+        By default, the image resource is set to the default image specified by BaseActivity.DEFAULT_IMAGE_PLACEHOLDER_ID
+         */
         if (mapImgID == RegionalMap.REGIONAL_MAP_NO_IMG_ID)
             jRMapView.setImageResource(BaseActivity.DEFAULT_IMAGE_PLACEHOLDER_ID);
         else

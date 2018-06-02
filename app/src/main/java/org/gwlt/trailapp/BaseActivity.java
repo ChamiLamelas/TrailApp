@@ -10,17 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import static org.gwlt.trailapp.Utilities.genBrowseIntent;
 
 /**
+ * Parent Activity of GWLT trail app activities
+ *
  * All Activities of the GWLT trail app inherit their properties from BaseActivity.
  * Note that this class is abstract, which means it cannot be implemented and thus does not have an associated XML file like the other GWLT Activities.
  * Therefore, the following rules apply to GWLT trail app activities:
- * <p>
+ *
  * All GWLT app activities will have a shared toolbar with "learn more" and help buttons.
  * Title of toolbar can be edited after toolbar is set as the supportActionBar.
  * To edit toolbar items, subclass should override onOptionsItemSelected()
@@ -29,9 +30,9 @@ import static org.gwlt.trailapp.Utilities.genBrowseIntent;
  * Subclass activities must override setUpUIComponents() to implement the activity's UI components.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    public static final int DEFAULT_IMAGE_PLACEHOLDER_ID = R.drawable.gwlt_mission_img;
+    public static final int DEFAULT_IMAGE_PLACEHOLDER_ID = R.drawable.gwlt_mission_img; // in circumstances where there is no other image, this specifies the default image to be used by the trail app
 
-    private Toolbar learnMoreToolbar;
+    private Toolbar learnMoreToolbar; // tool bar that is to be used by the learn more popup menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                         if (connectedToInternet()) {
                             try {
                                 startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.joinLink)), "Choose browser.."));
+                            } catch (ActivityNotFoundException ex) {
+                                Toast.makeText(BaseActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(BaseActivity.this, "An Internet connection is required to  complete this action.", Toast.LENGTH_LONG).show();
+                        }
+                    } else if (itemID == R.id.aboutChoice) {
+                        if (connectedToInternet()) {
+                            try {
+                                startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.aboutLink)), "Choose browser.."));
                             } catch (ActivityNotFoundException ex) {
                                 Toast.makeText(BaseActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG).show();
                             }
