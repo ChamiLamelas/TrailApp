@@ -119,6 +119,12 @@ fourTownGreenway.addProperty(this, R.string.asnebumskit, Property.PROPERTY_NO_SE
 
 The code can be tested using the emulator built into Android Studio or an actual Android device. To familiarize yourself with Android Studio it may be useful to first the tutorials for [building your first app](https://developer.android.com/training/basics/firstapp/) provided by Android. 
 
+If the project is unable to find R.java, make sure that your project is on the same drive you installed Android Studio into. If this does not fix the issue, the following actions can solve the issue:  
+* Clean Project (Under Build Menu)
+* Rebuild Project (Under Build Menu)
+* Invalidate Caches and Restart (Under File Menu)
+If the project is unable to identify the desired Android SDK version, go to the project build.gradle file and use the gradle sync button. 
+
 ## Authors
 
 * **Chami Lamelas** - [LiquidsShadow](https://github.com/LiquidsShadow)
