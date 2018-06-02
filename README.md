@@ -1,6 +1,6 @@
 # Trail App 
 
-The purpose of this project is to create the base of an Android app for the [Greater Worcester Land Trust](http://www.gwlt.org/) with the intention for them to continue with it in the future. Please note that this project is still in the BETA stage.
+The purpose of this project is to create the base of an Android app for the [Greater Worcester Land Trust](http://www.gwlt.org/) with the intention for them to continue with it in the future. This project was done as part of a larger group of community service projects run by [Bancroft School](https://www.bancroftschool.org/index.cfm) . Please note that this project is still in the BETA stage.
 
 The app contains the following features: 
 
@@ -35,10 +35,28 @@ The code can be tested using the emulator built into Android Studio or an actual
 * **Christopher Stephenson** - [cgstephenson](https://github.com/cgstephenson)
 
 Also view the list of [contributors](https://github.com/LiquidsShadow/TrailApp/graphs/contributors) who participated in this project.
+**Chris Banes** wrote PhotoView, see License and Acknowledgements for more. 
+
+## License 
+
+PhotoView, which was used to implement image panning and zooming, was written entirely by [Chris Banes](https://github.com/chrisbanes) . He used the following license when creating PhotoView. Please view the README of the following repository for [more information](https://github.com/chrisbanes/PhotoView) about PhotoView
+
+PhotoView, which "aims to help produce an easily usable implementation of a zooming Android ImageView", was licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 ## Acknowledgments
 
 * [Android Studio](https://developer.android.com/studio/intro/) and the [development guides](https://developer.android.com/guide/) provided by Android. 
 * The Android development tutorials on [tutorialspoint](https://www.tutorialspoint.com/android/index.htm) .
+* [Chris Banes](https://github.com/chrisbanes) who made [PhotoView](https://github.com/chrisbanes/PhotoView) .
 * [PurpleBooth](https://github.com/PurpleBooth) who wrote the [template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) for this file. 
 
