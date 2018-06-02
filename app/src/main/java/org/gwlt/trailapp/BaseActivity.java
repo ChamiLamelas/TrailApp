@@ -148,5 +148,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         learnMoreToolbar = toolbar;
     }
 
+    /**
+     * Subclass activities must implement this method to set up the activity's UI.
+     */
     public abstract void setUpUIComponents();
 }

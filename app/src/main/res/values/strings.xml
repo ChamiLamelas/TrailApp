@@ -47,10 +47,10 @@
     <string name="gwltMissionTxt">TEST POPUP</string>
 
     <!-- All Properties Map: -->
-    <string name="allProperties">Other GWLT Properties</string>
+    <string name="otherProperties">Other GWLT Properties</string>
 
     <!-- Four town Greenway: -->
-    <string name="fourTownGreenWayTxt">Four Town Greenway</string>>
+    <string name="fourTownGreenWayTxt">Four Town Greenway</string>
     <string name="asnebumskit">Asnebumskit Ridge</string>
     <string name="cascades">The Cascades</string>
     <string name="cookPond">Cook\'s Pond</string>

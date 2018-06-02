@@ -30,6 +30,94 @@ Some features, that are primarily for GWLT, such as adding new regional maps and
 
 The code can be tested using the emulator built into Android Studio or an actual Android device. To familiarize yourself with Android Studio it may be useful to first the tutorials for [building your first app](https://developer.android.com/training/basics/firstapp/) provided by Android. 
 
+## Adding New Regional Maps and Properties (Primarily for GWLT)
+
+All of the Java code for this should be written in loadRegionalMaps()
+
+How to add a new RegionalMap
+
+1) Add the name of the region and names of the properties to app/res/values/strings.xml
+
+Example Name:
+```
+<string name="fourTownGreenWayTxt">Four Town Greenway</string>
+```
+
+2) Add the image for the region map to the appropriate folder in app/res/ if it has an image
+3) Add the menu file with the list of properties to app/res/menu/ if it has a property list
+
+Example Menu:
+```
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/one"
+        android:title="@string/asnebumskit"/>
+    <item
+        android:id="@+id/two"
+        android:title="@string/cascades"/>
+    <item
+        android:id="@+id/three"
+        android:title="@string/cookPond"/>
+    <item
+        android:id="@+id/four"
+        android:title="@string/donkerCooksBrook"/>
+    <item
+        android:id="@+id/five"
+        android:title="@string/kinneywoods"/>
+    <item
+        android:id="@+id/six"
+        android:title="@string/morelandWoods"/>
+    <item
+        android:id="@+id/seven"
+        android:title="@string/southwickMuir"/>
+</menu>
+```
+
+4) Use addRegionalMap() to add (see its documentation) a new map to list of regionalMaps
+     If the map has no image, use RegionalMap.REGIONAL_MAP_NO_IMG_ID as a placeholder
+     If the map has no property list, use RegionalMap.REGIONAL_MAP_NO_PROPERTIES_ID as a placeholder
+	
+Example with image and properties: 	
+```
+RegionalMap fourTownGreenway = addRegionalMap(R.string.fourTownGreenWayTxt, R.drawable.four_town_greenway_1, R.menu.four_town_greenway_menu);
+```
+
+Example using placeholders: 
+```
+RegionalMap fourTownGreenway = addRegionalMap(R.string.fourTownGreenWayTxt, RegionalMap.REGIONAL_MAP_NO_IMG_ID, RegionalMap.REGIONAL_MAP_NO_PROPERTIES_ID);
+```
+
+How to add a new Property
+
+1) Add the name of the property to app/res/values/strings.xml
+
+Example Name:
+```
+<string name="asnebumskit">Asnebumskit Ridge</string>
+```
+
+2) Add the image of the property to the appropriate folder in app/res/menu/ if it has an image
+3) Add the link to "see more" about the property to app/res/values/strings.xml if it has "see more" information
+
+Example Link:
+```
+<string name="asnebumskitLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/asnebumskit-ridge-reservoir/</string>
+```
+
+4) On a new map that has been created call addProperty() on the new map for each property to be added to the region
+     If the property has no image, use Property.PROPERTY_NO_IMG_ID as a placeholder
+     If the property has no see more information, use Property.PROPERTY_NO_SEE_MORE_ID as a placeholder
+	 
+Example with image and see more: 
+```
+fourTownGreenway.addProperty(this, R.string.asnebumskit, R.mipmap.asnebumskit, R.string.asnebumskitLink);
+```
+
+Example using placeholders: 
+```
+fourTownGreenway.addProperty(this, R.string.asnebumskit, Property.PROPERTY_NO_SEE_MORE_ID, Property.PROPERTY_NO_IMG_ID);
+```
+
 ## Authors
 
 * **Chami Lamelas** - [LiquidsShadow](https://github.com/LiquidsShadow)

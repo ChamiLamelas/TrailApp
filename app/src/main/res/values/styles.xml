@@ -9,6 +9,8 @@
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="android:itemTextAppearance">@style/textAppearance</item>
     </style>
+	
+	<!-- This is what makes the PopupMenu be dark green and white. -->
 
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@color/darkGreen</item>

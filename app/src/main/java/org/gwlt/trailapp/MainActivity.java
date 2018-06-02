@@ -13,26 +13,6 @@ import java.util.ArrayList;
 
 /**
  * Class that represents the Main Activity of the GWLT app. This is the screen that is displayed when the user first opens the app.
- *
- * All of the Java code for this should be written in loadRegionalMaps()
- *
- * How to add a new RegionalMap
- *
- * 1) Add the name of the region and names of the properties to app/res/values/strings.xml
- * 2) Add the image for the region map to the appropriate folder in app/res/ if it has an image
- * 3) Add the menu file with the list of properties to app/res/menu/ if it has a property list
- * 4) Use addRegionalMap() to add (see its documentation) a new map to list of regionalMaps
- *      If the map has no image, use RegionalMap.REGIONAL_MAP_NO_IMG_ID as a placeholder
- *      If the map has no property list, use RegionalMap.REGIONAL_MAP_NO_PROPERTIES_ID as a placeholder
- *
- * How to add a new Property
- *
- * 1) Add the name of the property to app/res/values/strings.xml
- * 2) Add the image of the property to the appropriate folder in app/res/menu/ if it has an image
- * 3) Add the link to "see more" about the property to app/res/values/strings.xml if it has "see more" information
- * 4) On a new map that has been created call addProperty() on the new map for each property to be added to the region
- *      If the property has no image, use Property.PROPERTY_NO_IMG_ID as a placeholder
- *      If the property has no see more information, use Property.PROPERTY_NO_SEE_MORE_ID as a placeholder
  */
 
 public final class MainActivity extends BaseActivity {
@@ -79,17 +59,17 @@ public final class MainActivity extends BaseActivity {
      */
     private void loadRegionalMaps() {
         regionalMaps = new ArrayList<>();
-        RegionalMap allProperties = addRegionalMap(R.string.allProperties,R.drawable.trust_lands,R.menu.all_properties_map_menu);
-        allProperties.addProperty(this,R.string.bovenzi,R.mipmap.bovenzi,R.string.bovenziLink );
-        allProperties.addProperty(this,R.string.nicksWoods,R.mipmap.nicks_woods_g_1,R.string.nicksWoodsLink );
-        allProperties.addProperty(this,R.string.coesReservoir,R.mipmap.coes_reservoir,R.string.coesReservoirLink );
-        allProperties.addProperty(this,R.string.crowHill,R.mipmap.crow_hill,R.string.crowHillLink );
-        allProperties.addProperty(this,R.string.tetasset,R.mipmap.tetasset,R.string.tetassetLink );
-        allProperties.addProperty(this,R.string.eastsidetrail,R.mipmap.east_side_trail_map_1,R.string.eastsideLink );
-        allProperties.addProperty(this,R.string.broadmeadow,R.mipmap.broadmeadow,R.string.broadLink );
-        allProperties.addProperty(this,R.string.sibley,R.mipmap.sibley,R.string.sibleyLink );
-        allProperties.addProperty(this,R.string.elmersSeat,R.mipmap.elmers_seat,R.string.elmersLink );
-        allProperties.addProperty(this,R.string.pineGlen, R.mipmap.pine_glen, R.string.pineLink);
+        RegionalMap otherProperties = addRegionalMap(R.string.otherProperties,R.drawable.trust_lands,R.menu.other_properties_map_menu);
+        otherProperties.addProperty(this,R.string.bovenzi,R.mipmap.bovenzi,R.string.bovenziLink );
+        otherProperties.addProperty(this,R.string.nicksWoods,R.mipmap.nicks_woods_g_1,R.string.nicksWoodsLink );
+        otherProperties.addProperty(this,R.string.coesReservoir,R.mipmap.coes_reservoir,R.string.coesReservoirLink );
+        otherProperties.addProperty(this,R.string.crowHill,R.mipmap.crow_hill,R.string.crowHillLink );
+        otherProperties.addProperty(this,R.string.tetasset,R.mipmap.tetasset,R.string.tetassetLink );
+        otherProperties.addProperty(this,R.string.eastsidetrail,R.mipmap.east_side_trail_map_1,R.string.eastsideLink );
+        otherProperties.addProperty(this,R.string.broadmeadow,R.mipmap.broadmeadow,R.string.broadLink );
+        otherProperties.addProperty(this,R.string.sibley,R.mipmap.sibley,R.string.sibleyLink );
+        otherProperties.addProperty(this,R.string.elmersSeat,R.mipmap.elmers_seat,R.string.elmersLink );
+        otherProperties.addProperty(this,R.string.pineGlen, R.mipmap.pine_glen, R.string.pineLink);
         RegionalMap fourTownGreenway = addRegionalMap(R.string.fourTownGreenWayTxt, R.drawable.four_town_greenway_1, R.menu.four_town_greenway_menu);
         fourTownGreenway.addProperty(this, R.string.asnebumskit, R.mipmap.asnebumskit, R.string.asnebumskitLink);
         fourTownGreenway.addProperty(this, R.string.cascades, R.mipmap.cascades, R.string.cascadesLink);

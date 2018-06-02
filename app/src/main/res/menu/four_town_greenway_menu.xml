@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Use this file to edit the popup menu displayed on MainActivity. -->
+<!-- Use this file to edit the popup menu displayed on RegionalMapActivity screen  -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/one"
         android:title="@string/asnebumskit"/>
-
     <item
         android:id="@+id/two"
         android:title="@string/cascades"/>
-
     <item
         android:id="@+id/three"
         android:title="@string/cookPond"/>
@@ -26,7 +24,4 @@
     <item
         android:id="@+id/seven"
         android:title="@string/southwickMuir"/>
-
-    <!-- Add popup menu item for a new property here (step 3) -->
-
 </menu>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Use this file to edit the popup menu displayed on MainActivity. -->
+<!-- Use this file to edit the menu of properties that are not currently in a regional map and fall under "other properties" -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
@@ -35,6 +35,5 @@
     <item
         android:id="@+id/ten"
         android:title="@string/pineGlen"/>
-    <!-- Add popup menu item for a new property here (step 3) -->
 
 </menu>
