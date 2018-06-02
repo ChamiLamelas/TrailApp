@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -40,7 +39,7 @@ public final class MainActivity extends BaseActivity {
 
     private static ArrayList<RegionalMap> maps;
     private Toolbar jAppToolbar; // screen's toolbar
-    private ImageView jMapImgVIew; // image view to hold image
+    private PhotoView jPhotoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +55,8 @@ public final class MainActivity extends BaseActivity {
         jAppToolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(jAppToolbar);
         setLearnMoreToolbar(jAppToolbar);
-        jMapImgVIew = findViewById(R.id.mapImgView);
-        setZoomableImageView(jMapImgVIew);
-        super.setUpUIComponents();
+        jPhotoView = findViewById(R.id.mapPhotoView);
+        jPhotoView.setImageResource(R.drawable.trust_lands);
     }
 
     /**
@@ -80,24 +78,24 @@ public final class MainActivity extends BaseActivity {
     private void loadRegionalMaps() {
         maps = new ArrayList<>();
         RegionalMap allProperties = addRegionalMap(R.string.allProperties,R.drawable.trust_lands,R.menu.all_properties_map_menu);
-        allProperties.addProperty(this,R.string.bovenzi,R.mipmap.bovenzi,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.nicksWoods,R.mipmap.nicks_woods_g_1,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.coesReservoir,R.mipmap.coes_reservoir,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.crowHill,R.mipmap.crow_hill,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.tetasset,R.mipmap.tetasset,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.eastsidetrail,R.mipmap.east_side_trail_map_1,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.broadmeadow,R.mipmap.broadmeadow,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.sibley,R.mipmap.sibley,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.elmersSeat,R.mipmap.elmers_seat,Property.PROPERTY_NO_SEE_MORE_ID );
-        allProperties.addProperty(this,R.string.pineGlen, R.mipmap.pine_glen, Property.PROPERTY_NO_SEE_MORE_ID);
+        allProperties.addProperty(this,R.string.bovenzi,R.mipmap.bovenzi,R.string.bovenziLink );
+        allProperties.addProperty(this,R.string.nicksWoods,R.mipmap.nicks_woods_g_1,R.string.nicksWoodsLink );
+        allProperties.addProperty(this,R.string.coesReservoir,R.mipmap.coes_reservoir,R.string.coesReservoirLink );
+        allProperties.addProperty(this,R.string.crowHill,R.mipmap.crow_hill,R.string.crowHillLink );
+        allProperties.addProperty(this,R.string.tetasset,R.mipmap.tetasset,R.string.tetassetLink );
+        allProperties.addProperty(this,R.string.eastsidetrail,R.mipmap.east_side_trail_map_1,R.string.eastsideLink );
+        allProperties.addProperty(this,R.string.broadmeadow,R.mipmap.broadmeadow,R.string.broadLink );
+        allProperties.addProperty(this,R.string.sibley,R.mipmap.sibley,R.string.sibleyLink );
+        allProperties.addProperty(this,R.string.elmersSeat,R.mipmap.elmers_seat,R.string.elmersLink );
+        allProperties.addProperty(this,R.string.pineGlen, R.mipmap.pine_glen, R.string.pineLink);
         RegionalMap fourTownGreenway = addRegionalMap(R.string.fourTownGreenWayTxt, R.drawable.four_town_greenway_1, R.menu.four_town_greenway_menu);
-        fourTownGreenway.addProperty(this, R.string.asnebumskit, R.mipmap.asnebumskit, Property.PROPERTY_NO_SEE_MORE_ID);
-        fourTownGreenway.addProperty(this, R.string.cascades, R.mipmap.cascades, Property.PROPERTY_NO_SEE_MORE_ID);
-        fourTownGreenway.addProperty(this, R.string.cookPond, R.mipmap.cooks_pond, Property.PROPERTY_NO_SEE_MORE_ID);
-        fourTownGreenway.addProperty(this, R.string.donkerCooksBrook, R.mipmap.donker_cooks_brook, Property.PROPERTY_NO_SEE_MORE_ID);
-        fourTownGreenway.addProperty(this, R.string.kinneywoods, R.mipmap.kinney_woods, Property.PROPERTY_NO_SEE_MORE_ID);
-        fourTownGreenway.addProperty(this, R.string.morelandWoods, R.mipmap.moreland_woods, Property.PROPERTY_NO_SEE_MORE_ID);
-        fourTownGreenway.addProperty(this, R.string.southwickMuir, R.mipmap.southwick_muir, Property.PROPERTY_NO_SEE_MORE_ID);
+        fourTownGreenway.addProperty(this, R.string.asnebumskit, R.mipmap.asnebumskit, R.string.asnebumskitLink);
+        fourTownGreenway.addProperty(this, R.string.cascades, R.mipmap.cascades, R.string.cascadesLink);
+        fourTownGreenway.addProperty(this, R.string.cookPond, R.mipmap.cooks_pond, R.string.cookPondLink);
+        fourTownGreenway.addProperty(this, R.string.donkerCooksBrook, R.mipmap.donker_cooks_brook, R.string.donkerCooksLink);
+        fourTownGreenway.addProperty(this, R.string.kinneywoods, R.mipmap.kinney_woods, R.string.kinneyLink);
+        fourTownGreenway.addProperty(this, R.string.morelandWoods, R.mipmap.moreland_woods, R.string.morelandLink);
+        fourTownGreenway.addProperty(this, R.string.southwickMuir, R.mipmap.southwick_muir, R.string.southwickLink);
     }
 
     /**

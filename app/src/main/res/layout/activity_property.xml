@@ -39,39 +39,33 @@
         android:id="@+id/propertyToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
         android:background="@color/darkGreen"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/propertyImageView"
+        app:layout_constraintBottom_toTopOf="@+id/propertyPhotoView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:titleTextColor="@color/white" />
 
-    <!--
-    Initialize this image view with the default property image using:
-    app:srcCompat="@drawable/gwlt_mission_img"
-
-    android:scaleType="matrix" allows for image scaling
-    -->
-    <ImageView
-        android:id="@+id/propertyImageView"
+    <org.gwlt.trailapp.PhotoView
+        android:id="@+id/propertyPhotoView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="56dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
-        android:scaleType="matrix"
+        android:layout_marginBottom="61dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="61dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/gwlt_mission_img" />
+        app:layout_constraintTop_toTopOf="parent" />
+    />
 
 </android.support.constraint.ConstraintLayout>

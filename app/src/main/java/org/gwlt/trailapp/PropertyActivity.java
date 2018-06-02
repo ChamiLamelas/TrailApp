@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import static org.gwlt.trailapp.Utilities.genBrowseIntent;
@@ -22,7 +21,7 @@ public final class PropertyActivity extends BaseActivity {
     private Toolbar jPropertyToolbar; // screen's toolbar
     private Button jReportButton; // button to report
     private Button jSeeMoreButton; // button to see more
-    private ImageView jPropertyImageView; // image view to hold image of property map
+    private PhotoView jPropertyPhotoView; // image view to hold image of property map
     private Property property; // name of property
     private AlertDialog.Builder reportTypeDialog; // alert dialog for selecting report type
 
@@ -126,14 +125,16 @@ public final class PropertyActivity extends BaseActivity {
             }
         });
 
-        jPropertyImageView = findViewById(R.id.propertyImageView);
+        jPropertyPhotoView = findViewById(R.id.propertyPhotoView);
         int imgResID = property.getImgResID(); // get image resource id from property
         /*
         If the property's image resource id is not equal to the no id placeholder, set the image to the image resource with the provided id
         By default, the image resource is set to the default image (done in app/res/layout/activity_property.xml)
          */
-        if (imgResID != Property.PROPERTY_NO_IMG_ID)
-            jPropertyImageView.setImageResource(imgResID);
+        if (imgResID == Property.PROPERTY_NO_IMG_ID)
+            jPropertyPhotoView.setImageResource(BaseActivity.DEFAULT_IMAGE_PLACEHOLDER_ID);
+        else
+            jPropertyPhotoView.setImageResource(imgResID);
     }
 
 }

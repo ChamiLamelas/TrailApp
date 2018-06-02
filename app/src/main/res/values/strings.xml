@@ -44,10 +44,10 @@
     <string name="defaultSeeMoreTxt">There has been no information reported on </string>
     <string name="gwltMissionTxt">TEST POPUP</string>
 
-    //All Properties Map:
+    <!-- All Properties Map: -->
     <string name="allProperties">Other GWLT Properties</string>
 
-    //Four town Greenway:
+    <!-- Four town Greenway: -->
     <string name="fourTownGreenWayTxt">Four Town Greenway</string>>
     <string name="asnebumskit">Asnebumskit Ridge</string>
     <string name="cascades">The Cascades</string>
@@ -56,7 +56,7 @@
     <string name="kinneywoods">Kinneywoods</string>
     <string name="morelandWoods">Moreland Woods</string>
     <string name="southwickMuir">Southwick Pond and Muir Meadows</string>
-    //links
+    <!-- links -->
     <string name="asnebumskitLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/asnebumskit-ridge-reservoir/</string>
     <string name="cascadesLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/cascades/</string>
     <string name="cookPondLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/cooks-pond/</string>
@@ -65,45 +65,45 @@
     <string name="morelandLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/moreland-woods/</string>
     <string name="southwickLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/muir-meadows/</string>
 
-    //North Worcester:
+    <!-- North Worcester: -->
     <string name="bovenzi">Bovenzi Conservation Area</string>
     <string name="nicksWoods">Nick\'s Woods</string>
-    //links
+    <!-- links -->
     <string name="bovenziLink">http://www.gwlt.org/lands-and-trails/north-worcester/bovenzi-conservation-area/</string>
     <string name="nicksWoodsLink">http://www.gwlt.org/lands-and-trails/north-worcester/nicks-woods/</string>
 
-    //West Worcester:
+    <!-- West Worcester -->
     <string name="coesReservoir">Coe\'s Reservoir</string>
     <string name="crowHill">Crow Hill &amp; Fitzgerald Brook</string>
     <string name="tetasset">Tetasset Ridge</string>
-    //links
+    <!-- links -->
     <string name="coesReservoirLink">http://www.gwlt.org/lands-and-trails/west-worcester/coes-reservoir/</string>
     <string name="crowHillLink">http://www.gwlt.org/lands-and-trails/east-worcester/crow-hill-fitzgerald-brook/</string>
     <string name="tetassetLink">http://www.gwlt.org/lands-and-trails/west-worcester/tetasset-ridge-2/</string>
 
-    //East Worcester:
+    <!-- East Worcester: -->
     <string name="eastsidetrail">East Side Trail</string>
-    //links
+    <!-- links -->
     <string name="eastsideLink">http://www.gwlt.org/lands-and-trails/east-worcester/east-side-trail/</string>
 
-    //South Worcester:
+    <!-- South Worcester -->
     <string name="broadmeadow">Broad Meadow Brook Savannah</string>
-    //links
+    <!-- links -->
     <string name="broadLink">http://www.gwlt.org/lands-and-trails/south-worcester/broad-meadow-brook-savannah/</string>
 
-    //Spencer:
+    <!-- Spencer: -->
     <string name="sibley">Sibley Farm</string>
-    //links
+    <!-- links -->
     <string name="sibleyLink">http://www.gwlt.org/lands-and-trails/spencer/</string>
 
-    //Boylston:
+    <!-- Boylston: -->
     <string name="elmersSeat">Elmer\'s Seat Pleasant Hill</string>
-    //links
+    <!-- links -->
     <string name="elmersLink">http://www.gwlt.org/lands-and-trails/elmers-seat-pleasant-hill/</string>
 
-    //West Boylston:
+    <!-- West Boylston: -->
     <string name="pineGlen">Pine Glen</string>
-    //links
+    <!-- links -->
     <string name="pineLink">http://www.gwlt.org/lands-and-trails/west-boylston-holdings/pine-glen/</string>
 
 </resources>

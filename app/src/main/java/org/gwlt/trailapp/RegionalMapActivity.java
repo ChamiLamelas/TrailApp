@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -17,7 +16,7 @@ public class RegionalMapActivity extends BaseActivity {
 
     private RegionalMap regionalMap; // regional map being represented
     private Toolbar jRMapToolbar; // screen's toolbar
-    private ImageView jRMapView; // image view holding regional map image
+    private PhotoView jRMapView; // image view holding regional map image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +32,11 @@ public class RegionalMapActivity extends BaseActivity {
         setSupportActionBar(jRMapToolbar);
         getSupportActionBar().setTitle(regionalMap.getRegionName());
         setLearnMoreToolbar(jRMapToolbar);
-        jRMapView = findViewById(R.id.rMapImgView);
+        jRMapView = findViewById(R.id.rMapPhotoView);
         int mapImgID = regionalMap.getRegionalMapResID();
-        if (mapImgID != RegionalMap.REGIONAL_MAP_NO_IMG_ID)
+        if (mapImgID == RegionalMap.REGIONAL_MAP_NO_IMG_ID)
+            jRMapView.setImageResource(BaseActivity.DEFAULT_IMAGE_PLACEHOLDER_ID);
+        else
             jRMapView.setImageResource(mapImgID);
     }
 
