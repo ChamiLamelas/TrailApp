@@ -55,6 +55,7 @@ public final class PropertyActivity extends BaseActivity {
             jPropertyPhotoView.setImageResource(BaseActivity.DEFAULT_IMAGE_PLACEHOLDER_ID);
         else
             jPropertyPhotoView.setImageResource(imgResID);
+        jPropertyPhotoView.setMaximumScale(BaseActivity.VIEW_MAX_SCALE);
     }
 
     /**

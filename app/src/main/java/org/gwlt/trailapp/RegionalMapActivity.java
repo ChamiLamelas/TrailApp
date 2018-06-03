@@ -45,6 +45,7 @@ public class RegionalMapActivity extends BaseActivity {
             jRMapView.setImageResource(BaseActivity.DEFAULT_IMAGE_PLACEHOLDER_ID);
         else
             jRMapView.setImageResource(mapImgID);
+        jRMapView.setMaximumScale(BaseActivity.VIEW_MAX_SCALE);
     }
 
     /**

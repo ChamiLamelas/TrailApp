@@ -31,6 +31,7 @@ import static org.gwlt.trailapp.Utilities.genBrowseIntent;
  */
 public abstract class BaseActivity extends AppCompatActivity {
     public static final int DEFAULT_IMAGE_PLACEHOLDER_ID = R.drawable.gwlt_mission_img; // in circumstances where there is no other image, this specifies the default image to be used by the trail app
+    public static final float VIEW_MAX_SCALE = 8.0f;
 
     private Toolbar learnMoreToolbar; // tool bar that is to be used by the learn more popup menu
 
