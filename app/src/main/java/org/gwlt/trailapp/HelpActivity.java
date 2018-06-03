@@ -27,6 +27,7 @@ public final class HelpActivity extends BaseActivity {
         // set up toolbar
         jHelpToolbar = findViewById(R.id.helpToolbar);
         setSupportActionBar(jHelpToolbar);
+        setLearnMoreToolbar(jHelpToolbar);
         getSupportActionBar().setTitle(R.string.helpTitle);
 
         // set up text view

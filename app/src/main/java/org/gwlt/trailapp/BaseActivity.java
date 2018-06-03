@@ -5,35 +5,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import static org.gwlt.trailapp.Utilities.genBrowseIntent;
+
 /**
+ * Parent Activity of GWLT trail app activities
+ *
  * All Activities of the GWLT trail app inherit their properties from BaseActivity.
  * Note that this class is abstract, which means it cannot be implemented and thus does not have an associated XML file like the other GWLT Activities.
  * Therefore, the following rules apply to GWLT trail app activities:
  *
  * All GWLT app activities will have a shared toolbar with "learn more" and help buttons.
- *      Title of toolbar can be edited after toolbar is set as the supportActionBar.
- *      To edit toolbar items, subclass should override onOptionsItemSelected()
+ * Title of toolbar can be edited after toolbar is set as the supportActionBar.
+ * To edit toolbar items, subclass should override onOptionsItemSelected()
  * Subclass activities should override onCreate() to setContentView() on their respective layout XML files.
- *      Only reason this is not abstract is because AppCompatActivity.onCreate() has to be called in it.
+ * Only reason this is not abstract is because AppCompatActivity.onCreate() has to be called in it.
  * Subclass activities must override setUpUIComponents() to implement the activity's UI components.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    public static final float MAX_SCALE_FACTOR = 5.0f; // maximum possible scale factor to be used in image scaling in MainActivity
-    public static final String LOG_TAG = "[GWLT Trail App]"; // log tag to be used by Log
+    public static final int DEFAULT_IMAGE_PLACEHOLDER_ID = R.drawable.gwlt_mission_img; // in circumstances where there is no other image, this specifies the default image to be used by the trail app
+
+    private Toolbar learnMoreToolbar; // tool bar that is to be used by the learn more popup menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     /**
@@ -45,32 +49,60 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId(); // get item id to identify item using resource ids
         if (id == R.id.learnMoreButton) {
-            if (connectedToInternet()) {
-                try {
-                    // starts activity (opens browser) based on user's choice from dialog created by createChooser()
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW); // specifies Intent is for viewing a URI
-                    browserIntent.setData(Uri.parse("http://www.gwlt.org")); // sets data the Intent will work on
-                    startActivity(Intent.createChooser(browserIntent, "Choose browser.. "));
-                } catch (android.content.ActivityNotFoundException ex) { // thrown by startActivity
-                    Toast.makeText(this, "A browser must be installed to complete this action.", Toast.LENGTH_SHORT).show();
+            PopupMenu learnMoreMenu = new PopupMenu(this, learnMoreToolbar);
+            learnMoreMenu.getMenuInflater().inflate(R.menu.learn_more_options_menu, learnMoreMenu.getMenu());
+            learnMoreMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int itemID = item.getItemId();
+                    if (itemID == R.id.learnMoreChoice) {
+                        if (connectedToInternet()) {
+                            try {
+                                startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.learnMoreLink)), "Choose browser.."));
+                            } catch (ActivityNotFoundException ex) {
+                                Toast.makeText(BaseActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(BaseActivity.this, "An Internet connection is required to  complete this action.", Toast.LENGTH_LONG).show();
+                        }
+                    } else if (itemID == R.id.joinChoice) {
+                        if (connectedToInternet()) {
+                            try {
+                                startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.joinLink)), "Choose browser.."));
+                            } catch (ActivityNotFoundException ex) {
+                                Toast.makeText(BaseActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(BaseActivity.this, "An Internet connection is required to  complete this action.", Toast.LENGTH_LONG).show();
+                        }
+                    } else if (itemID == R.id.aboutChoice) {
+                        if (connectedToInternet()) {
+                            try {
+                                startActivity(Intent.createChooser(genBrowseIntent(getResources().getString(R.string.aboutLink)), "Choose browser.."));
+                            } catch (ActivityNotFoundException ex) {
+                                Toast.makeText(BaseActivity.this, "A browser must be installed to complete this action.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(BaseActivity.this, "An Internet connection is required to  complete this action.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    return true;
                 }
-            }
-            else {
-                Toast.makeText(this, "An Internet connection is required to complete this action.",Toast.LENGTH_LONG).show();
-            }
+            });
+            learnMoreMenu.show();
             return true;
-        }
-        else if (id == R.id.helpButton) {
+        } else if (id == R.id.helpButton) {
             try {
                 Intent helpIntent = new Intent(this, HelpActivity.class); // opens help screen
                 startActivity(helpIntent);
-            }
-            catch (ActivityNotFoundException ex) {
+            } catch (ActivityNotFoundException ex) {
                 Toast.makeText(this, "The help screen could not be opened.", Toast.LENGTH_SHORT).show();
             }
             return true;
-        }
-        else {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
@@ -84,9 +116,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.trailapp_menu, menu); // display menu
         // disable properties button and make it invisible
-        MenuItem propertiesItem = menu.findItem(R.id.properties);
-        propertiesItem.setEnabled(false);
-        propertiesItem.setVisible(false);
+        MenuItem popupMenu = menu.findItem(R.id.popupMenu);
+        popupMenu.setEnabled(false);
+        popupMenu.setVisible(false);
         return true;
     }
 
@@ -109,35 +141,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets properties popup menu for a provided Context connected to a provided View
-     * @param context - context the popup menu will be displayed on
-     * @param view - view that the popup menu will be connected on
-     * @return popup menu with the properties list
+     * Used by subclasses to set the toolbar to be used by learn more popup menu.
+     * @param toolbar - Toolbar from subclass and its associated resource file
      */
-    public PopupMenu getPropertiesMenu(Context context, View view) {
-        final Context CONTEXT = context; // must store as final variable to be used in PopupMenu.OnMenuItemClickListener implementation
-        PopupMenu propertiesMenu = new PopupMenu(CONTEXT, view); // instantiate PopupMenu with provided arguments
-        propertiesMenu.getMenuInflater().inflate(R.menu.property_popup_menu, propertiesMenu.getMenu()); // display menu
-        propertiesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() { // set up listener for popup menu item clicks
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                try {
-                    Intent propertyIntent = new Intent(CONTEXT, PropertyActivity.class); // create Property Intent on the provided Context
-                    /*
-                    In order for the PropertyActivity to load the correct data, the Property Intent must hold Property name identifier data
-                    This data is the title of the PopupMenu item and will be used by getPropertyWithName() to get the Property object
-                     */
-                    propertyIntent.putExtra(PropertyActivity.PROPERTY_NAME_ID, item.getTitle().toString());
-                    startActivity(propertyIntent);
-                }
-                catch (ActivityNotFoundException ex) {
-                    Toast.makeText(CONTEXT,"Could not open property",Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
-        return propertiesMenu;
+    public void setLearnMoreToolbar(Toolbar toolbar) {
+        learnMoreToolbar = toolbar;
     }
 
-    public abstract void setUpUIComponents(); // all child classes must implement this
+    /**
+     * Subclass activities must implement this method to set up the activity's UI.
+     */
+    public abstract void setUpUIComponents();
 }

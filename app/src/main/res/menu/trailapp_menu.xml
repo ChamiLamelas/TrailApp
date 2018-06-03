@@ -1,8 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Use this file to edit the toolbar menu items used in BaseActivity -->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/properties"
+        android:id="@+id/popupMenu"
         android:icon="@android:drawable/ic_menu_mapmode"
         android:title="@string/propertiesTxt"
         app:showAsAction="always" />

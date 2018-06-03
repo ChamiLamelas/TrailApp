@@ -8,6 +8,10 @@ public final class Property {
     private int imgResID; // image resource id
     private int seeMoreResID; // see more string resource id
 
+    public static final String PROPERTY_NAME_ID = "propertyName"; // name of the property name ID for passing between intents
+    public static final int PROPERTY_NO_IMG_ID = -1; // value to identify properties with no image
+    public static final int PROPERTY_NO_SEE_MORE_ID = -2; // value to identify properties with no see more
+
     public Property(String aName, int anImgResID, int aSeeMoreResID) {
         name = aName;
         imgResID = anImgResID;
@@ -25,5 +29,4 @@ public final class Property {
     public String getName() {
         return name;
     }
-
 }

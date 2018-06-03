@@ -7,44 +7,95 @@
 
 <resources>
     <string name="app_name">GWLT Trails</string>
-    <string name="reportBtnTxt">Report</string>
-    <string name="reportTitleTxt">Report</string>
-    <string name="reportDialogTitle">Report Type</string>
-    <string name="reportDialogInfo">Please choose a report type.</string>
-    <string name="reportDialogPositiveBtn">Sighting</string>
-    <string name="reportDialogNegativeBtn">Problem</string>
+    <string name="fillOutReportTxt">Fill out Report</string>
+    <string name="trailAppEmail">trailapp@gwlt.org</string>
+    <!-- Change this when a new report form has been made. -->
+    <string name="reportLink">https://docs.google.com/forms/d/e/1FAIpQLSdXgnpEiFHR2w-M8jNd8jZvrPWLLx6n5W6aR4qi_AAnrS7f-w/viewform</string>
+    <string name="reportImageBody">Please attach an image below of what you have to report on your visit to "</string>
+    <string name="emailImageTxt">Email an Image</string>
     <string name="learnMoreTxt">Learn More</string>
+    <string name="learnMoreLink">http://www.gwlt.org</string>
+    <string name="joinTxt">Become a Member</string>
+    <string name="joinLink">http://www.gwlt.org/contact-us/</string>
+    <string name="aboutTxt">About the App</string>
+    <string name="aboutLink">https://github.com/LiquidsShadow/TrailApp</string>
     <string name="helpTitle">Help</string>
     <string name="helpTxt">
         Navigating the Main Screen:\n
-        \nTo access the list of properties, click the map icon in the upper right.
-        \nTo learn more about the Greater Worcester Land Trust, click the information icon to visit their website.
+        \nTo access the list of regional maps, click the map icon on the toolbar.
+        \nTo learn more about the Greater Worcester Land Trust, becoming a member, and about the app, click the information icon on the toolbar.
+        \n\nNavigating the Regional Map Screen:\n
+        \nTo access the list of properties that are in the region, click the map icon on the toolbar.
+        \nTo learn more about the Greater Worcester Land Trust, becoming a member, and about the app, click the information icon on the toolbar.
         \n\nNavigating the Property Screen:\n
-        \nTo see more information about the property, click the "See More" button. This includes sightings reported by other users.
-        \nTo report either a sighting or a problem, click the "Report" button. You will then be prompted to choose between a sighting and a problem, and the app will then transfer to the report screen.
-        \n\nNavigating the Report Screen:\n
-        \nThe report screen will tell you the property you are reporting on and the type of report (sighting or problem).
-        \nIf you selected the problem report type, you can fill in the checkboxes which are for common problems on properties.
-        \nFor either type of report, you can fill in a text box with more details on the report.
-        \nYou will then be prompted to choose an email client to send the report.
-        \nOnce you have selected the email client, an email with the data you filled in on the report screen in addition to a subject and recipients will be generated.
+        \nTo access the list of possible actions on a property, click the agenda icon on the toolbar.
+        \nYou can then choose between filling out a report, sending an image via email, or seeing more about the property.
+        \nTo learn more about the Greater Worcester Land Trust, becoming a member, and about the app, click the information icon on the toolbar.
     </string>
     <string name="propertiesTxt">Properties</string>
-    <string name="trashBoxTxt">Trash</string>
-    <string name="overgrownBoxTxt">Overgrown</string>
-    <string name="reportSubmitTxt">Email Report</string>
-    <string name="problemDescriptionTxt">The following items are common problems with our trails and you can choose whichever are applicable and add additional information in the field below them. Once you are finished, an email will be generated for you that will be sent to the Greater Worcester Land Trust. </string>
-    <string name="sightingDescriptionTxt">Please add anything you saw or wish to tell the Greater Worcester Land Trust on your visit to this property. This information will be used to improve the "see more" section for this property.</string>
     <string name="seeMoreTxt">See More</string>
-    <string name="defaultSeeMoreTxt">There has been no information reported on this property.</string>
-    <string name="gwltMissionTxt">TEST POPUP</string>
-    <!--add more property names here-->
-    <string name="asnebumskit">Asnebumskit</string>
-    <string name="cascades">Cascades</string>
+    <string name="defaultSeeMoreTxt">There has been no information reported on </string>
+
+    <!-- All Properties Map: -->
+    <string name="otherProperties">Other GWLT Properties</string>
+
+    <!-- Four town Greenway: -->
+    <string name="fourTownGreenWayTxt">Four Town Greenway</string>
+    <string name="asnebumskit">Asnebumskit Ridge</string>
+    <string name="cascades">The Cascades</string>
     <string name="cookPond">Cook\'s Pond</string>
-    <string name="donkerCooksBrook">Donker Cook\'s Brook</string>
-    <string name="kinneyWoods">Kinney Woods</string>
+    <string name="donkerCooksBrook">Donker Farm and Cook\'s Brook</string>
+    <string name="kinneywoods">Kinneywoods</string>
     <string name="morelandWoods">Moreland Woods</string>
-    <string name="southwickMuir">Southwick Muir</string>
-    <!--add more property see more information here-->
+    <string name="southwickMuir">Southwick Pond and Muir Meadows</string>
+    <!-- links -->
+    <string name="asnebumskitLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/asnebumskit-ridge-reservoir/</string>
+    <string name="cascadesLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/cascades/</string>
+    <string name="cookPondLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/cooks-pond/</string>
+    <string name="donkerCooksLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/donker-farm/</string>
+    <string name="kinneyLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/kinneywoods/</string>
+    <string name="morelandLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/moreland-woods/</string>
+    <string name="southwickLink">http://www.gwlt.org/lands-and-trails/four-town-worcester-greenway/muir-meadows/</string>
+
+    <!-- North Worcester: -->
+    <string name="bovenzi">Bovenzi Conservation Area</string>
+    <string name="nicksWoods">Nick\'s Woods</string>
+    <!-- links -->
+    <string name="bovenziLink">http://www.gwlt.org/lands-and-trails/north-worcester/bovenzi-conservation-area/</string>
+    <string name="nicksWoodsLink">http://www.gwlt.org/lands-and-trails/north-worcester/nicks-woods/</string>
+
+    <!-- West Worcester -->
+    <string name="coesReservoir">Coe\'s Reservoir</string>
+    <string name="crowHill">Crow Hill &amp; Fitzgerald Brook</string>
+    <string name="tetasset">Tetasset Ridge</string>
+    <!-- links -->
+    <string name="coesReservoirLink">http://www.gwlt.org/lands-and-trails/west-worcester/coes-reservoir/</string>
+    <string name="crowHillLink">http://www.gwlt.org/lands-and-trails/east-worcester/crow-hill-fitzgerald-brook/</string>
+    <string name="tetassetLink">http://www.gwlt.org/lands-and-trails/west-worcester/tetasset-ridge-2/</string>
+
+    <!-- East Worcester: -->
+    <string name="eastsidetrail">East Side Trail</string>
+    <!-- links -->
+    <string name="eastsideLink">http://www.gwlt.org/lands-and-trails/east-worcester/east-side-trail/</string>
+
+    <!-- South Worcester -->
+    <string name="broadmeadow">Broad Meadow Brook Savannah</string>
+    <!-- links -->
+    <string name="broadLink">http://www.gwlt.org/lands-and-trails/south-worcester/broad-meadow-brook-savannah/</string>
+
+    <!-- Spencer: -->
+    <string name="sibley">Sibley Farm</string>
+    <!-- links -->
+    <string name="sibleyLink">http://www.gwlt.org/lands-and-trails/spencer/</string>
+
+    <!-- Boylston: -->
+    <string name="elmersSeat">Elmer\'s Seat Pleasant Hill</string>
+    <!-- links -->
+    <string name="elmersLink">http://www.gwlt.org/lands-and-trails/elmers-seat-pleasant-hill/</string>
+
+    <!-- West Boylston: -->
+    <string name="pineGlen">Pine Glen</string>
+    <!-- links -->
+    <string name="pineLink">http://www.gwlt.org/lands-and-trails/west-boylston-holdings/pine-glen/</string>
+
 </resources>

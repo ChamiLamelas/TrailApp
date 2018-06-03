@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Use this file to edit the menu options for the "learn more" menu -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/learnMoreChoice"
+        android:title="@string/learnMoreTxt"/>
+
+    <item
+        android:id="@+id/joinChoice"
+        android:title="@string/joinTxt" />
+
+    <item
+        android:id="@+id/aboutChoice"
+        android:title="@string/aboutTxt" />
+</menu>

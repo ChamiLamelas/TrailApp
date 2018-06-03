@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Use this file to edit the menu of properties that are not currently in a regional map and fall under "other properties" -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/one"
+        android:title="@string/bovenzi"/>
+
+    <item
+        android:id="@+id/two"
+        android:title="@string/nicksWoods"/>
+
+    <item
+        android:id="@+id/three"
+        android:title="@string/coesReservoir"/>
+    <item
+        android:id="@+id/four"
+        android:title="@string/crowHill"/>
+    <item
+        android:id="@+id/five"
+        android:title="@string/tetasset"/>
+    <item
+        android:id="@+id/six"
+        android:title="@string/eastsidetrail"/>
+    <item
+        android:id="@+id/seven"
+        android:title="@string/broadmeadow"/>
+    <item
+        android:id="@+id/eight"
+        android:title="@string/sibley"/>
+    <item
+        android:id="@+id/nine"
+        android:title="@string/elmersSeat"/>
+    <item
+        android:id="@+id/ten"
+        android:title="@string/pineGlen"/>
+
+</menu>
