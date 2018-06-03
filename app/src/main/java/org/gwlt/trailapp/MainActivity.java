@@ -38,6 +38,7 @@ public final class MainActivity extends BaseActivity {
         // set up photo view with correct image resource
         jPhotoView = findViewById(R.id.mapPhotoView);
         jPhotoView.setImageResource(R.drawable.trust_lands);
+        jPhotoView.setMaximumScale(BaseActivity.VIEW_MAX_SCALE);
     }
 
     /**
