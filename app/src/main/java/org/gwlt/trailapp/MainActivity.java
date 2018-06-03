@@ -14,7 +14,6 @@ import java.util.ArrayList;
 /**
  * Class that represents the Main Activity of the GWLT app. This is the screen that is displayed when the user first opens the app.
  */
-
 public final class MainActivity extends BaseActivity {
 
     private static ArrayList<RegionalMap> regionalMaps; // list of regional maps

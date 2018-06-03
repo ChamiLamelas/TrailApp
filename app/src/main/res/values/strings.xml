@@ -7,11 +7,9 @@
 
 <resources>
     <string name="app_name">GWLT Trails</string>
-    <string name="reportBtnTxt">Report</string>
-    <string name="reportTitleTxt">Report</string>
-    <string name="reportDialogTitle">Report Type</string>
-    <string name="reportDialogInfo">Please choose a report type.</string>
     <string name="fillOutReportTxt">Fill out Report</string>
+    <string name="trailAppEmail">trailapp@gwlt.org</string>
+    <!-- Change this when a new report form has been made. -->
     <string name="reportLink">https://docs.google.com/forms/d/e/1FAIpQLSdXgnpEiFHR2w-M8jNd8jZvrPWLLx6n5W6aR4qi_AAnrS7f-w/viewform</string>
     <string name="reportImageBody">Please attach an image below of what you have to report on your visit to "</string>
     <string name="emailImageTxt">Email an Image</string>
@@ -24,27 +22,19 @@
     <string name="helpTitle">Help</string>
     <string name="helpTxt">
         Navigating the Main Screen:\n
-        \nTo access the list of properties, click the map icon in the upper right.
-        \nTo learn more about the Greater Worcester Land Trust, click the information icon to visit their website.
+        \nTo access the list of regional maps, click the map icon on the toolbar.
+        \nTo learn more about the Greater Worcester Land Trust, becoming a member, and about the app, click the information icon on the toolbar.
+        \n\nNavigating the Regional Map Screen:\n
+        \nTo access the list of properties that are in the region, click the map icon on the toolbar.
+        \nTo learn more about the Greater Worcester Land Trust, becoming a member, and about the app, click the information icon on the toolbar.
         \n\nNavigating the Property Screen:\n
-        \nTo see more information about the property, click the "See More" button. This includes sightings reported by other users.
-        \nTo report either a sighting or a problem, click the "Report" button. You will then be prompted to choose between a sighting and a problem, and the app will then transfer to the report screen.
-        \n\nNavigating the Report Screen:\n
-        \nThe report screen will tell you the property you are reporting on and the type of report (sighting or problem).
-        \nIf you selected the problem report type, you can fill in the checkboxes which are for common problems on properties.
-        \nFor either type of report, you can fill in a text box with more details on the report.
-        \nYou will then be prompted to choose an email client to send the report.
-        \nOnce you have selected the email client, an email with the data you filled in on the report screen in addition to a subject and recipients will be generated.
+        \nTo access the list of possible actions on a property, click the agenda icon on the toolbar.
+        \nYou can then choose between filling out a report, sending an image via email, or seeing more about the property.
+        \nTo learn more about the Greater Worcester Land Trust, becoming a member, and about the app, click the information icon on the toolbar.
     </string>
     <string name="propertiesTxt">Properties</string>
-    <string name="trashBoxTxt">Trash</string>
-    <string name="overgrownBoxTxt">Overgrown</string>
-    <string name="reportSubmitTxt">Email Report</string>
-    <string name="problemDescriptionTxt">The following items are common problems with our trails and you can choose whichever are applicable and add additional information in the field below them. Once you are finished, an email will be generated for you that will be sent to the Greater Worcester Land Trust. </string>
-    <string name="sightingDescriptionTxt">Please add anything you saw or wish to tell the Greater Worcester Land Trust on your visit to this property. This information will be used to improve the "see more" section for this property.</string>
     <string name="seeMoreTxt">See More</string>
     <string name="defaultSeeMoreTxt">There has been no information reported on </string>
-    <string name="gwltMissionTxt">TEST POPUP</string>
 
     <!-- All Properties Map: -->
     <string name="otherProperties">Other GWLT Properties</string>

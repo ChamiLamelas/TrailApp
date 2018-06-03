@@ -1,5 +1,6 @@
 package org.gwlt.trailapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -17,12 +18,13 @@ public final class Utilities {
 
     /**
      * Generates an Intent that holds an email to GWLT with the provided information:
+     * @param context - context that the Intent is being generated from
      * @param subject - subject of the email
      * @param body - body of the email
      * @return - email Intent that holds the data
      */
-    public static Intent genEmailToGWLT(String subject, String body) {
-        String recipients[] = {"trailapp@gwlt.org"};
+    public static Intent genEmailToGWLT(Context context, String subject, String body) {
+        String recipients[] = {context.getResources().getString(R.string.trailAppEmail)};
         Intent emailIntent = new Intent(Intent.ACTION_SEND); // specifies that the Intent is for email
         emailIntent.setData(Uri.parse("mailto:")); // sets the type of data Intent will be handling
         emailIntent.setType("text/plain"); // sets MIME type (just text, text w/ attachments, etc.)

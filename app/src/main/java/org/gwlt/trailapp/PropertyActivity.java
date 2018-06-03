@@ -103,7 +103,7 @@ public final class PropertyActivity extends BaseActivity {
                         case R.id.emaiLImageChoice:
                             if (connectedToInternet()) {
                                 try {
-                                    startActivity(Intent.createChooser(genEmailToGWLT("[Report Image] " + property.getName(), getResources().getString(R.string.reportImageBody) + property.getName() + "."), "Choose email client.."));
+                                    startActivity(Intent.createChooser(genEmailToGWLT(PropertyActivity.this,"[Report Image] " + property.getName(), getResources().getString(R.string.reportImageBody) + property.getName() + "."), "Choose email client.."));
                                 } catch (ActivityNotFoundException ex) {
                                     Toast.makeText(PropertyActivity.this, "An email client must be installed to complete this action.", Toast.LENGTH_LONG).show();
                                 }
